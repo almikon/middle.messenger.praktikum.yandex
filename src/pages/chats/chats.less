@@ -1,0 +1,55 @@
+
+.chats__container{
+    height: 100%;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+}
+.chatsList{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    width: 310px;
+    border-right: solid 1px #EAEAEA;
+}
+.currentChat{
+    height: 100vh;
+    width: 100%;
+    display: flex;    
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.profileLink{
+    text-align: end;
+    & > a{
+        text-decoration: none;
+        font-family: Inter;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 12px;
+        letter-spacing: 0em;
+        text-align: right;
+        color: #999999;
+
+    }
+}
+.search{
+    height: 32px;
+    left: 10px;
+    top: 56px;
+    background: #EFEFEF;
+    border-radius: 5px;
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 32px;
+    letter-spacing: 0em;
+    text-align: center;
+    padding: 0;
+    color: #999999;
+    border: none;
+    &:focus{
+        outline: none;
+    }
+}
