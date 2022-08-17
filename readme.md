@@ -6,6 +6,6 @@
 Netlify - https://melodic-strudel-904994.netlify.app
 
 Команды:  
-    "dev": "parcel index.html -p 3000 --no-cache --open"  
-    "build": "parcel build index.html"  
-    "start": "node server.js"
+    npm run dev - запуск проекта для разработки   
+    npm run build - запуск готового проекта  
+    npm run start - запуск сервера Express
