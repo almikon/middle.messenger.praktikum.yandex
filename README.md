@@ -7,5 +7,5 @@ Netlify - https://melodic-strudel-904994.netlify.app
 
 Команды:  
     npm run dev - запуск проекта для разработки   
-    npm run build - запуск готового проекта
+    npm run build - запуск готового проекта  
     npm run start - запуск сервера Express
