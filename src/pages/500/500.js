@@ -1,5 +1,5 @@
 import Handlebars from 'handlebars';
-import './500.less'
+import '../../less/errorPage.less'
 
 const tmpl = `  
 <div class="container">

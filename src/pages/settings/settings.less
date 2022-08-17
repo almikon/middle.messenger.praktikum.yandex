@@ -1,29 +1,28 @@
-html, body{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    height: 100vh;
-    width: 100vw;
-    display: flex;
+body {
     flex-direction: row;
-  }
+}
+
 a {
     text-decoration: none;
-    &:visited{
+
+    &:visited {
         text-decoration: none;
     }
-    &:hover{
+
+    &:hover {
         text-decoration: none;
     }
 }
+
 .container {
     flex-grow: 100;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-  }
-.right__back{
+}
+
+.right__back {
     flex-grow: 1;
     width: 64px;
     display: flex;
@@ -33,20 +32,23 @@ a {
     background-color: #FBFBFB;
     border: none;
     border-right: solid 1px #EAEAEA;
-  }
-.user__avatar{
+}
+
+.user__avatar {
     margin-top: 60px;
     margin-bottom: 21px;
 }
-.user__title{
+
+.user__title {
     font-family: Inter;
-font-size: 16px;
-font-weight: 600;
-line-height: 16px;
-letter-spacing: 0em;
-text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: center;
 }
-.user__set_name{
+
+.user__set_name {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
@@ -54,7 +56,8 @@ text-align: center;
     line-height: 13px;
 
 }
-.user__set_value{
+
+.user__set_value {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
@@ -62,18 +65,20 @@ text-align: center;
     line-height: 13px;
     color: #999999;
 }
-.user__settings-item{
+
+.user__settings-item {
     width: 510px;
     display: flex;
     justify-content: space-between;
     border-bottom: solid 1px #EAEAEA;
-    &:last-child{
+
+    &:last-child {
         border-bottom: none;
         margin-bottom: 60px;
     }
 }
 
-.options__item{
+.options__item {
     width: 510px;
     font-family: 'Inter';
     font-style: normal;
@@ -85,7 +90,8 @@ text-align: center;
     padding: 10px;
     border-bottom: solid 1px #EAEAEA;
 }
-.options__exit{
+
+.options__exit {
     width: 510px;
     font-family: 'Inter';
     font-style: normal;
