@@ -1,5 +1,5 @@
 import Handlebars from "handlebars";
-import './changeSettings.less'
+import '../../less/changeSettings.less'
 import user__avatar from '../../../static/img/user_avatar.png'
 import back_arrow from '../../../static/img/back_arrow.png'
 
@@ -27,7 +27,7 @@ const tmpl = `
 </div>
 <div class="modal">
 
-    <div class="modal-content">
+    <div class="modalContent">
         <p class="user__title">Загрузите файл</p>
         <a href="#">Выбрать файл на компьютере</a>
 

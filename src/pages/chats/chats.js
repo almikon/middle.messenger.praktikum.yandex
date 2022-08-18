@@ -1,5 +1,5 @@
 import Handlebars from 'handlebars';
-import './chats.less'
+import '../../less/chats.less'
 const tmpl = `  
 <div class="chats__container">
     <div class="chatsList">

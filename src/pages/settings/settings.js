@@ -1,5 +1,5 @@
 import Handlebars from "handlebars";
-import './settings.less'
+import '../../less/settings.less'
 import user__avatar from '../../../static/img/user_avatar.png'
 import back_arrow from '../../../static/img/back_arrow.png'
 

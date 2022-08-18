@@ -1,5 +1,5 @@
 import Handlebars from 'handlebars';
-import './signUp.less'
+import '../../less/form.less'
 
 const tmpl = `  
 <div class="container">

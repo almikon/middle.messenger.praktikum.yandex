@@ -1,5 +1,6 @@
 import Handlebars from 'handlebars';
-import './login.less'
+import '../../less/form.less';
+
 const tmpl = `<div class="container">
     <form class="form__data">
         <div class="form__data-inputs">
