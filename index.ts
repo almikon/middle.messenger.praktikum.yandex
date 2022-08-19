@@ -1,8 +1,9 @@
-function makeKeyValue<K, V>(key: K, value: V): { key: K; value: V } {
-    return { key, value };
+namespace('a.b.c.d.e') // "{"a":{"b":{"c":{"d":{"e":{}}}}}}"
+
+function namespace(string:String): Object{
+    console.log(string.split('.'))
+    
+    return {}
 }
 
-const pair = makeKeyValue('days', ['ПН', 'ВТ']);
-pair.value.push('СР', 'ЧТ', 'ПТ', 'СБ', 'ВС');  // OK
-pair.value.push('42');   // Error: cannot push a number 
-console.log(pair)
+export default namespace
