@@ -1,4 +1,4 @@
-export const template = `<div class="chats__container">
+const template = `<div class="chats__container">
     <div class="chatsList">
         <div class="profileLink"><a href="{{profileLink.url}}">{{profileLink.text}}</a></div>
         <input class="search" placeholder="Поиск"></input>
@@ -20,3 +20,4 @@ export const template = `<div class="chats__container">
         {{chooseChat}}
     </div>
 </div>`
+export default template
