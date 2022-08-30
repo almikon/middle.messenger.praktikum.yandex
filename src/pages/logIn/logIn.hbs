@@ -1,0 +1,16 @@
+<div class="container">
+    <form class="form__data">
+        <div class="form__data-inputs">
+            <div class="form__title">{{title}}</div>
+            {{#each inputs}}
+            <label> {{this.id}}<br>
+                <input class="form__input" type="{{this.type}}" name="{{this.name}}" placeholder="{{this.placeholder}}">
+            </label>
+            {{/each}}
+        </div>
+        <div class="form__data-button">
+            <input type="button" class="form__button" onclick="location.href='/chats.html'" value={{button__text}} />
+            <div class="footerNote"><a href="{{footerNote.url}}">{{footerNote.text}}</a></div>
+        </div>
+    </form>
+</div>
