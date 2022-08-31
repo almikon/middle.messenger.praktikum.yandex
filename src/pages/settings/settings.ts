@@ -2,6 +2,7 @@ import '../../less/settings.less'
 import user__avatar from '../../../static/img/user_avatar.png'
 import back_arrow from '../../../static/img/back_arrow.png'
 import tmpl from './settings.hbs'
+import Block from '../../utils/Block';
 
 const context = {
     back_arrow: back_arrow,
@@ -46,4 +47,14 @@ const context = {
     option__exit: "Выйти"
 };
 
-export const htmlSettings = tmpl(context)
+export class settingsPage extends Block {
+    constructor(props = context) {
+        super('div', props);
+    }
+
+    init() { }
+
+    render() {
+        return this.compile(tmpl, this.props);
+    }
+}

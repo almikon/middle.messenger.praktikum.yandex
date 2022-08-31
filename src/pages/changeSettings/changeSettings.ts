@@ -2,6 +2,8 @@ import '../../less/changeSettings.less'
 import user__avatar from '../../../static/img/user_avatar.png'
 import back_arrow from '../../../static/img/back_arrow.png'
 import tmpl from './changeSettings.hbs'
+import Block from '../../utils/Block';
+import { Button } from '../../components/Button';
 
 // function changeAvatar() {
 //     const modal = document.querySelector(".modal");
@@ -46,4 +48,25 @@ const context = {
     button__text: "Сохранить"
 };
 
-export const htmlChangeSettings = tmpl(context)
+export class changeSettingsPage extends Block {
+    constructor(props = context) {
+        super('div', props);
+    }
+
+    init() {
+        this.children.button = new Button({
+            class: 'form__button',
+            value: this.props.button__text,
+            events: {
+                click: () => {
+
+                    console.log('clicked')
+                }
+            }
+        });
+    }
+
+    render() {
+        return this.compile(tmpl, this.props);
+    }
+}

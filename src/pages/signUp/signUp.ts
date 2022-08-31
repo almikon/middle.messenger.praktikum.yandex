@@ -1,5 +1,7 @@
 import '../../less/form.less'
 import tmpl from './signUp.hbs'
+import Block from '../../utils/Block';
+import { Button } from '../../components/Button';
 
 const context = {
     title: "Регистрация",
@@ -50,8 +52,28 @@ const context = {
     button__text: "Зарегистрироваться",
     footerNote: {
         text: "Войти",
-        url: "../index/index.html"
+        url: "./index.html"
     }
-};
+}
+export class signUpPage extends Block {
+    constructor(props = context) {
+        super('div', props);
+    }
 
-export const htmlSignUp = tmpl(context)
+    init() {
+        this.children.button = new Button({
+            class: 'form__button',
+            value: this.props.button__text,
+            events: {
+                click: () => {
+
+                    console.log('clicked')
+                }
+            }
+        });
+    }
+
+    render() {
+        return this.compile(tmpl, this.props);
+    }
+}

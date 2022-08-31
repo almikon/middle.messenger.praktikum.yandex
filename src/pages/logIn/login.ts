@@ -1,4 +1,6 @@
+import { Button } from '../../components/Button';
 import '../../less/form.less';
+import Block from '../../utils/Block';
 import tmpl from './logIn.hbs'
 
 const context = {
@@ -24,5 +26,25 @@ const context = {
     },
     url: "chats.html"
 };
+export class logInPage extends Block {
+    constructor(props = context) {
+        super('div', props);
+    }
 
-export const htmlLogin = tmpl(context)
+    init() {
+        this.children.button = new Button({
+            class: 'form__button',
+            value: this.props.button__text,
+            events: {
+                click: () => {
+
+                    console.log('clicked')
+                }
+            }
+        });
+    }
+
+    render() {
+        return this.compile(tmpl, this.props);
+    }
+}

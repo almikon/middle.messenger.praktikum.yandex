@@ -1,6 +1,8 @@
 import '../../less/chats.less'
 import chat__avatar from '../../../static/img/user_avatar.png'
 import tmpl from './chats.hbs'
+import Block from '../../utils/Block';
+import { Button } from '../../components/Button';
 
 const context = {
     profileLink: {
@@ -37,4 +39,25 @@ const context = {
     chooseChat: "Выберите чат чтобы отправить сообщение"
 };
 
-export const htmlChats = tmpl(context)
+export class chatsPage extends Block {
+    constructor(props = context) {
+        super('div', props);
+    }
+
+    init() {
+        this.children.button = new Button({
+            class: 'form__button',
+            value: this.props.button__text,
+            events: {
+                click: () => {
+
+                    console.log('clicked')
+                }
+            }
+        });
+    }
+
+    render() {
+        return this.compile(tmpl, this.props);
+    }
+}

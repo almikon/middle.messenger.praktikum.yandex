@@ -1,4 +1,5 @@
 import '../../less/errorPage.less'
+import Block from '../../utils/Block';
 import tmpl from './500.hbs'
 
 const context = {
@@ -12,4 +13,12 @@ const context = {
     }
 };
 
-export const html500 = tmpl(context)
+export class page500Page extends Block {
+    constructor(props = context) {
+        super('div', props);
+    }
+
+    render() {
+        return this.compile(tmpl, this.props);
+    }
+}

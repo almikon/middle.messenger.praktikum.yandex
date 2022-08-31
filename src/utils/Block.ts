@@ -32,7 +32,6 @@ class Block {
         this.eventBus = () => eventBus;
 
         this._registerEvents(eventBus);
-
         eventBus.emit(Block.EVENTS.INIT);
     }
 
@@ -53,7 +52,6 @@ class Block {
 
     _addEvents() {
         const { events = {} } = this.props as { events: Record<string, () => void> };
-
         Object.keys(events).forEach(eventName => {
             this._element?.addEventListener(eventName, events[eventName]);
         });
@@ -72,6 +70,7 @@ class Block {
     }
 
     private _init() {
+
         this._createResources();
 
         this.init();
@@ -79,7 +78,8 @@ class Block {
         this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
 
-    protected init() { }
+    protected init() {
+    }
 
     _componentDidMount() {
         this.componentDidMount();
@@ -129,7 +129,7 @@ class Block {
         const contextAndStubs = { ...context };
 
         Object.entries(this.children).forEach(([name, component]) => {
-            contextAndStubs[name] = `<div data-id="${component.id}" />`;
+            contextAndStubs[name] = `<div data-id="${component.id}"></div>`;
         });
 
         const html = template(contextAndStubs);
@@ -145,7 +145,7 @@ class Block {
                 return;
             }
 
-            component.getContent()?.append(...Array.from(stub.childNodes));
+            // component.getContent()?.append(...Array.from(stub.childNodes));
 
             stub.replaceWith(component.getContent()!);
 
@@ -164,24 +164,14 @@ class Block {
 
     _makePropsProxy(props: any) {
         const self = this;
-
         return new Proxy(props, {
-            get(target, prop) {
-                const value = target[prop];
-                return typeof value === "function" ? value.bind(target) : value;
-            },
             set(target, prop, value) {
-                const oldTarget = { ...target }
-
-                target[prop] = value;
-
-                self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
-                return true;
-            },
-            deleteProperty() {
-                throw new Error("Нет доступа");
+                target[prop] = value
+                self.eventBus().emit(Block.EVENTS.FLOW_CDU)
+                return target[prop]
             }
-        });
+        })
+
     }
 
     _createDocumentElement(tagName: string) {
