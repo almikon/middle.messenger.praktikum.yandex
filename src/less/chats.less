@@ -79,3 +79,80 @@
     line-height: 15px;
     color: @userValueColor;
 }
+
+.message {
+    height: 32px;
+    left: 0px;
+    flex: 1;
+    top: 56px;
+    background: #EFEFEF;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 32px;
+    letter-spacing: 0em;
+    text-align: center;
+    padding: 0;
+    color: @userValueColor;
+    border: none;
+}
+
+.companion__avatar {
+    width: 34px;
+    height: 34px;
+}
+
+.currentChat {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &__header {
+        width: calc(100% - 10px);
+        margin-top: 10px;
+        display: flex;
+        border-bottom: 2px solid @borderColor;
+
+        &>p {
+            flex: 1;
+        }
+    }
+
+    &__message {
+        padding: 5px;
+        margin: 10px;
+        width: fit-content;
+        color: @blackText;
+        background-color: @grayBackground;
+        border-radius: 0 10px 10px 10px;
+
+        &.me {
+            background-color: @lightBlue;
+            right: 0;
+        }
+    }
+
+    &__main-date {
+        margin: 0 auto;
+    }
+
+    &__main {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+
+        &_messages {
+            max-width: 350px;
+
+            &.me {}
+        }
+    }
+
+    &__sendMessage {
+        width: 100%;
+        display: flex;
+        border-top: 1px solid @borderColor;
+    }
+}

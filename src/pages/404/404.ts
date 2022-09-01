@@ -8,7 +8,7 @@ const context = {
         description: "Не туда попали"
     },
     footerNote: {
-        url: "../chats/chats.html",
+        url: "./chats.html",
         text: "Назад к чатам"
     }
 };

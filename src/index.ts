@@ -10,7 +10,6 @@ import { signUpPage } from './pages/signUp/signUp';
 window.addEventListener('DOMContentLoaded', () => {
     const root = document.querySelector('#app')!
     const currentPath = document.location.pathname
-    console.log(currentPath)
 
     switch (currentPath) {
         case '/index.html':
@@ -55,5 +54,7 @@ window.addEventListener('DOMContentLoaded', () => {
             root.append(changeSettings.getContent()!)
             changeSettings.dispatchComponentDidMount()
             break
+        default:
+            document.location.pathname = '/index.html'
     }
 });

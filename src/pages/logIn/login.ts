@@ -20,6 +20,7 @@ const context = {
         }
     },
     button__text: "Вход",
+    goTo: "./chats.html",
     footerNote: {
         text: "Нет аккаунта?",
         url: "signUp.html"
@@ -35,12 +36,7 @@ export class logInPage extends Block {
         this.children.button = new Button({
             class: 'form__button',
             value: this.props.button__text,
-            events: {
-                click: () => {
-
-                    console.log('clicked')
-                }
-            }
+            goTo: this.props.goTo
         });
     }
 

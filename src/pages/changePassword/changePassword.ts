@@ -35,12 +35,7 @@ export class changePasswordPage extends Block {
         this.children.button = new Button({
             class: 'form__button',
             value: this.props.button__text,
-            events: {
-                click: () => {
-
-                    console.log('clicked')
-                }
-            }
+            goTo: '/settings.html'
         });
     }
 
