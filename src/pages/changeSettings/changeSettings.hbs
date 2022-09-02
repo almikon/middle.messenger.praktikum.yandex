@@ -1,0 +1,50 @@
+<div class="right__back">
+    <img src={{back_arrow}} alt="Назад" class="back_arrow">
+</div>
+<div class="container">
+    <div class="avatar">
+        <img src={{user__avatar}} alt="Нажмите чтобы изменить" class="user__avatar" onclick="setAvatar()">
+    </div>
+    <p class="user__title">{{user}}</p>
+
+    <div class-"user__settings">
+        <div class="user__settings-item">
+            <p class="user__set_name">{{email.name}}</p>
+            {{{emailInput}}}
+        </div>
+        <div class="user__settings-item">
+            <p class="user__set_name">{{login.name}}</p>
+            {{{loginInput}}}
+        </div>
+        <div class="user__settings-item">
+            <p class="user__set_name">{{first_name.name}}</p>
+            {{{first_nameInput}}}
+        </div>
+        <div class="user__settings-item">
+            <p class="user__set_name">{{second_name.name}}</p>
+            {{{second_nameInput}}}
+        </div>
+        <div class="user__settings-item">
+            <p class="user__set_name">{{display_name.name}}</p>
+            {{{display_nameInput}}}
+        </div>
+        <div class="user__settings-item">
+            <p class="user__set_name">{{phone.name}}</p>
+            {{{phoneInput}}}
+        </div>
+
+    </div>
+    <div class="form__data-button">
+        {{{button}}}
+    </div>
+</div>
+<div class="modal">
+
+    <div class="modalContent">
+        <p class="user__title">Загрузите файл</p>
+        <a href="#">Выбрать файл на компьютере</a>
+
+        <button class="form__button" onclick="changeAvatar()">Поменять</button>
+    </div>
+
+</div>
