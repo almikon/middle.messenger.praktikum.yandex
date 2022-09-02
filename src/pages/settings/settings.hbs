@@ -7,17 +7,40 @@
     <p class="user__title">{{user}}</p>
 
     <div class-"user__settings">
-        {{#each user__settings}}
         <div class="user__settings-item">
-            <p class="user__set_name">{{this.name}}</p>
-            <p class="user__set_value">{{this.value}}</p>
+            <p class="user__set_name">{{email.name}}</p>
+            <p class="user__set_value">{{email.value}}</p>
         </div>
-        {{/each}}
+
+        <div class="user__settings-item">
+            <p class="user__set_name">{{login.name}}</p>
+            <p class="user__set_value">{{login.value}}</p>
+        </div>
+
+        <div class="user__settings-item">
+            <p class="user__set_name">{{first_name.name}}</p>
+            <p class="user__set_value">{{first_name.value}}</p>
+        </div>
+
+        <div class="user__settings-item">
+            <p class="user__set_name">{{second_name.name}}</p>
+            <p class="user__set_value">{{second_name.value}}</p>
+        </div>
+
+        <div class="user__settings-item">
+            <p class="user__set_name">{{display_name.name}}</p>
+            <p class="user__set_value">{{display_name.value}}</p>
+        </div>
+
+        <div class="user__settings-item">
+            <p class="user__set_name">{{phone.name}}</p>
+            <p class="user__set_value">{{phone.value}}</p>
+        </div>
+
     </div>
 
-    {{#each options}}
-    <div class="options__item"><a href={{this.url}}>{{this.item}}</a></div>
-    {{/each}}
+    <div class="options__item"><a href={{change__data.url}}>{{change__data.item}}</a></div>
+    <div class="options__item"><a href={{change__password.url}}>{{change__password.item}}</a></div>
 
-    <div class="options__exit"><a href="index.html">{{option__exit}}</a></div>
+    <div class="options__exit"><a href="./index.html">{{option__exit}}</a></div>
 </div>
