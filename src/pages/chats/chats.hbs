@@ -3,17 +3,52 @@
         <div class="profileLink"><a href="{{profileLink.url}}">{{profileLink.text}}</a></div>
         <input class="search" placeholder="Поиск"></input>
         <div class="chatsList">
-            {{#each chatsList__items}}
+
             <div class="chatsList__item">
                 <div>
-                    <img src={{this.img}} alt={{this.title}} class="chat__avatar">
+                    <img src={{chat1.img}} alt={{chat1.title}} class="chat__avatar">
                 </div>
                 <div>
-                    <p class='chat__title'>{{this.title}}</p>
-                    <p class='chat__text'>{{this.text}}</p>
+                    <p class='chat__title'>{{chat1.title}}</p>
+                    <p class='chat__text'>{{chat1.text}}</p>
                 </div>
             </div>
-            {{/each}}
+            <div class="chatsList__item">
+                <div>
+                    <img src={{chat2.img}} alt={{chat2.title}} class="chat__avatar">
+                </div>
+                <div>
+                    <p class='chat__title'>{{chat2.title}}</p>
+                    <p class='chat__text'>{{chat2.text}}</p>
+                </div>
+            </div>
+            <div class="chatsList__item">
+                <div>
+                    <img src={{chat3.img}} alt={{chat3.title}} class="chat__avatar">
+                </div>
+                <div>
+                    <p class='chat__title'>{{chat3.title}}</p>
+                    <p class='chat__text'>{{chat3.text}}</p>
+                </div>
+            </div>
+            <div class="chatsList__item">
+                <div>
+                    <img src={{chat4.img}} alt={{chat4.title}} class="chat__avatar">
+                </div>
+                <div>
+                    <p class='chat__title'>{{chat4.title}}</p>
+                    <p class='chat__text'>{{chat4.text}}</p>
+                </div>
+            </div>
+            <div class="chatsList__item">
+                <div>
+                    <img src={{chat5.img}} alt={{chat5.title}} class="chat__avatar">
+                </div>
+                <div>
+                    <p class='chat__title'>{{chat5.title}}</p>
+                    <p class='chat__text'>{{chat5.text}}</p>
+                </div>
+            </div>
         </div>
     </div>
     <div class="currentChat">
@@ -25,17 +60,21 @@
         </div>
         <div class="currentChat__main">
             <div class="currentChat__main-date">{{date}}</div>
-            {{#each currentChat__main_messages}}
-            <div class="currentChat__main_messages chat__text {{this.author}}">
-                <div class="currentChat__message {{this.author}}">
-                    {{#if this.image}}
-                    <img src={{this.content}} alt="фото" class="message_img">
-                    {{else}}
-                    {{{this.content}}}
-                    {{/if}}
+            <div class="currentChat__main_messages chat__text {{msg1.author}}">
+                <div class="currentChat__message {{msg1.author}}">
+                    {{{msg1.content}}}
                 </div>
             </div>
-            {{/each}}
+            <div class="currentChat__main_messages chat__text {{msg2.author}}">
+                <div class="currentChat__message {{msg2.author}}">
+                    <img src={{msg2.content}} alt="фото" class="message_img">
+                </div>
+            </div>
+            <div class="currentChat__main_messages chat__text {{msg3.author}}">
+                <div class="currentChat__message {{msg3.author}}">
+                    {{{msg3.content}}}
+                </div>
+            </div>
         </div>
         <div class="currentChat__sendMessage">
             <img src={{clip__img}} alt="Отправить файл" class="clip">

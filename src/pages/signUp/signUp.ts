@@ -62,7 +62,8 @@ export class signUpPage extends Block {
     init() {
         this.children.button = new Button({
             class: 'form__button',
-            value: this.props.button__text
+            value: this.props.button__text,
+            goTo: '/chats.html'
         })
         this.children.loginInput = new Input({
             name: 'login',
