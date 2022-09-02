@@ -4,9 +4,8 @@ import tmpl from './button.hbs'
 
 interface ButtonProps {
     class: string,
-    value: string,
-    goTo: string,
-    type?: string
+    value?: string,
+    goTo?: string
 }
 
 export class Button extends Block {
@@ -31,22 +30,18 @@ export class Button extends Block {
     }
     protected getData() {
         let res: Record<string, string> = {}
-        const inputList = document.querySelectorAll('.required')
-
+        const inputList = document.querySelectorAll('input')
         inputList.forEach(input => {
-            console.log(input)
-            // if (!input) {
-            //     res[input.name] = input.value
-            // }
-            // else {
-            //     console.log(input.value)
-            //     alert(`${input.name} не может быть пустым!`)
-            // }
+            if (input.classList.contains('required')) {
+                if (input.value.length > 0) {
+                    res[input.name] = input.value
+                }
+                else {
+                    alert(`${input.name} не может быть пустым!`)
+                }
+            }
         })
         console.log(res)
-    }
-    protected checkIsEmpty() {
-
     }
     protected render(): DocumentFragment {
         return this.compile(tmpl, this.props)

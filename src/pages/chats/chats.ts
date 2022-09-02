@@ -66,7 +66,8 @@ const context = {
             img: chat__avatar,
             title: 'Стас Рогозин',
             text: 'Можно или сегодня или завтра вечером.'
-        }
+        },
+
     },
     chooseChat: "Выберите чат чтобы отправить сообщение"
 };
@@ -77,9 +78,7 @@ export class chatsPage extends Block {
     }
     protected init(): void {
         this.children.button = new Button({
-            class: 'send__button',
-            value: this.props.button__text,
-            goTo: ''
+            class: 'send__button'
         });
     }
     render() {

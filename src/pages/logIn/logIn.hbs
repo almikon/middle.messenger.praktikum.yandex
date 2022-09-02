@@ -2,11 +2,12 @@
     <div class="form__data">
         <div class="form__data-inputs">
             <div class="form__title">{{title}}</div>
-            {{#each inputs}}
-            <label> {{this.id}}<br>
-                <input class="form__input" type="{{this.type}}" name="{{this.name}}" placeholder="{{this.placeholder}}">
+            <label> {{login}}
+                {{{loginInput}}}
             </label>
-            {{/each}}
+            <label> {{password}}
+                {{{passwordInput}}}
+            </label>
         </div>
         <div class="form__data-button">
             {{{button}}}

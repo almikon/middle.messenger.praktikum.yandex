@@ -52,8 +52,6 @@ export class settingsPage extends Block {
         super('div', props);
     }
 
-    init() { }
-
     render() {
         return this.compile(tmpl, this.props);
     }

@@ -63,13 +63,7 @@ export class signUpPage extends Block {
     init() {
         this.children.button = new Button({
             class: 'form__button',
-            value: this.props.button__text,
-            events: {
-                click: () => {
-
-                    console.log('clicked')
-                }
-            }
+            value: this.props.button__text
         });
     }
 
