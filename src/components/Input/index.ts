@@ -24,6 +24,10 @@ export class Input extends Block {
             const target = event.target as HTMLTextAreaElement
             checkContent(target, target.value, props.pattern)
         })
+        this.element?.addEventListener('focus', function (event) {
+            const target = event.target as HTMLTextAreaElement
+            checkContent(target, target.value, props.pattern)
+        })
     }
     public checkContent(target: HTMLTextAreaElement, value: string, pattern: string) {
 
