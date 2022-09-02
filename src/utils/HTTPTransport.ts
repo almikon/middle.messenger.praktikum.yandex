@@ -5,7 +5,7 @@ const METHODS = {
     DELETE: 'DELETE'
 };
 function queryStringify(data: Record<string, string>) {
-    let res = '?';
+    let res = '?'
     for (let key in data) {
         res += key + '='
         res += data[key].toString()
@@ -16,19 +16,19 @@ function queryStringify(data: Record<string, string>) {
 class HTTPTransport {
     get = (url: string, options: Record<any, any> = {}) => {
 
-        return this.request(url, { ...options, method: METHODS.GET }, options.timeout);
+        return this.request(url, { ...options, method: METHODS.GET }, options.timeout)
     };
     put = (url: string, options: Record<any, any> = {}) => {
 
-        return this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
+        return this.request(url, { ...options, method: METHODS.PUT }, options.timeout)
     };
     post = (url: string, options: Record<any, any> = {}) => {
 
-        return this.request(url, { ...options, method: METHODS.POST }, options.timeout);
+        return this.request(url, { ...options, method: METHODS.POST }, options.timeout)
     };
     delete = (url: string, options: Record<any, any> = {}) => {
 
-        return this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
+        return this.request(url, { ...options, method: METHODS.DELETE }, options.timeout)
     };
 
 
@@ -36,30 +36,31 @@ class HTTPTransport {
 
         const { headers, data, method } = options;
         return new Promise((resolve, reject) => {
-            const xhr = new XMLHttpRequest();
+            const xhr = new XMLHttpRequest()
             if (method === METHODS.GET) {
                 let urlWithParam = url + queryStringify(data)
-                xhr.open(method, urlWithParam);
+                xhr.open(method, urlWithParam)
             } else {
-                xhr.open(method, url);
+                xhr.open(method, url)
             }
             for (let header in headers) {
                 xhr.setRequestHeader(header, headers[header])
             }
 
             xhr.onload = function () {
-                resolve(xhr);
+                resolve(xhr)
             };
 
-            xhr.onabort = reject;
-            xhr.onerror = reject;
-            xhr.ontimeout = reject;
+            xhr.onabort = reject
+            xhr.onerror = reject
+            xhr.timeout = timeout
+            xhr.ontimeout = reject
 
             if (method === METHODS.GET) {
                 xhr.send();
             } else {
-                xhr.send(data);
+                xhr.send(data)
             }
-        });
-    };
+        })
+    }
 }
