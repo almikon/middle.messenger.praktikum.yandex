@@ -12,18 +12,21 @@ export class Button extends Block {
     constructor(props: ButtonProps) {
         super('button', props)
         this.element?.classList.add(props.class)
-        if (this.props.class === 'form__button') {
-            this.element?.addEventListener('click', () => {
-                this.getData()
-                this.goTo(this.props.goTo)
-            })
-        }
-        if (this.props.class === 'send__button') {
-            this.element?.addEventListener('click', () => {
-                this.getData()
-            })
-        }
+        this.element?.addEventListener('click', () => {
+            this.checkData()
+        })
 
+    }
+    protected checkData() {
+        this.getData()
+        const inputs = document.querySelectorAll('.wrong')
+        if (inputs.length) {
+            console.log('Есть ошибки')
+        } else {
+            if (this.props.goTo) {
+                this.goTo(this.props.goTo)
+            }
+        }
     }
     protected goTo(adress: string) {
         document.location.pathname = adress
@@ -37,7 +40,8 @@ export class Button extends Block {
                     res[input.name] = input.value
                 }
                 else {
-                    alert(`${input.name} не может быть пустым!`)
+                    console.log(`${input.name} не может быть пустым!`)
+                    input.classList.add('wrong')
                 }
             }
         })

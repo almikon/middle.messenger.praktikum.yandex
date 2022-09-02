@@ -8,12 +8,31 @@
     <p class="user__title">{{user}}</p>
 
     <div class-"user__settings">
-        {{#each user__settings}}
         <div class="user__settings-item">
-            <p class="user__set_name">{{this.name}}</p>
-            <input class="settings__input  required" name={{this}} placeholder={{this.value}}>
+            <p class="user__set_name">{{email.name}}</p>
+            {{{emailInput}}}
         </div>
-        {{/each}}
+        <div class="user__settings-item">
+            <p class="user__set_name">{{login.name}}</p>
+            {{{loginInput}}}
+        </div>
+        <div class="user__settings-item">
+            <p class="user__set_name">{{first_name.name}}</p>
+            {{{first_nameInput}}}
+        </div>
+        <div class="user__settings-item">
+            <p class="user__set_name">{{second_name.name}}</p>
+            {{{second_nameInput}}}
+        </div>
+        <div class="user__settings-item">
+            <p class="user__set_name">{{display_name.name}}</p>
+            {{{display_nameInput}}}
+        </div>
+        <div class="user__settings-item">
+            <p class="user__set_name">{{phone.name}}</p>
+            {{{phoneInput}}}
+        </div>
+
     </div>
     <div class="form__data-button">
         {{{button}}}

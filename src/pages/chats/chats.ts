@@ -8,6 +8,7 @@ import camera from '../../../static/img/camera.png'
 import tmpl from './chats.hbs'
 import Block from '../../utils/Block';
 import { Button } from '../../components/Button'
+import { Input } from '../../components/Input'
 
 const context = {
     date: '19 июня',
@@ -80,6 +81,11 @@ export class chatsPage extends Block {
         this.children.button = new Button({
             class: 'send__button'
         });
+        this.children.input = new Input({
+            name: 'Message',
+            classes: ['message', 'required'],
+            pattern: '^(?!\s*$).+'
+        })
     }
     render() {
         return this.compile(tmpl, this.props);

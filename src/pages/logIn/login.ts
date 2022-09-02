@@ -28,20 +28,22 @@ export class logInPage extends Block {
             goTo: this.props.goTo
         })
         this.children.loginInput = new Input({
+            name: 'login',
             classes: [
                 'form__input',
                 'required',
                 'login'
             ],
-            pattern: '\w'
+            pattern: '^(?=.*[a-zA-Z])([a-zA-Z0-9-_]+){3,20}$'
         })
         this.children.passwordInput = new Input({
+            name: 'password',
             classes: [
                 'form__input',
                 'required',
                 'password'
             ],
-            pattern: '^[a-z]'
+            pattern: '(?=.*[A-Z]).'
         })
     }
 
