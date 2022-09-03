@@ -1,56 +1,55 @@
-import { page404Page } from './pages/404/404';
-import { page500Page } from './pages/500/500';
-import { changePasswordPage } from './pages/changePassword/changePassword';
-import { changeSettingsPage } from './pages/changeSettings/changeSettings';
-import { chatsPage } from './pages/chats/chats';
-import { logInPage } from './pages/logIn/login';
-import { settingsPage } from './pages/settings/settings';
-import { signUpPage } from './pages/signUp/signUp';
+import { Page404Page } from './pages/404/404';
+import { Page500Page } from './pages/500/500';
+import { ChangePasswordPage } from './pages/changePassword/changePassword';
+import { ChangeSettingsPage } from './pages/changeSettings/changeSettings';
+import { ChatsPage } from './pages/chats/chats';
+import { LogInPage } from './pages/logIn/login';
+import { SettingsPage } from './pages/settings/settings';
+import { SignUpPage } from './pages/signUp/signUp';
 
 window.addEventListener('DOMContentLoaded', () => {
     const root = document.querySelector('#app')!
     const currentPath = document.location.pathname
-    console.log(currentPath)
     switch (currentPath) {
         case '/index.html':
-            const logIn = new logInPage()
+            const logIn = new LogInPage()
             root.append(logIn.getContent()!)
             logIn.dispatchComponentDidMount()
             break
 
         case '/signUp.html':
-            const signUp = new signUpPage()
+            const signUp = new SignUpPage()
             root.append(signUp.getContent()!)
             signUp.dispatchComponentDidMount()
             break
 
         case '/settings.html':
-            const settings = new settingsPage()
+            const settings = new SettingsPage()
             root.append(settings.getContent()!)
             settings.dispatchComponentDidMount()
             break
         case '/404.html':
-            const page404 = new page404Page()
+            const page404 = new Page404Page()
             root.append(page404.getContent()!)
             page404.dispatchComponentDidMount()
             break
         case '/500.html':
-            const page500 = new page500Page()
+            const page500 = new Page500Page()
             root.append(page500.getContent()!)
             page500.dispatchComponentDidMount()
             break
         case '/changePassword.html':
-            const changePassword = new changePasswordPage()
+            const changePassword = new ChangePasswordPage()
             root.append(changePassword.getContent()!)
             changePassword.dispatchComponentDidMount()
             break
         case '/chats.html':
-            const chats = new chatsPage()
+            const chats = new ChatsPage()
             root.append(chats.getContent()!)
             chats.dispatchComponentDidMount()
             break
         case '/changeSettings.html':
-            const changeSettings = new changeSettingsPage()
+            const changeSettings = new ChangeSettingsPage()
             root.append(changeSettings.getContent()!)
             changeSettings.dispatchComponentDidMount()
             break

@@ -8,7 +8,7 @@ interface InputProps {
     pattern: string
 }
 
-export class Input extends Block {
+export class Input extends Block<InputProps> {
     constructor(props: InputProps) {
         super('input', props)
         const self = this.element
