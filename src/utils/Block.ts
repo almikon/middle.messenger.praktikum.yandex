@@ -1,7 +1,7 @@
 import { EventBus } from "./EventBus";
 import { nanoid } from 'nanoid';
 
-class Block {
+class Block<Props extends {}> {
     static EVENTS = {
         INIT: "init",
         FLOW_CDM: "flow:component-did-mount",
@@ -10,13 +10,13 @@ class Block {
     };
 
     public id = nanoid(4);
-    protected props: any;
-    public children: Record<string, Block>;
+    protected props: Record<string, any>;
+    public children: Record<string, Block<Props>>;
     private eventBus: () => EventBus;
     private _element: HTMLElement | null = null;
     private _meta: { tagName: string; props: any; };
 
-    constructor(tagName = "div", propsWithChildren: any = {}) {
+    public constructor(tagName: string = "div", propsWithChildren: Props) {
         const eventBus = new EventBus();
 
         const { props, children } = this._getChildrenAndProps(propsWithChildren);
@@ -35,9 +35,9 @@ class Block {
         eventBus.emit(Block.EVENTS.INIT);
     }
 
-    _getChildrenAndProps(childrenAndProps: any) {
+    private _getChildrenAndProps(childrenAndProps: any) {
         const props: Record<string, any> = {};
-        const children: Record<string, Block> = {};
+        const children: Record<string, Block<Props>> = {};
 
         Object.entries(childrenAndProps).forEach(([key, value]) => {
             if (value instanceof Block) {
@@ -50,21 +50,21 @@ class Block {
         return { props, children };
     }
 
-    _addEvents() {
+    private _addEvents() {
         const { events = {} } = this.props as { events: Record<string, () => void> };
         Object.keys(events).forEach(eventName => {
             this._element?.addEventListener(eventName, events[eventName]);
         });
     }
 
-    _registerEvents(eventBus: EventBus) {
+    private _registerEvents(eventBus: EventBus) {
         eventBus.on(Block.EVENTS.INIT, this._init.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
         eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
     }
 
-    _createResources() {
+    private _createResources() {
         const { tagName } = this._meta;
         this._element = this._createDocumentElement(tagName);
     }
@@ -81,7 +81,7 @@ class Block {
     protected init() {
     }
 
-    _componentDidMount() {
+    private _componentDidMount() {
         this.componentDidMount();
     }
 
@@ -145,8 +145,6 @@ class Block {
                 return;
             }
 
-            // component.getContent()?.append(...Array.from(stub.childNodes));
-
             stub.replaceWith(component.getContent()!);
 
         });
@@ -162,7 +160,7 @@ class Block {
         return this.element;
     }
 
-    _makePropsProxy(props: any) {
+    private _makePropsProxy(props: any) {
         const self = this;
         return new Proxy(props, {
             set(target, prop, value) {
@@ -174,7 +172,7 @@ class Block {
 
     }
 
-    _createDocumentElement(tagName: string) {
+    private _createDocumentElement(tagName: string) {
         return document.createElement(tagName);
     }
 

@@ -1,14 +1,14 @@
 import '../../less/changeSettings.less'
-import user__avatar from '../../../static/img/user_avatar.png'
-import back_arrow from '../../../static/img/back_arrow.png'
+import userAvatar from '../../../static/img/userAvatar.png'
+import backArrow from '../../../static/img/backArrow.png'
 import tmpl from './changeSettings.hbs'
 import Block from '../../utils/Block';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
-
+import { PATTERNS } from '../../constants'
 const context = {
-    back_arrow: back_arrow,
-    user__avatar: user__avatar,
+    backArrow: backArrow,
+    userAvatar: userAvatar,
     user: "Иван",
     email: {
         name: "Почта",
@@ -36,8 +36,10 @@ const context = {
     },
     button__text: "Сохранить"
 };
+type ChangeSettingsPageProps = {
 
-export class changeSettingsPage extends Block {
+}
+export class ChangeSettingsPage extends Block<ChangeSettingsPageProps> {
     constructor(props = context) {
         super('div', props);
     }
@@ -46,8 +48,12 @@ export class changeSettingsPage extends Block {
         this.children.button = new Button({
             class: 'form__button',
             value: this.props.button__text,
-            goTo: '/settings.html'
-        });
+            goTo: this.props.goTo,
+            events: {
+                click: () => this.checkData()
+            }
+        }
+        )
         this.children.loginInput = new Input({
             name: 'login',
             placeholder: this.props.login.placeholder,
@@ -55,7 +61,7 @@ export class changeSettingsPage extends Block {
                 'settings__input',
                 'required'
             ],
-            pattern: '^(?=.*[a-zA-Z])([a-zA-Z0-9-_]+){3,20}$'
+            pattern: PATTERNS.LOGIN
         })
         this.children.emailInput = new Input({
             name: 'email',
@@ -64,25 +70,25 @@ export class changeSettingsPage extends Block {
                 'settings__input',
                 'required'
             ],
-            pattern: '^\\S+@\\S+\\.\\S+$'
+            pattern: PATTERNS.EMAIL
         })
-        this.children.first_nameInput = new Input({
+        this.children.firstNameInput = new Input({
             name: 'first_name',
             placeholder: this.props.first_name.placeholder,
             classes: [
                 'settings__input',
                 'required'
             ],
-            pattern: '^[A-ZА-Я][a-zа-я-]*$'
+            pattern: PATTERNS.NAME
         })
-        this.children.second_nameInput = new Input({
+        this.children.secondNameInput = new Input({
             name: 'second_name',
             placeholder: this.props.second_name.placeholder,
             classes: [
                 'settings__input',
                 'required'
             ],
-            pattern: '^[A-ZА-Я][a-zа-я-]*$'
+            pattern: PATTERNS.NAME
         })
         this.children.phoneInput = new Input({
             name: 'phone',
@@ -91,7 +97,7 @@ export class changeSettingsPage extends Block {
                 'settings__input',
                 'required'
             ],
-            pattern: '^[\+][0-9]{10,15}$'
+            pattern: PATTERNS.PHONE
         })
         this.children.display_nameInput = new Input({
             name: 'phone',
@@ -100,10 +106,37 @@ export class changeSettingsPage extends Block {
                 'settings__input',
                 'required'
             ],
-            pattern: '^(?!\s*$).+'
+            pattern: PATTERNS.NOTEMPTY
         })
     }
-
+    public checkData() {
+        this.getData()
+        const inputs = document.querySelectorAll('.wrong')
+        if (inputs.length) {
+            console.log('Есть ошибки')
+        } else {
+            this.goTo(this.props.goTo)
+        }
+    }
+    public goTo(adress: string) {
+        document.location.pathname = adress
+    }
+    public getData() {
+        let res: Record<string, string> = {}
+        const inputList = document.querySelectorAll('input')
+        inputList.forEach(input => {
+            if (input.classList.contains('required')) {
+                if (input.value.length > 0) {
+                    res[input.name] = input.value
+                }
+                else {
+                    console.log(`${input.name} не может быть пустым!`)
+                    input.classList.add('wrong')
+                }
+            }
+        })
+        console.log(res)
+    }
     render() {
         return this.compile(tmpl, this.props);
     }

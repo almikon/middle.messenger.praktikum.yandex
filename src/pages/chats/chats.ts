@@ -1,15 +1,15 @@
 import '../../less/chats.less'
-import chat__avatar from '../../../static/img/user_avatar.png'
-import companion__avatar from '../../../static/img/user_avatar.png'
+import chat__avatar from '../../../static/img/userAvatar.png'
+import companion__avatar from '../../../static/img/userAvatar.png'
 import clip__img from '../../../static/img/clip.png'
 import dots from '../../../static/img/dots.png'
-import forward__arrow from '../../../static/img/forward_arrow.png'
+import forwardArrow from '../../../static/img/forwardArrow.png'
 import camera from '../../../static/img/camera.png'
 import tmpl from './chats.hbs'
 import Block from '../../utils/Block';
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
-
+import { PATTERNS } from '../../constants'
 const context = {
     date: '19 июня',
     msg1: {
@@ -34,7 +34,7 @@ const context = {
     },
     dots: dots,
     clip__img: clip__img,
-    forward__arrow: forward__arrow,
+    forwardArrow: forwardArrow,
     companion__avatar: companion__avatar,
     profileLink: {
         url: "settings.html",
@@ -67,20 +67,44 @@ const context = {
     },
     chooseChat: "Выберите чат чтобы отправить сообщение"
 };
+type ChatsPageProps = {
 
-export class chatsPage extends Block {
+}
+export class ChatsPage extends Block<ChatsPageProps> {
     constructor(props = context) {
         super('div', props);
     }
     protected init(): void {
         this.children.button = new Button({
-            class: 'send__button'
-        });
+            class: 'send__button',
+            value: this.props.button__text,
+            goTo: this.props.goTo,
+            events: {
+                click: () => this.checkData()
+            }
+        }
+        )
         this.children.input = new Input({
             name: 'Message',
             classes: ['message', 'required'],
-            pattern: '^(?!\s*$).+'
+            pattern: PATTERNS.NOTEMPTY
         })
+    }
+    public checkData() {
+        let res: Record<string, string> = {}
+        const inputList = document.querySelectorAll('input')
+        inputList.forEach(input => {
+            if (input.classList.contains('required')) {
+                if (input.value.length > 0) {
+                    res[input.name] = input.value
+                }
+                else {
+                    console.log(`${input.name} не может быть пустым!`)
+                    input.classList.add('wrong')
+                }
+            }
+        })
+        console.log(res)
     }
     render() {
         return this.compile(tmpl, this.props);

@@ -13,7 +13,7 @@ const context = {
     }
 };
 
-export class page500Page extends Block {
+export class Page500Page extends Block {
     constructor(props = context) {
         super('div', props);
     }

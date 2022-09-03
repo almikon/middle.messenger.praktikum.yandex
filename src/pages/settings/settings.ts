@@ -1,12 +1,12 @@
 import '../../less/settings.less'
-import user__avatar from '../../../static/img/user_avatar.png'
-import back_arrow from '../../../static/img/back_arrow.png'
+import userAvatar from '../../../static/img/userAvatar.png'
+import backArrow from '../../../static/img/backArrow.png'
 import tmpl from './settings.hbs'
 import Block from '../../utils/Block';
 
 const context = {
-    back_arrow: back_arrow,
-    user__avatar: user__avatar,
+    backArrow: backArrow,
+    userAvatar: userAvatar,
     user: "Иван",
     email: {
         name: "Почта",
@@ -42,8 +42,10 @@ const context = {
     },
     option__exit: "Выйти"
 };
+type SettingsPageProps = {
 
-export class settingsPage extends Block {
+}
+export class SettingsPage extends Block<SettingsPageProps> {
     constructor(props = context) {
         super('div', props);
     }

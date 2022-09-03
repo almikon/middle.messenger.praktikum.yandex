@@ -1,21 +1,16 @@
+import queryStringify from './QueryStringify'
+
 const METHODS = {
     GET: 'GET',
     POST: 'POST',
     PUT: 'PUT',
     DELETE: 'DELETE'
 };
-function queryStringify(data: Record<string, string>) {
-    let res = '?'
-    for (let key in data) {
-        res += key + '='
-        res += data[key].toString()
-        res += '&'
-    }
-    return (res.substring(0, res.length - 1))
-}
+
 class HTTPTransport {
     get = (url: string, options: Record<any, any> = {}) => {
 
+        url += queryStringify(options.data)
         return this.request(url, { ...options, method: METHODS.GET }, options.timeout)
     };
     put = (url: string, options: Record<any, any> = {}) => {
@@ -37,12 +32,9 @@ class HTTPTransport {
         const { headers, data, method } = options;
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest()
-            if (method === METHODS.GET) {
-                let urlWithParam = url + queryStringify(data)
-                xhr.open(method, urlWithParam)
-            } else {
-                xhr.open(method, url)
-            }
+
+            xhr.open(method, url)
+
             for (let header in headers) {
                 xhr.setRequestHeader(header, headers[header])
             }
