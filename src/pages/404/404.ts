@@ -12,8 +12,10 @@ const context = {
         text: "Назад к чатам"
     }
 };
+type Page404Props = {
 
-export class Page404Page extends Block {
+}
+export class Page404Page extends Block<Page404Props> {
     constructor(props = context) {
         super('div', props);
     }

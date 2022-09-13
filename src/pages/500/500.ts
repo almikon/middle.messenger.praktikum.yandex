@@ -12,8 +12,10 @@ const context = {
         text: "Назад к чатам"
     }
 };
+type TPage500Page = {
 
-export class Page500Page extends Block {
+}
+export class Page500Page extends Block<TPage500Page> {
     constructor(props = context) {
         super('div', props);
     }
