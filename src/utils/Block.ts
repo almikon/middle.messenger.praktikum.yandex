@@ -1,7 +1,7 @@
 import { EventBus } from "./EventBus";
 import { nanoid } from 'nanoid';
 
-class Block<Props extends {}> {
+class Block<P extends Record<string,any> = any> {
     static EVENTS = {
         INIT: "init",
         FLOW_CDM: "flow:component-did-mount",
@@ -11,12 +11,12 @@ class Block<Props extends {}> {
 
     public id = nanoid(4);
     protected props: Record<string, any>;
-    public children: Record<string, Block<Props>>;
+    public children: Record<string, Block<P>>;
     private eventBus: () => EventBus;
     private _element: HTMLElement | null = null;
-    private _meta: { tagName: string; props: any; };
+    private _meta: { tagName: string; props: P; };
 
-    public constructor(tagName: string = "div", propsWithChildren: Props) {
+    public constructor(tagName: string = "div", propsWithChildren: P) {
         const eventBus = new EventBus();
 
         const { props, children } = this._getChildrenAndProps(propsWithChildren);
@@ -35,13 +35,13 @@ class Block<Props extends {}> {
         eventBus.emit(Block.EVENTS.INIT);
     }
 
-    private _getChildrenAndProps(childrenAndProps: any) {
-        const props: Record<string, any> = {};
-        const children: Record<string, Block<Props>> = {};
+    private _getChildrenAndProps(childrenAndProps: P) {
+        const props: P = {} as P;
+        const children: Record<string, Block<P>> = {};
 
-        Object.entries(childrenAndProps).forEach(([key, value]) => {
+        Object.entries(childrenAndProps).forEach(([key, value]: [keyof P, any]) => {
             if (value instanceof Block) {
-                children[key] = value;
+                children[key as string] = value;
             } else {
                 props[key] = value;
             }
@@ -144,7 +144,7 @@ class Block<Props extends {}> {
             if (!stub) {
                 return;
             }
-
+            component.getContent()?.append(...Array.from(stub.childNodes))
             stub.replaceWith(component.getContent()!);
 
         });

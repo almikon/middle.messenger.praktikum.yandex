@@ -8,16 +8,23 @@ import { SettingsPage } from './pages/settings/settings';
 import { SignUpPage } from './pages/signUp/signUp';
 import Router from './utils/Router'
 
-const router = new Router('.root')
-router.use('/',new LogInPage().getContent()!).start()
-router.use('/login.html',new LogInPage().getContent()!).start()
-router.use('/404,html',new Page404Page().getContent()!).start()
-router.use('/500.html',new Page500Page().getContent()!).start()
-router.use('/changePassword.html',new ChangePasswordPage().getContent()!).start()
-router.use('/changeSettings.html',new ChangeSettingsPage().getContent()!).start()
-router.use('/chats.html',new ChatsPage().getContent()!).start()
-router.use('/settings.html',new SettingsPage().getContent()!).start()
-router.use('/signUp.html',new SignUpPage().getContent()!).start()
+const router = new Router('#app')
+const logIn = new LogInPage()
+const signUp = new SignUpPage()
+const page404 = new Page404Page()
+const page500 = new Page500Page()
+const  = new LogInPage()
+const signUp = new SignUpPage()
+const logIn = new LogInPage()
+const signUp = new SignUpPage()
+router
+    .use('/',logIn.getContent() as HTMLElement)
+    .use('/index.html',logIn.getContent() as HTMLElement)
+    .use('/signUp.html',signUp.getContent() as HTMLElement)
+    .use('/',logIn.getContent() as HTMLElement)
+    .use('/index.html',logIn.getContent() as HTMLElement)
+    .use('/signUp.html',signUp.getContent() as HTMLElement) 
+    .start()
 
 // window.addEventListener('DOMContentLoaded', () => {
 //     const root = document.querySelector('#app')!

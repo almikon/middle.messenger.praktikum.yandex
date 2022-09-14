@@ -16,10 +16,10 @@ const context = {
     },
     url: "chats.html"
 };
-type LogInPageProps = {
+interface ILogInPageProps{
 
 }
-export class LogInPage extends Block<LogInPageProps> {
+export class LogInPage extends Block<ILogInPageProps> {
     constructor(props = context) {
         super('div', props);
     }

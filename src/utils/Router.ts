@@ -1,3 +1,4 @@
+// import Block from "./Block";
 import Route from "./Route";
 
 export default class Router {
@@ -6,7 +7,8 @@ export default class Router {
   history!: History;
   _currentRoute!: Route | null | undefined;
   _rootQuery: any;
-  constructor(rootQuery: any) {
+  
+  constructor(rootQuery: string) {
       if (Router.__instance) {
           return Router.__instance;
       }
@@ -19,7 +21,7 @@ export default class Router {
       Router.__instance = this;
   }
 
-  use(pathname: any, block: any) {
+  use(pathname: string, block: HTMLElement) {
       const route = new Route(pathname, block, {rootQuery: this._rootQuery});
       this.routes.push(route);
       return this

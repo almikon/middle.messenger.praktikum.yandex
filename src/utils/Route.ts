@@ -7,7 +7,7 @@ export default class Route {
   _props: Record<string | number | symbol, any>;
   
   constructor(pathname:string, 
-    view:typeof Block, 
+    view: any, 
     props:Record<string,string>) {
       this._pathname = pathname;
       this._blockClass = view;
@@ -32,10 +32,8 @@ export default class Route {
 
   render() {
       if (!this._block) {
-                
-          this._block = new this._blockClass('div',this._props)
-          render(this._props.rootQuery, this._block);
-          return;
+        this._block = render(this._props.rootQuery, this._blockClass);
+        return;
       }
 
       this._block.render();
@@ -44,6 +42,6 @@ export default class Route {
 }
 function render(query:string, block: any) {
     const root = document.querySelector(query);
-    root!.textContent = block.getContent();
+    root!.append(block)
     return root;
   }
