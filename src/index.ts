@@ -9,14 +9,7 @@ import { SignUpPage } from './pages/signUp/signUp';
 import Router from './utils/Router'
 
 const router = new Router('#app')
-// const logIn = new LogInPage()
-// const signUp = new SignUpPage()
-// const page404 = new Page404Page()
-// const page500 = new Page500Page()
-// const changePassword = new ChangePasswordPage()
-// const changeSettings = new ChangeSettingsPage()
-// const settings = new SettingsPage()
-// const chats = new ChatsPage()
+
 router
     .use('/',new LogInPage().getContent() as HTMLElement)
     .use('/index.html',new LogInPage().getContent() as HTMLElement)

@@ -3,6 +3,7 @@ import userAvatar from '../../../static/img/userAvatar.png'
 import backArrow from '../../../static/img/backArrow.png'
 import tmpl from './settings.hbs'
 import Block from '../../utils/Block';
+import { Button } from '../../components/Button';
 
 const context = {
     backArrow: backArrow,
@@ -49,7 +50,15 @@ export class SettingsPage extends Block<SettingsPageProps> {
     constructor(props = context) {
         super('div', props);
     }
-
+    init(){
+        this.children.button = new Button({
+        class: 'form__button',
+        value: this.props.button__text,
+        goTo: this.props.goTo,
+        events: {
+            click: () => window.history.back()
+        }
+    })}
     render() {
         return this.compile(tmpl, this.props);
     }
