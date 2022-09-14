@@ -1,7 +1,8 @@
-<div class="right__back">
-    <img src={{backArrow}} alt="Назад" class="backArrow">
+<div class="settings__container">
+<div class="left__back">
+    {{{backButton}}}
 </div>
-<div class="container">
+<div class="settings__main">
     <div class="avatar">
         <img src={{userAvatar}} alt="Нажмите чтобы изменить" class="userAvatar" onclick="setAvatar()">
     </div>
@@ -37,14 +38,12 @@
     <div class="form__data-button">
         {{{button}}}
     </div>
-</div>
-<div class="modal">
-
-    <div class="modalContent">
-        <p class="user__title">Загрузите файл</p>
-        <a href="#">Выбрать файл на компьютере</a>
-
-        <button class="form__button" onclick="changeAvatar()">Поменять</button>
+</div>      
+    <div class="modal">
+        <div class="modalContent">
+            <p class="user__title">Загрузите файл</p>
+            <a href="#">Выбрать файл на компьютере</a>
+            <button class="form__button" onclick="changeAvatar()">Поменять</button>
+        </div>
     </div>
-
 </div>

@@ -1,13 +1,11 @@
 import '../../less/changeSettings.less'
 import userAvatar from '../../../static/img/userAvatar.png'
-import backArrow from '../../../static/img/backArrow.png'
 import tmpl from './changeSettings.hbs'
 import Block from '../../utils/Block';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { PATTERNS } from '../../constants'
 const context = {
-    backArrow: backArrow,
     userAvatar: userAvatar,
     user: "Иван",
     email: {
@@ -34,7 +32,8 @@ const context = {
         name: "Телефон",
         placeholder: "+7(909)967-30-30"
     },
-    button__text: "Сохранить"
+    button__text: "Сохранить",
+    goTo:'./settings.html'
 };
 type ChangeSettingsPageProps = {
 
@@ -52,8 +51,14 @@ export class ChangeSettingsPage extends Block<ChangeSettingsPageProps> {
             events: {
                 click: () => this.checkData()
             }
-        }
-        )
+        })
+
+        this.children.backButton = new Button({
+            class: 'back__button',
+            events: {
+                click: () => window.history.back()
+            }})
+
         this.children.loginInput = new Input({
             name: 'login',
             placeholder: this.props.login.placeholder,

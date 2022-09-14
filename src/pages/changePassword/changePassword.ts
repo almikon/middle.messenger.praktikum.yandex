@@ -1,6 +1,5 @@
 import '../../less/userSettings.less'
 import userAvatar from '../../../static/img/userAvatar.png'
-import backArrow from '../../../static/img/backArrow.png'
 import tmpl from './changePassword.hbs'
 import Block from '../../utils/Block';
 import { Button } from '../../components/Button';
@@ -8,7 +7,6 @@ import { Input } from '../../components/Input';
 import { PATTERNS } from '../../constants'
 
 const context = {
-    backArrow: backArrow,
     userAvatar: userAvatar,
     user: "Иван",
     oldPassword: {
@@ -23,7 +21,8 @@ const context = {
         name: "Повторите новый пароль",
         placeholder: "**********"
     },
-    button__text: "Сохранить"
+    button__text: "Сохранить",
+    goTo: './settings.html'
 };
 type ChangePasswordPageProps = {
 
@@ -41,8 +40,14 @@ export class ChangePasswordPage extends Block<ChangePasswordPageProps> {
             events: {
                 click: () => this.checkData()
             }
-        }
-        )
+        })
+        this.children.backButton = new Button({
+            class: 'back__button',
+            events: {
+                click: () => window.history.back()
+            }
+        })
+
         this.children.oldPasswordInput = new Input({
             name: 'oldPassword',
             placeholder: this.props.oldPassword.placeholder,
