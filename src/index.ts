@@ -9,70 +9,22 @@ import { SignUpPage } from './pages/signUp/signUp';
 import Router from './utils/Router'
 
 const router = new Router('#app')
-const logIn = new LogInPage()
-const signUp = new SignUpPage()
-const page404 = new Page404Page()
-const page500 = new Page500Page()
-const  = new LogInPage()
-const signUp = new SignUpPage()
-const logIn = new LogInPage()
-const signUp = new SignUpPage()
+// const logIn = new LogInPage()
+// const signUp = new SignUpPage()
+// const page404 = new Page404Page()
+// const page500 = new Page500Page()
+// const changePassword = new ChangePasswordPage()
+// const changeSettings = new ChangeSettingsPage()
+// const settings = new SettingsPage()
+// const chats = new ChatsPage()
 router
-    .use('/',logIn.getContent() as HTMLElement)
-    .use('/index.html',logIn.getContent() as HTMLElement)
-    .use('/signUp.html',signUp.getContent() as HTMLElement)
-    .use('/',logIn.getContent() as HTMLElement)
-    .use('/index.html',logIn.getContent() as HTMLElement)
-    .use('/signUp.html',signUp.getContent() as HTMLElement) 
+    .use('/',new LogInPage().getContent() as HTMLElement)
+    .use('/index.html',new LogInPage().getContent() as HTMLElement)
+    .use('/signUp.html',new SignUpPage().getContent() as HTMLElement)
+    .use('/404.html',new Page404Page().getContent() as HTMLElement)
+    .use('/500.html',new Page500Page().getContent() as HTMLElement)
+    .use('/changePassword.html',new ChangePasswordPage().getContent() as HTMLElement) 
+    .use('/changeSettings.html',new ChangeSettingsPage().getContent() as HTMLElement)
+    .use('/settings.html',new SettingsPage().getContent() as HTMLElement)
+    .use('/chats.html',new ChatsPage().getContent() as HTMLElement) 
     .start()
-
-// window.addEventListener('DOMContentLoaded', () => {
-//     const root = document.querySelector('#app')!
-//     const currentPath = document.location.pathname
-//     switch (currentPath) {
-//         case '/index.html':
-//             const logIn = new LogInPage()
-//             root.append(logIn.getContent()!)
-//             logIn.dispatchComponentDidMount()
-//             break
-
-//         case '/signUp.html':
-//             const signUp = new SignUpPage()
-//             root.append(signUp.getContent()!)
-//             signUp.dispatchComponentDidMount()
-//             break
-
-//         case '/settings.html':
-//             const settings = new SettingsPage()
-//             root.append(settings.getContent()!)
-//             settings.dispatchComponentDidMount()
-//             break
-//         case '/404.html':
-//             const page404 = new Page404Page()
-//             root.append(page404.getContent()!)
-//             page404.dispatchComponentDidMount()
-//             break
-//         case '/500.html':
-//             const page500 = new Page500Page()
-//             root.append(page500.getContent()!)
-//             page500.dispatchComponentDidMount()
-//             break
-//         case '/changePassword.html':
-//             const changePassword = new ChangePasswordPage()
-//             root.append(changePassword.getContent()!)
-//             changePassword.dispatchComponentDidMount()
-//             break
-//         case '/chats.html':
-//             const chats = new ChatsPage()
-//             root.append(chats.getContent()!)
-//             chats.dispatchComponentDidMount()
-//             break
-//         case '/changeSettings.html':
-//             const changeSettings = new ChangeSettingsPage()
-//             root.append(changeSettings.getContent()!)
-//             changeSettings.dispatchComponentDidMount()
-//             break
-//         default:
-//             document.location.pathname = '/index.html'
-//     }
-// });
