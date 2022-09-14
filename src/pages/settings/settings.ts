@@ -1,12 +1,10 @@
 import '../../less/settings.less'
 import userAvatar from '../../../static/img/userAvatar.png'
-import backArrow from '../../../static/img/backArrow.png'
 import tmpl from './settings.hbs'
 import Block from '../../utils/Block';
 import { Button } from '../../components/Button';
 
 const context = {
-    backArrow: backArrow,
     userAvatar: userAvatar,
     user: "Иван",
     email: {
@@ -52,13 +50,11 @@ export class SettingsPage extends Block<SettingsPageProps> {
     }
     init(){
         this.children.button = new Button({
-        class: 'form__button',
-        value: this.props.button__text,
-        goTo: this.props.goTo,
+        class: 'back__button',
         events: {
             click: () => window.history.back()
-        }
-    })}
+        }})
+    }
     render() {
         return this.compile(tmpl, this.props);
     }

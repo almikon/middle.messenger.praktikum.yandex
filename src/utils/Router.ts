@@ -1,4 +1,3 @@
-// import Block from "./Block";
 import Route from "./Route";
 
 export default class Router {

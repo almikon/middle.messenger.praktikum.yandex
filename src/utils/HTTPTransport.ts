@@ -7,7 +7,7 @@ const METHODS = {
     DELETE: 'DELETE'
 };
 
-class HTTPTransport {
+export default class HTTPTransport {
     get = (url: string, options: Record<any, any> = {}) => {
 
         url += queryStringify(options.data)
