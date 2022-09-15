@@ -4,12 +4,14 @@ import '../../less/form.less';
 import Block from '../../utils/Block';
 import tmpl from './logIn.hbs'
 import { PATTERNS } from '../../constants'
+import Router from '../../utils/Router';
+import getData from '../../utils/GetData';
+import { LoginApi } from './loginApi';
 const context = {
     title: "Вход",
-    login: "Логин",
-    password: "Пароль",
+    login: "megaMEGAmegaMEGa",
+    password: "sjhdbckhubdkehbchwekebhjcbekjh",
     button__text: "Вход",
-    goTo: "./chats.html",
     footerNote: {
         text: "Нет аккаунта?",
         url: "signUp.html"
@@ -28,9 +30,8 @@ export class LogInPage extends Block<ILogInPageProps> {
         this.children.button = new Button({
             class: 'form__button',
             value: this.props.button__text,
-            goTo: this.props.goTo,
             events: {
-                click: () => this.checkData()
+                click: () => this.logIn()
             }
         }
         )
@@ -55,34 +56,21 @@ export class LogInPage extends Block<ILogInPageProps> {
             pattern: PATTERNS.PASSWORD
         })
     }
-    public checkData() {
-        this.getData()
-        const inputs = document.querySelectorAll('.wrong')
-        if (inputs.length) {
-            console.log('Есть ошибки')
-        } else {
-            this.goTo(this.props.goTo)
-        }
+
+    public logIn() {
+        const data = getData()
+
+        // const inputs = document.querySelectorAll('.wrong')
+        // if (inputs.length) {
+        //     console.log('Есть ошибки')
+        // } else {
+            const logInRequest = new LoginApi()
+            console.log(logInRequest.logIn(data))
+            // const router = new Router('#app')
+            // router.go('/chats.html')
+        // }
     }
-    public goTo(adress: string) {
-        document.location.pathname = adress
-    }
-    public getData() {
-        let res: Record<string, string> = {}
-        const inputList = document.querySelectorAll('input')
-        inputList.forEach(input => {
-            if (input.classList.contains('required')) {
-                if (input.value.length > 0) {
-                    res[input.name] = input.value
-                }
-                else {
-                    console.log(`${input.name} не может быть пустым!`)
-                    input.classList.add('wrong')
-                }
-            }
-        })
-        console.log(res)
-    }
+
     render() {
 
         return this.compile(tmpl, this.props);

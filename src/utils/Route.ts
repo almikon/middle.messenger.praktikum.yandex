@@ -23,6 +23,10 @@ export default class Route {
   }
 
   leave() {
+    if(this._block){
+      const root = document.querySelector(this._props.rootQuery)
+      root.innerHTML = ''
+    }
 
   }
 

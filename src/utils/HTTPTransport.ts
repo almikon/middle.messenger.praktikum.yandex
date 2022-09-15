@@ -8,28 +8,33 @@ const METHODS = {
 };
 
 export default class HTTPTransport {
+    baseUrl: string;
+    constructor(baseUrl:string){
+        this.baseUrl = baseUrl
+    }
     get = (url: string, options: Record<any, any> = {}) => {
 
         url += queryStringify(options.data)
-        return this.request(url, { ...options, method: METHODS.GET }, options.timeout)
+        return this.request(this.baseUrl + url, { ...options, method: METHODS.GET }, options.timeout)
     };
     put = (url: string, options: Record<any, any> = {}) => {
 
-        return this.request(url, { ...options, method: METHODS.PUT }, options.timeout)
+        return this.request(this.baseUrl + url, { ...options, method: METHODS.PUT }, options.timeout)
     };
     post = (url: string, options: Record<any, any> = {}) => {
 
-        return this.request(url, { ...options, method: METHODS.POST }, options.timeout)
+        return this.request(this.baseUrl + url, { ...options, method: METHODS.POST }, options.timeout)
     };
     delete = (url: string, options: Record<any, any> = {}) => {
 
-        return this.request(url, { ...options, method: METHODS.DELETE }, options.timeout)
+        return this.request(this.baseUrl + url, { ...options, method: METHODS.DELETE }, options.timeout)
     };
 
 
     request = (url: string, options: Record<any, any>, timeout = 5000) => {
-
+        
         const { headers, data, method } = options;
+        const JSONdata = JSON.stringify(data)
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest()
 
@@ -39,9 +44,6 @@ export default class HTTPTransport {
                 xhr.setRequestHeader(header, headers[header])
             }
 
-            xhr.onload = function () {
-                resolve(xhr)
-            };
 
             xhr.onabort = reject
             xhr.onerror = reject
@@ -51,8 +53,13 @@ export default class HTTPTransport {
             if (method === METHODS.GET) {
                 xhr.send();
             } else {
-                xhr.send(data)
+                xhr.send(JSONdata)
             }
+
+            xhr.onload = function () {
+                resolve(xhr)
+            };
+
         })
     }
 }

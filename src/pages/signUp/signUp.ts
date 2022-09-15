@@ -4,6 +4,8 @@ import Block from '../../utils/Block';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { PATTERNS } from '../../constants'
+import { SignUpApi } from './signUpApi';
+import Router from '../../utils/Router';
 const context = {
     title: "Регистрация",
     email: {
@@ -68,7 +70,7 @@ export class SignUpPage extends Block<SignUpPageProps> {
             value: this.props.button__text,
             goTo: this.props.goTo,
             events: {
-                click: () => this.checkData()
+                click: () => this.signUp()
             }
         }
         )
@@ -136,18 +138,28 @@ export class SignUpPage extends Block<SignUpPageProps> {
             pattern: PATTERNS.PASSWORD
         })
     }
-    public checkData() {
-        this.getData()
+    public signUp() {
+        const data = this.getData()
         const inputs = document.querySelectorAll('.wrong')
+        
         if (inputs.length) {
             console.log('Есть ошибки')
         } else {
-            this.goTo(this.props.goTo)
+            const signUpRequest = new SignUpApi()
+            const response = signUpRequest.signUp(data)
+            console.log(response)
+            const router = new Router('#app')
+            router.go('/chats.html')
         }
     }
-    public goTo(adress: string) {
-        document.location.pathname = adress
-    }
+    // const res ={
+    //     "first_name": "mega",
+    //     "second_name": "MEGA",
+    //     "login": "megaMEGAmegaMEGa",
+    //     "email": "mega@mega.com",
+    //     "password": "sjhdbckhubdkehbchwekebhjcbekjh",
+    //     "phone": "+79998881532"
+    //   }
     public getData() {
         let res: Record<string, string> = {}
         const inputList = document.querySelectorAll('input')
@@ -162,7 +174,7 @@ export class SignUpPage extends Block<SignUpPageProps> {
                 }
             }
         })
-        console.log(res)
+        return res
     }
     render() {
         return this.compile(tmpl, this.props);
