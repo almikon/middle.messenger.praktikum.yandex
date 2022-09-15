@@ -7,6 +7,7 @@ import { PATTERNS } from '../../constants'
 import Router from '../../utils/Router';
 import getData from '../../utils/GetData';
 import { LoginApi } from './loginApi';
+import Store, { StoreEvents } from '../../utils/Store';
 const context = {
     title: "Вход",
     login: "megaMEGAmegaMEGa",
@@ -19,7 +20,7 @@ const context = {
     url: "chats.html"
 };
 
-interface ILogInPageProps{
+interface ILogInPageProps {
 }
 
 export class LogInPage extends Block<ILogInPageProps> {
@@ -58,16 +59,23 @@ export class LogInPage extends Block<ILogInPageProps> {
     }
 
     public logIn() {
+        Store.on(StoreEvents.Updated, () => {
+            // вызываем обновление компонента, передав данные из хранилища
+            this.setProps(Store.getState());
+        });
+        const logInRequest = new LoginApi()
         const data = getData()
-
+        logInRequest.logIn(data).then(data => Store.set('loginResponse', data))
+        const resp = logInRequest.logIn(data).then(data => { return data }) as unknown as string
+        console.log(resp)
         // const inputs = document.querySelectorAll('.wrong')
         // if (inputs.length) {
         //     console.log('Есть ошибки')
         // } else {
-            const logInRequest = new LoginApi()
-            console.log(logInRequest.logIn(data))
-            // const router = new Router('#app')
-            // router.go('/chats.html')
+
+
+        // const router = new Router('#app')
+        // router.go('/chats.html')
         // }
     }
 

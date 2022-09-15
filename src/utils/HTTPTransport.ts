@@ -9,7 +9,7 @@ const METHODS = {
 
 export default class HTTPTransport {
     baseUrl: string;
-    constructor(baseUrl:string){
+    constructor(baseUrl: string) {
         this.baseUrl = baseUrl
     }
     get = (url: string, options: Record<any, any> = {}) => {
@@ -32,7 +32,7 @@ export default class HTTPTransport {
 
 
     request = (url: string, options: Record<any, any>, timeout = 5000) => {
-        
+
         const { headers, data, method } = options;
         const JSONdata = JSON.stringify(data)
         return new Promise((resolve, reject) => {
@@ -57,7 +57,7 @@ export default class HTTPTransport {
             }
 
             xhr.onload = function () {
-                resolve(xhr)
+                resolve(xhr.response)
             };
 
         })
