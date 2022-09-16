@@ -13,7 +13,7 @@ type ButtonProps = {
 
 export class Button extends Block<ButtonProps> {
     constructor(props: ButtonProps) {
-        super('button', props)
+        super(props)
         this.element?.classList.add(props.class)
         this.props.events = {
             click: () => { }

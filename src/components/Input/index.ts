@@ -10,7 +10,7 @@ interface InputProps {
 
 export class Input extends Block<InputProps> {
     constructor(props: InputProps) {
-        super('input', props)
+        super(props)
         const self = this.element
         this.props.classes.forEach(function (value: string) {
             self?.classList.add(value)
