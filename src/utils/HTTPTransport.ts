@@ -8,47 +8,50 @@ const METHODS = {
 };
 
 export default class HTTPTransport {
-    baseUrl: string;
+    static YA_URL = 'https://ya-praktikum.tech/api/v2'
+    protected baseUrl: string;
     constructor(baseUrl: string) {
-        this.baseUrl = baseUrl
+        this.baseUrl = HTTPTransport.YA_URL + baseUrl
     }
-    get = (url: string, options: Record<any, any> = {}) => {
+    
+    get<Response>(url: string, options: Record<any, any> = {}):Promise<Response>{
 
         url += queryStringify(options.data)
-        return this.request(this.baseUrl + url, { ...options, method: METHODS.GET }, options.timeout)
+        return this.request<Response>(this.baseUrl + url, { ...options, method: METHODS.GET }, options.timeout)
     };
-    put = (url: string, options: Record<any, any> = {}) => {
+    put<Response>(url: string, options: Record<any, any> = {}):Promise<Response>{
 
         return this.request(this.baseUrl + url, { ...options, method: METHODS.PUT }, options.timeout)
     };
-    post = (url: string, options: Record<any, any> = {}) => {
+    post<Response>(url: string, options: Record<any, any> = {}):Promise<Response>{
 
         return this.request(this.baseUrl + url, { ...options, method: METHODS.POST }, options.timeout)
     };
-    delete = (url: string, options: Record<any, any> = {}) => {
+    delete<Response>(url: string, options: Record<any, any> = {}):Promise<Response>{
 
         return this.request(this.baseUrl + url, { ...options, method: METHODS.DELETE }, options.timeout)
     };
 
+    // private request<Response>(url: string, options: Options = {method: Method.Get}): Promise<Response> {
+    private request<Response>(url: string, options: Record<any, any>, timeout = 5000): Promise<Response>{
 
-    request = (url: string, options: Record<any, any>, timeout = 5000) => {
-
-        const { headers, data, method } = options;
+        const { data, method } = options;
         const JSONdata = JSON.stringify(data)
 
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest()
 
             xhr.open(method, url)
-
-            for (let header in headers) {
-                xhr.setRequestHeader(header, headers[header])
-            }
+            
+            xhr.setRequestHeader('content-type', 'application/json')
 
             xhr.onabort = reject
             xhr.onerror = reject
             xhr.timeout = timeout
             xhr.ontimeout = reject
+
+            xhr.withCredentials = true
+            xhr.responseType = 'json'
 
             if (method === METHODS.GET) {
                 xhr.send();
@@ -57,7 +60,7 @@ export default class HTTPTransport {
             }
 
             xhr.onload = function () {
-                resolve(xhr.responseText)
+                resolve(xhr.response)
             };
 
         })

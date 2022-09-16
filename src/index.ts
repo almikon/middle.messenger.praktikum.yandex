@@ -9,7 +9,7 @@ import { SignUpPage } from './pages/signUp/signUp';
 import Router from './utils/Router'
 
 const router = new Router('#app')
-
+window.addEventListener('DOMContentLoaded',()=>{
 router
     .use('/',LogInPage)
     .use('/index.html',LogInPage)
@@ -21,3 +21,4 @@ router
     .use('/settings.html',SettingsPage)
     .use('/chats.html',ChatsPage) 
     .start()
+})
