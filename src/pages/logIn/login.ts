@@ -10,9 +10,9 @@ import { LoginApi } from './loginApi';
 import Store, { StoreEvents } from '../../utils/Store';
 const context = {
     title: "Вход",
-    login: "megaMEGAmegaMEGa",
-    password: "sjhdbckhubdkehbchwekebhjcbekjh",
-    button__text: "Вход",
+    login: "Логин",
+    password: "Пароль",
+    button__text: ,
     footerNote: {
         text: "Нет аккаунта?",
         url: "signUp.html"
@@ -20,17 +20,14 @@ const context = {
     url: "chats.html"
 };
 
-interface ILogInPageProps {
-}
-
-export class LogInPage extends Block<ILogInPageProps> {
-    constructor(props = context) {
-        super('div', props);
+export class LogInPage extends Block{
+    constructor() {
+        super({});
     }
     init() {
         this.children.button = new Button({
             class: 'form__button',
-            value: this.props.button__text,
+            value: "Вход",
             events: {
                 click: () => this.logIn()
             }
@@ -60,27 +57,34 @@ export class LogInPage extends Block<ILogInPageProps> {
 
     public logIn() {
         Store.on(StoreEvents.Updated, () => {
-            // вызываем обновление компонента, передав данные из хранилища
             this.setProps(Store.getState());
         });
-        const logInRequest = new LoginApi()
-        const data = getData()
-        logInRequest.logIn(data).then(data => Store.set('loginResponse', data))
-        const resp = logInRequest.logIn(data).then(data => { return data }) as unknown as string
-        console.log(resp)
-        // const inputs = document.querySelectorAll('.wrong')
-        // if (inputs.length) {
-        //     console.log('Есть ошибки')
-        // } else {
-
-
-        // const router = new Router('#app')
-        // router.go('/chats.html')
-        // }
+        const inputs = document.querySelectorAll('.wrong')
+        if (inputs.length) {
+            console.log('Есть ошибки')
+        } else {
+            const logInRequest = new LoginApi()
+            const data = getData()
+            logInRequest.logIn(data)
+                .then(function(result){
+                    Store.set('isLoginCorrect',result)
+                    console.log(`first then : ${result}`)
+                    return result
+                })
+                .then(result=>{
+                    if(result==='OK'){
+                        console.log(result)
+                        const router = new Router('#app')
+                        router.go('/chats.html')
+                    }else{
+                        console.log(result)
+                    }
+                })
+                .catch(err=>{throw new Error(err)})
+        }
     }
 
     render() {
-
         return this.compile(tmpl, this.props);
     }
 }

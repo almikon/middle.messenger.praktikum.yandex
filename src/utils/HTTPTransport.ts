@@ -35,6 +35,7 @@ export default class HTTPTransport {
 
         const { headers, data, method } = options;
         const JSONdata = JSON.stringify(data)
+
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest()
 
@@ -43,7 +44,6 @@ export default class HTTPTransport {
             for (let header in headers) {
                 xhr.setRequestHeader(header, headers[header])
             }
-
 
             xhr.onabort = reject
             xhr.onerror = reject
@@ -57,7 +57,7 @@ export default class HTTPTransport {
             }
 
             xhr.onload = function () {
-                resolve(xhr.response)
+                resolve(xhr.responseText)
             };
 
         })

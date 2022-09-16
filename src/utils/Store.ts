@@ -4,18 +4,15 @@ import set from "./Set";
 export enum StoreEvents {
     Updated = "Updated"
 }
-type Indexed<T = unknown> = {
-    [key in string]: T
-}
 
 class Store extends EventBus {
-    private state: Indexed = {}
+    private state: Record<any,any> = {}
 
-    public getState() {
+    public getState():Record<string,any> {
         return this.state;
     }
 
-    public set(path: string, value: unknown) {
+    public set(path: string, value: any) {
         set(this.state, path, value);
         this.emit(StoreEvents.Updated)
     }

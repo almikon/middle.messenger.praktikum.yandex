@@ -26,6 +26,7 @@ export default class Route {
     if(this._block){
       const root = document.querySelector(this._props.rootQuery)
       root.innerHTML = ''
+      this._block=null
     }
 
   }

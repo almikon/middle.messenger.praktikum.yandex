@@ -6,14 +6,12 @@ export class LoginApi {
     async logIn(data: Record<string, string>) {
         const options: Record<string, any> = {}
         options.data = data
-        data['login'] = "megaMEGAmegaMEGa"
-        data['password'] = "sjhdbckhubdkehbchwekebhjcbekjh"
 
         options.headers = {
             'content-type': 'application/json'
         }
 
 
-        return await LoginApiInstance.post('/auth/signin', options)
+        return await LoginApiInstance.post('/auth/signin', options).then(response => {return response})
     }
 }

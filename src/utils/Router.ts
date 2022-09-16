@@ -1,7 +1,8 @@
+import Block from "./Block";
 import Route from "./Route";
 
 export default class Router {
-  static __instance: any;
+  private static __instance: Router;
   routes: Array<Route> = [];
   history!: History;
   _currentRoute!: Route | null | undefined;
@@ -20,13 +21,13 @@ export default class Router {
       Router.__instance = this;
   }
 
-  use(pathname: string, block: HTMLElement) {
+  public use(pathname: string, block: typeof Block) {
       const route = new Route(pathname, block, {rootQuery: this._rootQuery});
       this.routes.push(route);
       return this
   }
 
-  start() {
+  public start() {
     window.onpopstate = ((event: PopStateEvent) => {
       if(event.currentTarget){
       const targetWindow = event.currentTarget as Window
