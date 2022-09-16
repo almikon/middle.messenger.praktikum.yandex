@@ -8,7 +8,7 @@ export enum StoreEvents {
 class Store extends EventBus {
     private state: Record<any,any> = {}
 
-    public getState():Record<string,any> {
+    public getState():Record<any,any> {
         return this.state;
     }
 

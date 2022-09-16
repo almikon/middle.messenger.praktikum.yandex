@@ -4,9 +4,6 @@ import '../../less/form.less';
 import Block from '../../utils/Block';
 import tmpl from './logIn.hbs'
 import { PATTERNS } from '../../constants'
-import Router from '../../utils/Router';
-import getData from '../../utils/GetData';
-import { LoginApi } from './loginApi';
 import Store, { StoreEvents } from '../../utils/Store';
 
 export class LogInPage extends Block{
@@ -62,24 +59,24 @@ export class LogInPage extends Block{
         if (inputs.length) {
             console.log('Есть ошибки')
         } else {
-            const logInRequest = new LoginApi()
-            const data = getData()
-            logInRequest.logIn(data)
-                .then(function(result){
-                    Store.set('isLoginCorrect',result)
-                    console.log(`${result}`)
-                    return result
-                })
-                .then(result=>{
-                    if(result==='OK'){
-                        console.log(result)
-                        const router = new Router('#app')
-                        router.go('/chats.html')
-                    }else{
-                        console.log(result)
-                    }
-                })
-                .catch(err=>{throw new Error(err)})
+            // const logInRequest = new UserAPI()
+            // const data = getData()
+            // logInRequest.logIn(data)
+            //     .then(function(result){
+            //         Store.set('isLoginCorrect',result)
+            //         console.log(`${result}`)
+            //         return result
+            //     })
+            //     .then(result=>{
+            //         if(result==='OK'){
+            //             console.log(result)
+            //             const router = new Router('#app')
+            //             router.go('/chats.html')
+            //         }else{
+            //             console.log(result)
+            //         }
+            //     })
+            //     .catch(err=>{throw new Error(err)})
         }
     }
 

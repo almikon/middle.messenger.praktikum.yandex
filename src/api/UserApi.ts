@@ -1,4 +1,4 @@
-import BaseAPI from '../../api/baseApi'
+import BaseAPI from './baseApi'
 
 export interface logInData{
     login:string
@@ -25,7 +25,7 @@ export interface User {
     avatar: string;
     }
 
-export class UserApi extends BaseAPI {
+class UserApi extends BaseAPI {
     constructor(){
         super('/auth')
     }
@@ -57,3 +57,5 @@ export class UserApi extends BaseAPI {
     update = undefined
     delete = undefined
 }
+
+export default new UserApi()
