@@ -67,7 +67,7 @@ export class LogInPage extends Block{
             logInRequest.logIn(data)
                 .then(function(result){
                     Store.set('isLoginCorrect',result)
-                    console.log(`first then : ${result}`)
+                    console.log(`${result}`)
                     return result
                 })
                 .then(result=>{
