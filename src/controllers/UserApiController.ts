@@ -1,51 +1,34 @@
 import store from '../utils/Store';
 import router from '../utils/Router';
-import UserApi, { logInData, SignupData } from '../api/UserApi';
+import UserAPI, { logInData, SignupData, UserApi } from '../api/UserApi';
 
 export class UserApiController {
-//   private readonly api : use
+  private readonly api: UserApi
 
   constructor() {
-    this.api = UserApi;
+    this.api = UserAPI;
   }
 
   async logIn(data: logInData) {
-    try {
-      await this.api.signin(data);
-
-      router.go('/profile');
-    } catch (e: any) {
-      console.error(e);
-    }
+    await this.api.logIn(data);
   }
 
   async signup(data: SignupData) {
-    try {
-      await this.api.signup(data);
+    await this.api.signUp(data);
 
-      await this.fetchUser();
+    await this.fetchUser()
 
-      router.go('/profile');
-    } catch (e: any) {
-      console.error(e.message);
-    }
+    router.go('/chats.html')
   }
 
   async fetchUser() {
-    const user = await this.api.read();
-
-    store.set('user', user);
+    const user = await this.api.getUser();
+    store.set('user', user)
   }
 
   async logout() {
-    try {
-      await this.api.logout();
-
-      router.go('/');
-    } catch (e: any) {
-      console.error(e.message);
-    }
+    await this.api.logout();
   }
 }
 
-export default new UserApiController();
+export default new UserApiController()

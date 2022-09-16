@@ -6,19 +6,19 @@ import { ChatsPage } from './pages/chats/chats';
 import { LogInPage } from './pages/logIn/login';
 import { SettingsPage } from './pages/settings/settings';
 import { SignUpPage } from './pages/signUp/signUp';
-import Router from './utils/Router'
+import router from './utils/Router'
 
-const router = new Router('#app')
-window.addEventListener('DOMContentLoaded',()=>{
-router
-    .use('/',LogInPage)
-    .use('/index.html',LogInPage)
-    .use('/signUp.html',SignUpPage)
-    .use('/404.html',Page404Page)
-    .use('/500.html',Page500Page)
-    .use('/changePassword.html',ChangePasswordPage) 
-    .use('/changeSettings.html',ChangeSettingsPage)
-    .use('/settings.html',SettingsPage)
-    .use('/chats.html',ChatsPage) 
-    .start()
+
+window.addEventListener('DOMContentLoaded', () => {
+    router
+        .use('/', LogInPage)
+        .use('/index.html', LogInPage)
+        .use('/signUp.html', SignUpPage)
+        .use('/404.html', Page404Page)
+        .use('/500.html', Page500Page)
+        .use('/changePassword.html', ChangePasswordPage)
+        .use('/changeSettings.html', ChangeSettingsPage)
+        .use('/settings.html', SettingsPage)
+        .use('/chats.html', ChatsPage)
+        .start()
 })

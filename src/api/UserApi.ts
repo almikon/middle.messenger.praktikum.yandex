@@ -1,8 +1,8 @@
 import BaseAPI from './baseApi'
 
-export interface logInData{
-    login:string
-    password:string
+export interface logInData {
+    login: string
+    password: string
 }
 
 export interface SignupData {
@@ -12,7 +12,7 @@ export interface SignupData {
     email: string;
     password: string;
     phone: string;
-  }
+}
 
 export interface User {
     id: number;
@@ -23,33 +23,33 @@ export interface User {
     password: string;
     phone: string;
     avatar: string;
-    }
+}
 
-class UserApi extends BaseAPI {
-    constructor(){
+export class UserApi extends BaseAPI {
+    constructor() {
         super('/auth')
     }
 
     logIn(data: logInData) {
-        const options: Record< string, string | logInData> = {}
+        const options: Record<string, string | logInData> = {}
         options.data = data
- 
+
         return this.HTTPTransport.post('/signin', options)
     }
 
-    signUp(data: SignupData){
+    signUp(data: SignupData) {
         const options: Record<string, any> = {}
         options.data = data
 
-        return this.HTTPTransport.post('/signin', options)
+        return this.HTTPTransport.post('/signup', options)
     }
 
-    getUser(): Promise<User>{
+    getUser(): Promise<User> {
 
         return this.HTTPTransport.get('/user')
     }
 
-    logout(){
+    logout() {
         return this.HTTPTransport.post('/logout')
     }
     create = undefined

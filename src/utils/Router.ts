@@ -1,26 +1,26 @@
 import Block from "./Block";
 import Route from "./Route";
 
-export default class Router {
+class Router {
   private static __instance: Router;
   private routes: Route[] = [];
   private history: History = window.history;
   private currentRoute: Route | null = null;
-  
-  
-  constructor(private readonly rootQuery: string) {
-      if (Router.__instance) {
-          return Router.__instance;
-      }
 
-      this.routes = [];
-      Router.__instance = this;
+
+  constructor(private readonly rootQuery: string) {
+    if (Router.__instance) {
+      return Router.__instance;
+    }
+
+    this.routes = [];
+    Router.__instance = this;
   }
 
   public use(pathname: string, block: typeof Block) {
-      const route = new Route(pathname, block, this.rootQuery);
-      this.routes.push(route);
-      return this
+    const route = new Route(pathname, block, this.rootQuery);
+    this.routes.push(route);
+    return this
   }
 
   public start() {
@@ -31,21 +31,21 @@ export default class Router {
     this._onRoute(window.location.pathname);
   }
 
-  private _onRoute(pathname:string) {
-      const route = this.getRoute(pathname);
-      if(!route){
-        return
-      }
+  private _onRoute(pathname: string) {
+    const route = this.getRoute(pathname);
+    if (!route) {
+      return
+    }
 
-      if (this.currentRoute && this.currentRoute !== route) {
-          this.currentRoute.leave();
-      }
+    if (this.currentRoute && this.currentRoute !== route) {
+      this.currentRoute.leave();
+    }
 
-      this.currentRoute = route;
-      route.render();
+    this.currentRoute = route;
+    route.render();
   }
 
-  go(pathname:string) {
+  public go(pathname: string) {
     this.history.pushState({}, "", pathname);
     this._onRoute(pathname)
   }
@@ -58,7 +58,9 @@ export default class Router {
     window.history.forward()
   }
 
-  getRoute(pathname:string) {
-      return this.routes.find(route => route.match(pathname));
+  getRoute(pathname: string) {
+    return this.routes.find(route => route.match(pathname));
   }
 }
+
+export default new Router('#app')

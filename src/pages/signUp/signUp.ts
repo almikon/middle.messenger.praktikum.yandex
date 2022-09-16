@@ -4,11 +4,11 @@ import Block from '../../utils/Block';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { PATTERNS } from '../../constants'
-import { SignUpApi } from './signUpApi';
-import Router from '../../utils/Router';
 import getData from '../../utils/GetData';
+import UserApiController from '../../controllers/UserApiController';
+import { SignupData } from '../../api/UserApi';
 
-export class SignUpPage extends Block{
+export class SignUpPage extends Block {
     constructor() {
         super({
             title: "Регистрация",
@@ -139,15 +139,10 @@ export class SignUpPage extends Block{
     public signUp() {
         const data = getData()
         const inputs = document.querySelectorAll('.wrong')
-        
         if (inputs.length) {
             console.log('Есть ошибки')
         } else {
-            const signUpRequest = new SignUpApi()
-            const response = signUpRequest.signUp(data)
-            console.log(response)
-            const router = new Router('#app')
-            router.go('/chats.html')
+            UserApiController.signup(data as unknown as SignupData)
         }
     }
     // const res ={
