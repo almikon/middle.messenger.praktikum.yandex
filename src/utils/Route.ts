@@ -1,52 +1,41 @@
 import Block from "./Block";
 
 export default class Route {
-  _pathname: string;
-  _blockClass: typeof Block;
-  _block: any;
-  _props: Record<string | number | symbol, any>;
-  
-  constructor(pathname:string, 
-    view: any, 
-    props:Record<string,string>) {
-      this._pathname = pathname;
-      this._blockClass = view;
-      this._block = null;
-      this._props = props;
+  private block: Block | null = null;
+
+  constructor(
+    private pathname: string,
+    private readonly blockClass: typeof Block,
+    private readonly query: string) {
   }
 
-  navigate(pathname:string) {
-      if (this.match(pathname)) {
-          this._pathname = pathname;
-          this.render();
-      }
-  }
-
-  leave() {
-    if(this._block){
-      const root = document.querySelector(this._props.rootQuery)
-      root.innerHTML = ''
-      this._block=null
-    }
-
+  leave(){
+      this.block=null
   }
 
   match(pathname:string) {
-      return pathname === this._pathname
+      return pathname === this.pathname
   }
 
   render() {
-      if (!this._block) {
-        this._block = render(this._props.rootQuery, this._blockClass);
+      if (!this.block) {
+        this.block = new this.blockClass({});
+        render (this.query, this.block)
         return;
       }
-
-      this._block.render();
   }
-
 }
-function render(query:string, block: any) {
+
+function render(query: string, block: Block) {
     const root = document.querySelector(query);
-    root!.append(block)
+  
+    if (root === null) {
+      throw new Error(`root not found by selector "${query}"`);
+    }
+  
+    root.innerHTML = '';
+  
+    root.append(block.getContent()!);
+  
     return root;
   }

@@ -6,62 +6,60 @@ import { Input } from '../../components/Input';
 import { PATTERNS } from '../../constants'
 import { SignUpApi } from './signUpApi';
 import Router from '../../utils/Router';
-const context = {
-    title: "Регистрация",
-    email: {
-        id: "Почта",
-        type: "email",
-        name: "email",
-        placeholder: "pochta@yandex.ru"
-    },
-    login: {
-        id: "Логин",
-        type: "text",
-        name: "login",
-        placeholder: "Логин"
-    },
-    first_name: {
-        id: "Имя",
-        type: "text",
-        name: "first_name",
-        placeholder: "Иван"
-    },
-    second_name: {
-        id: "Фамилия",
-        type: "text",
-        name: "second_name",
-        placeholder: "Иванов"
-    },
-    phone: {
-        id: "Телефон",
-        type: "phone",
-        name: "phone",
-        placeholder: "+7 (909) 967 30 30"
-    },
-    password: {
-        id: "Пароль",
-        type: "password",
-        name: "password",
-        placeholder: "Пароль"
-    },
-    checkpassword: {
-        id: "Пароль (ещё раз)",
-        type: "password",
-        name: "checkPassword",
-        placeholder: "Пароль (ещё раз)"
-    },
-    button__text: "Зарегистрироваться",
-    footerNote: {
-        text: "Войти",
-        url: "./index.html"
-    }
-}
-type SignUpPageProps = {
+import getData from '../../utils/GetData';
 
-}
-export class SignUpPage extends Block<SignUpPageProps> {
-    constructor(props = context) {
-        super('div', props);
+export class SignUpPage extends Block{
+    constructor() {
+        super({
+            title: "Регистрация",
+            email: {
+                id: "Почта",
+                type: "email",
+                name: "email",
+                placeholder: "pochta@yandex.ru"
+            },
+            login: {
+                id: "Логин",
+                type: "text",
+                name: "login",
+                placeholder: "Логин"
+            },
+            first_name: {
+                id: "Имя",
+                type: "text",
+                name: "first_name",
+                placeholder: "Иван"
+            },
+            second_name: {
+                id: "Фамилия",
+                type: "text",
+                name: "second_name",
+                placeholder: "Иванов"
+            },
+            phone: {
+                id: "Телефон",
+                type: "phone",
+                name: "phone",
+                placeholder: "+7 (909) 967 30 30"
+            },
+            password: {
+                id: "Пароль",
+                type: "password",
+                name: "password",
+                placeholder: "Пароль"
+            },
+            checkpassword: {
+                id: "Пароль (ещё раз)",
+                type: "password",
+                name: "checkPassword",
+                placeholder: "Пароль (ещё раз)"
+            },
+            button__text: "Зарегистрироваться",
+            footerNote: {
+                text: "Войти",
+                url: "./index.html"
+            }
+        });
     }
 
     init() {
@@ -139,7 +137,7 @@ export class SignUpPage extends Block<SignUpPageProps> {
         })
     }
     public signUp() {
-        const data = this.getData()
+        const data = getData()
         const inputs = document.querySelectorAll('.wrong')
         
         if (inputs.length) {
@@ -160,22 +158,7 @@ export class SignUpPage extends Block<SignUpPageProps> {
     //     "password": "sjhdbckhubdkehbchwekebhjcbekjh",
     //     "phone": "+79998881532"
     //   }
-    public getData() {
-        let res: Record<string, string> = {}
-        const inputList = document.querySelectorAll('input')
-        inputList.forEach(input => {
-            if (input.classList.contains('required')) {
-                if (input.value.length > 0) {
-                    res[input.name] = input.value
-                }
-                else {
-                    console.log(`${input.name} не может быть пустым!`)
-                    input.classList.add('wrong')
-                }
-            }
-        })
-        return res
-    }
+
     render() {
         return this.compile(tmpl, this.props);
     }

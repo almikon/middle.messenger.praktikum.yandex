@@ -6,30 +6,26 @@ import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { PATTERNS } from '../../constants'
 
-const context = {
-    userAvatar: userAvatar,
-    user: "Иван",
-    oldPassword: {
-        name: "Старый пароль",
-        placeholder: "**********"
-    },
-    password: {
-        name: "Новый пароль",
-        placeholder: "**********"
-    },
-    checkPassword: {
-        name: "Повторите новый пароль",
-        placeholder: "**********"
-    },
-    button__text: "Сохранить",
-    goTo: './settings.html'
-};
-type ChangePasswordPageProps = {
-
-}
-export class ChangePasswordPage extends Block<ChangePasswordPageProps> {
-    constructor(props = context) {
-        super('div', props);
+export class ChangePasswordPage extends Block{
+    constructor() {
+        super({
+            userAvatar: userAvatar,
+            user: "Иван",
+            oldPassword: {
+                name: "Старый пароль",
+                placeholder: "**********"
+            },
+            password: {
+                name: "Новый пароль",
+                placeholder: "**********"
+            },
+            checkPassword: {
+                name: "Повторите новый пароль",
+                placeholder: "**********"
+            },
+            button__text: "Сохранить",
+            goTo: './settings.html'
+        });
     }
 
     init() {

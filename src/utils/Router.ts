@@ -3,50 +3,46 @@ import Route from "./Route";
 
 export default class Router {
   private static __instance: Router;
-  routes: Array<Route> = [];
-  history!: History;
-  _currentRoute!: Route | null | undefined;
-  _rootQuery: any;
+  private routes: Route[] = [];
+  private history: History = window.history;
+  private currentRoute: Route | null = null;
   
-  constructor(rootQuery: string) {
+  
+  constructor(private readonly rootQuery: string) {
       if (Router.__instance) {
           return Router.__instance;
       }
 
       this.routes = [];
-      this.history = window.history;
-      this._currentRoute = null;
-      this._rootQuery = rootQuery;
-
       Router.__instance = this;
   }
 
   public use(pathname: string, block: typeof Block) {
-      const route = new Route(pathname, block, {rootQuery: this._rootQuery});
+      const route = new Route(pathname, block, this.rootQuery);
       this.routes.push(route);
       return this
   }
 
   public start() {
-    window.onpopstate = ((event: PopStateEvent) => {
-      if(event.currentTarget){
+    window.onpopstate = (event: PopStateEvent) => {
       const targetWindow = event.currentTarget as Window
-
       this._onRoute(targetWindow.location.pathname)
-      }
-    }).bind(this);
+    }
     this._onRoute(window.location.pathname);
   }
 
-  _onRoute(pathname:string) {
+  private _onRoute(pathname:string) {
       const route = this.getRoute(pathname);
-
-      if (this._currentRoute) {
-          this._currentRoute.leave();
+      if(!route){
+        return
       }
 
-      this._currentRoute = route;
-      route!.render();
+      if (this.currentRoute && this.currentRoute !== route) {
+          this.currentRoute.leave();
+      }
+
+      this.currentRoute = route;
+      route.render();
   }
 
   go(pathname:string) {

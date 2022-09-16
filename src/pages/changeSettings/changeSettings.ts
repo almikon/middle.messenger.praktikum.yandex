@@ -34,13 +34,10 @@ const context = {
     },
     button__text: "Сохранить",
     goTo:'./settings.html'
-};
-type ChangeSettingsPageProps = {
-
 }
-export class ChangeSettingsPage extends Block<ChangeSettingsPageProps> {
-    constructor(props = context) {
-        super('div', props);
+export class ChangeSettingsPage extends Block{
+    constructor() {
+        super(context);
     }
 
     init() {

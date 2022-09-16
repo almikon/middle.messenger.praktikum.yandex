@@ -66,13 +66,11 @@ const context = {
         text: 'Можно или сегодня или завтра вечером.'
     },
     chooseChat: "Выберите чат чтобы отправить сообщение"
-};
-type ChatsPageProps = {
-
 }
-export class ChatsPage extends Block<ChatsPageProps> {
-    constructor(props = context) {
-        super('div', props);
+
+export class ChatsPage extends Block{
+    constructor() {
+        super(context);
     }
     protected init(): void {
         this.children.button = new Button({

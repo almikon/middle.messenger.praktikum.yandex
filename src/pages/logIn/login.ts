@@ -8,21 +8,20 @@ import Router from '../../utils/Router';
 import getData from '../../utils/GetData';
 import { LoginApi } from './loginApi';
 import Store, { StoreEvents } from '../../utils/Store';
-const context = {
-    title: "Вход",
-    login: "Логин",
-    password: "Пароль",
-    button__text: ,
-    footerNote: {
-        text: "Нет аккаунта?",
-        url: "signUp.html"
-    },
-    url: "chats.html"
-};
 
 export class LogInPage extends Block{
     constructor() {
-        super({});
+        super(
+        {
+            title: "Вход",
+            login: "Логин",
+            password: "Пароль",
+            footerNote: {
+                text: "Нет аккаунта?",
+                url: "signUp.html"
+            },
+            url: "chats.html"
+        });
     }
     init() {
         this.children.button = new Button({

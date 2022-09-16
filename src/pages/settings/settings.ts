@@ -40,13 +40,10 @@ const context = {
         url: "changePassword.html"
     },
     option__exit: "Выйти"
-};
-type SettingsPageProps = {
-
 }
-export class SettingsPage extends Block<SettingsPageProps> {
-    constructor(props = context) {
-        super('div', props);
+export class SettingsPage extends Block{
+    constructor() {
+        super(context);
     }
     init(){
         this.children.button = new Button({

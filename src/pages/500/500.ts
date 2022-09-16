@@ -2,22 +2,18 @@ import '../../less/errorPage.less'
 import Block from '../../utils/Block';
 import tmpl from './500.hbs'
 
-const context = {
-    error: {
-        title: "505",
-        description: "Мы уже фиксим"
-    },
-    footerNote: {
-        url: "./chats.html",
-        text: "Назад к чатам"
-    }
-};
-type TPage500Page = {
-
-}
-export class Page500Page extends Block<TPage500Page> {
-    constructor(props = context) {
-        super('div', props);
+export class Page500Page extends Block{
+    constructor() {
+        super({
+            error: {
+                title: "505",
+                description: "Мы уже фиксим"
+            },
+            footerNote: {
+                url: "./chats.html",
+                text: "Назад к чатам"
+            }
+        });
     }
 
     render() {
