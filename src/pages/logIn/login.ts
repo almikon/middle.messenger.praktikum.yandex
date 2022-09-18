@@ -5,6 +5,9 @@ import Block from '../../utils/Block';
 import tmpl from './logIn.hbs'
 import { PATTERNS } from '../../constants'
 import Store, { StoreEvents } from '../../utils/Store';
+import UserApiController from '../../controllers/UserApiController';
+import getData from '../../utils/GetData';
+import { logInData } from '../../api/UserApi';
 
 export class LogInPage extends Block{
     constructor() {
@@ -52,6 +55,7 @@ export class LogInPage extends Block{
     }
 
     public logIn() {
+        const data = getData()
         Store.on(StoreEvents.Updated, () => {
             this.setProps(Store.getState());
         });
@@ -59,24 +63,7 @@ export class LogInPage extends Block{
         if (inputs.length) {
             console.log('Есть ошибки')
         } else {
-            // const logInRequest = new UserAPI()
-            // const data = getData()
-            // logInRequest.logIn(data)
-            //     .then(function(result){
-            //         Store.set('isLoginCorrect',result)
-            //         console.log(`${result}`)
-            //         return result
-            //     })
-            //     .then(result=>{
-            //         if(result==='OK'){
-            //             console.log(result)
-            //             const router = new Router('#app')
-            //             router.go('/chats.html')
-            //         }else{
-            //             console.log(result)
-            //         }
-            //     })
-            //     .catch(err=>{throw new Error(err)})
+            UserApiController.logIn(data as unknown as logInData)
         }
     }
 

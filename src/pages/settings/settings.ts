@@ -3,6 +3,8 @@ import userAvatar from '../../../static/img/userAvatar.png'
 import tmpl from './settings.hbs'
 import Block from '../../utils/Block';
 import { Button } from '../../components/Button';
+import UserApiController from '../../controllers/UserApiController';
+import { withStore } from '../../utils/Store';
 
 const context = {
     userAvatar: userAvatar,
@@ -41,18 +43,29 @@ const context = {
     },
     option__exit: "Выйти"
 }
-export class SettingsPage extends Block{
-    constructor() {
-        super(context);
-    }
+export class SettingsPageCore extends Block{
     init(){
+        UserApiController.fetchUser()
+        console.log(context)
         this.children.button = new Button({
-        class: 'back__button',
-        events: {
-            click: () => window.history.back()
-        }})
+            class: 'back__button',
+            events: {
+                click: () => window.history.back()
+            }})
+        this.children.exitButton = new Button({
+                class: 'exit__button',
+                value:'Выход',
+                events: {
+                    click: () => UserApiController.logout()
+                }})
+
+
+        console.log(this.props)
     }
     render() {
         return this.compile(tmpl, this.props);
     }
 }
+
+const withUser = withStore((state) => ({...state.user}))
+export const SettingsPage = withUser(SettingsPageCore)

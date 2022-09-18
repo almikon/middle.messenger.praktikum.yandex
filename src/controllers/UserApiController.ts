@@ -10,7 +10,12 @@ export class UserApiController {
   }
 
   async logIn(data: logInData) {
-    await this.api.logIn(data);
+    await this.api.logIn(data)
+    await this.fetchUser()
+
+    console.log(`login`)
+    console.log(store.getState())
+    router.go('/chats.html')
   }
 
   async signup(data: SignupData) {
@@ -28,6 +33,8 @@ export class UserApiController {
 
   async logout() {
     await this.api.logout();
+    await this.fetchUser()
+    router.go('/')
   }
 }
 

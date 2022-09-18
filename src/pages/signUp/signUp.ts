@@ -148,9 +148,9 @@ export class SignUpPage extends Block {
     // const res ={
     //     "first_name": "mega",
     //     "second_name": "MEGA",
-    //     "login": "megaMEGAmegaMEGa",
+    //     "login": "megaMEGAmegaMEGaQQ",
     //     "email": "mega@mega.com",
-    //     "password": "sjhdbckhubdkehbchwekebhjcbekjh",
+    //     "password": "sjhdbckhubdkehbchwekebhjcbekjhQQ",
     //     "phone": "+79998881532"
     //   }
 

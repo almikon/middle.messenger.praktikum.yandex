@@ -6,7 +6,7 @@ export enum StoreEvents {
     Updated = "Updated"
 }
 
-class Store extends EventBus {
+export class Store extends EventBus {
     private state: Record<any, any> = {}
 
     public getState(): Record<any, any> {
@@ -15,7 +15,7 @@ class Store extends EventBus {
 
     public set(path: string, value: any) {
         set(this.state, path, value);
-        this.emit(StoreEvents.Updated)
+        this.emit(StoreEvents.Updated, this.getState())
     }
 }
 
