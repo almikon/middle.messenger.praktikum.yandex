@@ -5,6 +5,8 @@ import Block from '../../utils/Block';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { PATTERNS } from '../../constants'
+import getData from '../../utils/GetData';
+import UserApiController from '../../controllers/UserApiController';
 const context = {
     userAvatar: userAvatar,
     user: "Иван",
@@ -37,6 +39,7 @@ export class ChangeSettingsPage extends Block {
     }
 
     init() {
+        UserApiController.fetchUser()
         this.children.button = new Button({
             class: 'form__button',
             value: this.props.button__text,
@@ -55,7 +58,7 @@ export class ChangeSettingsPage extends Block {
 
         this.children.loginInput = new Input({
             name: 'login',
-            placeholder: this.props.login.placeholder,
+            placeholder: this.props.login,
             classes: [
                 'settings__input',
                 'required'
@@ -64,7 +67,7 @@ export class ChangeSettingsPage extends Block {
         })
         this.children.emailInput = new Input({
             name: 'email',
-            placeholder: this.props.email.placeholder,
+            placeholder: this.props.email,
             classes: [
                 'settings__input',
                 'required'
@@ -73,7 +76,7 @@ export class ChangeSettingsPage extends Block {
         })
         this.children.firstNameInput = new Input({
             name: 'first_name',
-            placeholder: this.props.first_name.placeholder,
+            placeholder: this.props.first_name,
             classes: [
                 'settings__input',
                 'required'
@@ -82,7 +85,7 @@ export class ChangeSettingsPage extends Block {
         })
         this.children.secondNameInput = new Input({
             name: 'second_name',
-            placeholder: this.props.second_name.placeholder,
+            placeholder: this.props.second_name,
             classes: [
                 'settings__input',
                 'required'
@@ -91,7 +94,7 @@ export class ChangeSettingsPage extends Block {
         })
         this.children.phoneInput = new Input({
             name: 'phone',
-            placeholder: this.props.phone.placeholder,
+            placeholder: this.props.phone,
             classes: [
                 'settings__input',
                 'required'
@@ -100,34 +103,14 @@ export class ChangeSettingsPage extends Block {
         })
     }
     public checkData() {
-        this.getData()
+        const data = getData()
         const inputs = document.querySelectorAll('.wrong')
         if (inputs.length) {
             console.log('Есть ошибки')
         } else {
-            this.goTo(this.props.goTo)
+            console.log(data)
         }
-    }
-    public goTo(adress: string) {
-        document.location.pathname = adress
-    }
-    public getData() {
-        let res: Record<string, string> = {}
-        const inputList = document.querySelectorAll('input')
-        inputList.forEach(input => {
-            if (input.classList.contains('required')) {
-                if (input.value.length > 0) {
-                    res[input.name] = input.value
-                }
-                else {
-                    console.log(`${input.name} не может быть пустым!`)
-                    input.classList.add('wrong')
-                }
-            }
-        })
-        console.log(res)
-    }
-    render() {
+    }   render() {
         return this.compile(tmpl, this.props);
     }
 }

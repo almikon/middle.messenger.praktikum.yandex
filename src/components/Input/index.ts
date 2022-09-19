@@ -16,9 +16,7 @@ export class Input extends Block<InputProps> {
             self?.classList.add(value)
         })
         self?.setAttribute('name', this.props.name)
-        if (props.placeholder) {
-            self?.setAttribute('placeholder', this.props.placeholder)
-        }
+        
         const checkContent = this.checkContent
         this.element?.addEventListener('blur', function (event) {
             const target = event.target as HTMLTextAreaElement

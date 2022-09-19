@@ -23,7 +23,6 @@ export class UserApiController {
 
   async signup(data: SignupData) {
     await this.api.signUp(data);
-    await this.profile.update(data)
     await this.fetchUser()
 
     router.go('/chats.html')

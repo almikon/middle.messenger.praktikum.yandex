@@ -142,20 +142,10 @@ export class SignUpPage extends Block {
         if (inputs.length) {
             console.log('Есть ошибки')
         } else {
-            data.avatar = '/0ec2bb6a-4ce8-43f4-acdd-d67b86163f25/07b0ef90-99ca-4397-aefe-8dea9b6b3008_A_1850.png'
-            console.log(data)
             UserApiController.signup(data as unknown as SignupData)
         }
     }
-    // const res ={
-    //     "first_name": ""sljdfksdfppAA"",
-    //     "second_name": "MEGA",
-    //     "login": "megaMEGAmegaMEGaWW",
-    //     "email": "mega@mega.com",
-    //     "password": "sjhdbckhubdkehbchwekebhjcbekjhWW",
-    //     "phone": "+79998881532",
-    //      "display_name": "megaMEGAmegaMEGaWW"
-    //   }
+    // sljdfksdfppAA
 
     render() {
         return this.compile(tmpl, this.props);

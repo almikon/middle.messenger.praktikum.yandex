@@ -11,9 +11,11 @@ import { Avatar } from '../../components/Avatar';
 export class SettingsPageCore extends Block {
     
     init() {
+        
         UserApiController.fetchUser()
+        //TODO: avatar src doesn't work (reason: not found)
         this.children.avatar = new Avatar({
-            userAvatar: 'ya-praktikum.tech/api/v2/auth/user' + this.props.avatar,
+            userAvatar: 'https://ya-praktikum.tech/api/v2/auth/user' + this.props.avatar,
             altText: 'Ваш аватар'
         })
         this.children.title = new Title({
