@@ -1,40 +1,29 @@
 import '../../less/userSettings.less'
-import userAvatar from '../../../static/img/userAvatar.png'
 import tmpl from './changePassword.hbs'
 import Block from '../../utils/Block';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { PATTERNS } from '../../constants'
+import getData from '../../utils/GetData';
+import { withStore } from '../../utils/Store';
+import { Avatar } from '../../components/Avatar';
+import { Title } from '../../components/Title';
 
-export class ChangePasswordPage extends Block{
-    constructor() {
-        super({
-            userAvatar: userAvatar,
-            user: "Иван",
-            oldPassword: {
-                name: "Старый пароль",
-                placeholder: "**********"
-            },
-            password: {
-                name: "Новый пароль",
-                placeholder: "**********"
-            },
-            checkPassword: {
-                name: "Повторите новый пароль",
-                placeholder: "**********"
-            },
-            button__text: "Сохранить",
-            goTo: './settings.html'
-        });
-    }
-
+export class ChangePasswordPageCore extends Block{
     init() {
+        //TODO: avatar src doesn't work (reason: not found)
+        this.children.avatar = new Avatar({
+            userAvatar: 'https://ya-praktikum.tech/api/v2/auth/user' + this.props.avatar,
+            altText: 'Ваш аватар'
+        })
+        this.children.title = new Title({
+            value: this.props.login
+        })
         this.children.button = new Button({
             class: 'form__button',
-            value: this.props.button__text,
-            goTo: this.props.goTo,
+            value: 'Сохранить',
             events: {
-                click: () => this.checkData()
+                click: () => this.changePassword()
             }
         })
         this.children.backButton = new Button({
@@ -46,7 +35,7 @@ export class ChangePasswordPage extends Block{
 
         this.children.oldPasswordInput = new Input({
             name: 'oldPassword',
-            placeholder: this.props.oldPassword.placeholder,
+            placeholder: '********',
             classes: [
                 'form__input',
                 'required'
@@ -54,8 +43,8 @@ export class ChangePasswordPage extends Block{
             pattern: PATTERNS.PASSWORD
         })
         this.children.passwordInput = new Input({
-            name: 'password',
-            placeholder: this.props.password.placeholder,
+            name: 'newPassword',
+            placeholder: '********',
             classes: [
                 'form__input',
                 'required'
@@ -64,7 +53,7 @@ export class ChangePasswordPage extends Block{
         })
         this.children.checkPasswordInput = new Input({
             name: 'checkPassword',
-            placeholder: this.props.checkPassword.placeholder,
+            placeholder: '********',
             classes: [
                 'form__input',
                 'required'
@@ -72,35 +61,21 @@ export class ChangePasswordPage extends Block{
             pattern: PATTERNS.PASSWORD
         })
     }
-    public checkData() {
-        this.getData()
+    public changePassword() {
+        const data = getData()
         const inputs = document.querySelectorAll('.wrong')
-        if (inputs.length) {
-            console.log('Есть ошибки')
+        if (inputs.length || data.newPassword != data.checkPassword) {
+            console.log('Есть ошибки или новый пароль не совпадает с проверочным полем')
+            console.log(`${data.newPassword} : ${data.checkPassword}`)
         } else {
-            this.goTo(this.props.goTo)
+            console.log(data)
         }
     }
-    public goTo(adress: string) {
-        document.location.pathname = adress
-    }
-    public getData() {
-        let res: Record<string, string> = {}
-        const inputList = document.querySelectorAll('input')
-        inputList.forEach(input => {
-            if (input.classList.contains('required')) {
-                if (input.value.length > 0) {
-                    res[input.name] = input.value
-                }
-                else {
-                    console.log(`${input.name} не может быть пустым!`)
-                    input.classList.add('wrong')
-                }
-            }
-        })
-        console.log(res)
-    }
+
     render() {
         return this.compile(tmpl, this.props);
     }
 }
+
+const withUser = withStore((state) => ({ ...state.user }))
+export const ChangePasswordPage = withUser(ChangePasswordPageCore)

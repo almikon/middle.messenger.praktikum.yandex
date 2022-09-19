@@ -1,5 +1,4 @@
 import '../../less/changeSettings.less'
-import userAvatar from '../../../static/img/userAvatar.png'
 import tmpl from './changeSettings.hbs'
 import Block from '../../utils/Block';
 import { Button } from '../../components/Button';
@@ -7,45 +6,29 @@ import { Input } from '../../components/Input';
 import { PATTERNS } from '../../constants'
 import getData from '../../utils/GetData';
 import UserApiController from '../../controllers/UserApiController';
-const context = {
-    userAvatar: userAvatar,
-    user: "Иван",
-    email: {
-        name: "Почта",
-        placeholder: "pochta@yandex.ru"
-    },
-    login: {
-        name: "Логин",
-        placeholder: "ivanivanov"
-    },
-    first_name: {
-        name: "Имя",
-        placeholder: "Иван"
-    },
-    second_name: {
-        name: "Фамилия",
-        placeholder: "Иванов"
-    },
-    phone: {
-        name: "Телефон",
-        placeholder: "+7(909)967-30-30"
-    },
-    button__text: "Сохранить",
-    goTo: './settings.html'
-}
-export class ChangeSettingsPage extends Block {
-    constructor() {
-        super(context);
-    }
+import { Avatar } from '../../components/Avatar';
+import { Title } from '../../components/Title';
+import { withStore } from '../../utils/Store';
+import { SignupData } from '../../api/UserApi';
+import ProfileApiController from '../../controllers/ProfileApiController';
+
+export class ChangeSettingsPageCore extends Block {
 
     init() {
         UserApiController.fetchUser()
+        //TODO: avatar src doesn't work (reason: not found)
+        this.children.avatar = new Avatar({
+            userAvatar: 'https://ya-praktikum.tech/api/v2/auth/user' + this.props.avatar,
+            altText: 'Ваш аватар'
+        })
+        this.children.title = new Title({
+            value: this.props.login
+        })
         this.children.button = new Button({
             class: 'form__button',
-            value: this.props.button__text,
-            goTo: this.props.goTo,
+            value: 'Сохранить',
             events: {
-                click: () => this.checkData()
+                click: () => this.changeSettings()
             }
         })
 
@@ -101,16 +84,30 @@ export class ChangeSettingsPage extends Block {
             ],
             pattern: PATTERNS.PHONE
         })
+        this.children.displayNameInput = new Input({
+            name: 'display_name',
+            placeholder: this.props.display_name,
+            classes: [
+                'settings__input',
+                'required'
+            ],
+            pattern: PATTERNS.NAME
+        })
     }
-    public checkData() {
+    public changeSettings() {
         const data = getData()
         const inputs = document.querySelectorAll('.wrong')
         if (inputs.length) {
             console.log('Есть ошибки')
         } else {
+            ProfileApiController.update(data as unknown as SignupData)
             console.log(data)
         }
-    }   render() {
+    }   
+    
+    render() {
         return this.compile(tmpl, this.props);
     }
 }
+const withUser = withStore((state) => ({ ...state.user }))
+export const ChangeSettingsPage = withUser(ChangeSettingsPageCore)
