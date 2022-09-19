@@ -8,6 +8,7 @@ import getData from '../../utils/GetData';
 import { withStore } from '../../utils/Store';
 import { Avatar } from '../../components/Avatar';
 import { Title } from '../../components/Title';
+import ProfileApiController from '../../controllers/ProfileApiController';
 
 export class ChangePasswordPageCore extends Block{
     init() {
@@ -65,10 +66,9 @@ export class ChangePasswordPageCore extends Block{
         const data = getData()
         const inputs = document.querySelectorAll('.wrong')
         if (inputs.length || data.newPassword != data.checkPassword) {
-            console.log('Есть ошибки или новый пароль не совпадает с проверочным полем')
-            console.log(`${data.newPassword} : ${data.checkPassword}`)
-        } else {
-            console.log(data)
+           } else {
+            delete data.checkPassword
+            ProfileApiController.changePassword(data)
         }
     }
 

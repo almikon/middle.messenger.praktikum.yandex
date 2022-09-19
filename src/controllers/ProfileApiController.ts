@@ -1,6 +1,6 @@
 import store from '../utils/Store';
 import router from '../utils/Router';
-import ProfileAPI, { ProfileApi } from '../api/ProfileApi';
+import ProfileAPI, { IChangePassword, ProfileApi } from '../api/ProfileApi';
 
 import UserAPI, { SignupData, UserApi } from '../api/UserApi';
 
@@ -13,10 +13,23 @@ export class ProfileApiController {
   }
 
   async update(data: SignupData) {
-    await this.api.update(data);
-    await this.fetchUser()
+    try{
+        await this.api.update(data);
+        await this.fetchUser()
 
-    router.go('/settings.html')
+        router.go('/settings.html')
+    }catch(e){
+        console.error(e)
+    }
+  }
+  async changePassword(data: IChangePassword){
+    try{
+        await this.api.updatePassword(data)
+        await this.fetchUser()
+        router.go('/settings.html')
+    }catch(e){
+        console.error(e)
+    }
   }
 
   async fetchUser() {

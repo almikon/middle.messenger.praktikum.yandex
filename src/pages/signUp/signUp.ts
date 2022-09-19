@@ -146,6 +146,7 @@ export class SignUpPage extends Block {
         }
     }
     // sljdfksdfppAA
+    // sljdfksdfppBB
 
     render() {
         return this.compile(tmpl, this.props);

@@ -1,6 +1,6 @@
 import BaseAPI from "./baseApi";
 import { SignupData } from "./UserApi";
-interface IChangePassword{
+export interface IChangePassword{
     oldpassword: string,
     newPassword: string
 }

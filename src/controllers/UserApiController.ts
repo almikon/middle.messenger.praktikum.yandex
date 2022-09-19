@@ -19,21 +19,33 @@ export class UserApiController {
   }
 
   async signup(data: SignupData) {
-    await this.api.signUp(data);
-    await this.fetchUser()
+    try{
+      await this.api.signUp(data);
+      await this.fetchUser()
 
-    router.go('/chats.html')
+      router.go('/chats.html')
+    }catch(e:any){
+      console.error(e)
+    }
   }
 
   async fetchUser() {
-    const user = await this.api.getUser();
+    try{
+      const user = await this.api.getUser();
 
-    store.set('user', user)
+      store.set('user', user)
+    }catch(e){
+      console.error(e)
+    }
   }
 
   async logout() {
-    await this.api.logout();
-    router.go('/')
+    try{
+      await this.api.logout();
+      router.go('/')
+    }catch(e){
+      console.error(e)
+    }
   }
 }
 

@@ -1,5 +1,5 @@
 export default function getData() {
-    let res: Record<string, string> = {}
+    let res: any = {}
     const inputList = document.querySelectorAll('input')
     inputList.forEach(input => {
         if (input.classList.contains('required')) {
