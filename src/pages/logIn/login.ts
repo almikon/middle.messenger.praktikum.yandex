@@ -9,19 +9,19 @@ import UserApiController from '../../controllers/UserApiController';
 import getData from '../../utils/GetData';
 import { logInData } from '../../api/UserApi';
 
-export class LogInPage extends Block{
+export class LogInPage extends Block {
     constructor() {
         super(
-        {
-            title: "Вход",
-            login: "Логин",
-            password: "Пароль",
-            footerNote: {
-                text: "Нет аккаунта?",
-                url: "signUp.html"
-            },
-            url: "chats.html"
-        });
+            {
+                title: "Вход",
+                login: "Логин",
+                password: "Пароль",
+                footerNote: {
+                    text: "Нет аккаунта?",
+                    url: "signUp.html"
+                },
+                url: "chats.html"
+            });
     }
     init() {
         this.children.button = new Button({

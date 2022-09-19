@@ -12,14 +12,14 @@ import { withStore } from '../../utils/Store';
 import { SignupData } from '../../api/UserApi';
 import ProfileApiController from '../../controllers/ProfileApiController';
 import { Modal } from '../../components/Modal';
-
+import router from '../../utils/Router'
 export class ChangeSettingsPageCore extends Block {
 
     init() {
         UserApiController.fetchUser()
         //TODO: avatar src doesn't work (reason: not found)
         this.children.avatar = new Avatar({
-            userAvatar: 'https://ya-praktikum.tech/api/v2/auth/user' + this.props.avatar,
+            userAvatar: this.props.avatar,
             altText: 'Ваш аватар',
             events: {
                 click: () => this.showModal()
@@ -39,7 +39,7 @@ export class ChangeSettingsPageCore extends Block {
         this.children.backButton = new Button({
             class: 'back__button',
             events: {
-                click: () => window.history.back()
+                click: () => router.go('/chats.html')
             }
         })
 
@@ -107,16 +107,16 @@ export class ChangeSettingsPageCore extends Block {
         } else {
             ProfileApiController.update(data as unknown as SignupData)
         }
-    }   
-    public showModal(){
+    }
+    public showModal() {
         const modal = document.querySelector('.modal') as HTMLElement
         modal.style.display = 'block'
     }
 
     render() {
         const modal = document.querySelector('.modal') as HTMLElement
-        window.onclick = (event)=>{
-            if(event.target == modal){
+        window.onclick = (event) => {
+            if (event.target == modal) {
                 modal.style.display = 'none'
             }
         }

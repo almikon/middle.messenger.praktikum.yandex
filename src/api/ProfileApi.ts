@@ -1,6 +1,6 @@
 import BaseAPI from "./baseApi";
 import { SignupData } from "./UserApi";
-export interface IChangePassword{
+export interface IChangePassword {
     oldpassword: string,
     newPassword: string
 }
@@ -13,14 +13,15 @@ export class ProfileApi extends BaseAPI {
         options.data = data
         return this.HTTPTransport.put('/profile', options)
     }
-    updatePassword(data:IChangePassword){
+    updatePassword(data: IChangePassword) {
         const options: Record<string, any> = {}
         options.data = data
         return this.HTTPTransport.put('/password', options)
     }
-    updateAvatar(formData: FormData){
+    updateAvatar(formData: FormData) {
         const options: Record<string, any> = {}
         options.data = formData
+        options.type = 'file'
         return this.HTTPTransport.put('/profile/avatar', options)
     }
 }

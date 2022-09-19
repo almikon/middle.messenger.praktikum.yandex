@@ -9,12 +9,13 @@ import { withStore } from '../../utils/Store';
 import { Avatar } from '../../components/Avatar';
 import { Title } from '../../components/Title';
 import ProfileApiController from '../../controllers/ProfileApiController';
+import router from '../../utils/Router'
 
-export class ChangePasswordPageCore extends Block{
+export class ChangePasswordPageCore extends Block {
     init() {
         //TODO: avatar src doesn't work (reason: not found)
         this.children.avatar = new Avatar({
-            userAvatar: 'https://ya-praktikum.tech/api/v2/auth/user' + this.props.avatar,
+            userAvatar: this.props.avatar,
             altText: 'Ваш аватар'
         })
         this.children.title = new Title({
@@ -30,7 +31,7 @@ export class ChangePasswordPageCore extends Block{
         this.children.backButton = new Button({
             class: 'back__button',
             events: {
-                click: () => window.history.back()
+                click: () => router.go('/chats.html')
             }
         })
 
@@ -66,7 +67,7 @@ export class ChangePasswordPageCore extends Block{
         const data = getData()
         const inputs = document.querySelectorAll('.wrong')
         if (inputs.length || data.newPassword != data.checkPassword) {
-           } else {
+        } else {
             delete data.checkPassword
             ProfileApiController.changePassword(data)
         }

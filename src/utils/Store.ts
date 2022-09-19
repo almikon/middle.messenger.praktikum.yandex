@@ -10,8 +10,7 @@ export class Store extends EventBus {
     private state: any = {}
 
     public getState() {
-            console.log(this.state.user)
-            return this.state
+        return this.state
     }
 
     public set(path: string, value: any) {
@@ -19,7 +18,7 @@ export class Store extends EventBus {
         this.emit(StoreEvents.Updated, this.getState())
     }
 
-    
+
 }
 
 const store = new Store();

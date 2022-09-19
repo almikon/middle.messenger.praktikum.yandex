@@ -21,13 +21,12 @@ window.addEventListener('DOMContentLoaded', async () => {
         .use('/changeSettings.html', ChangeSettingsPage)
         .use('/settings.html', SettingsPage)
         .use('/chats.html', ChatsPage)
-        
 
-        try {
-            await UserApiController.fetchUser()
-            router.start()
-        }catch(err){
-            console.error(err)
-            router.go('/')
-        }
+
+    try {
+        await UserApiController.fetchUser()
+        router.start()
+    } catch {
+        router.go('/')
+    }
 })

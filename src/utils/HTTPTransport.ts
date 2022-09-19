@@ -13,37 +13,42 @@ export default class HTTPTransport {
     constructor(baseUrl: string) {
         this.baseUrl = HTTPTransport.YA_URL + baseUrl
     }
-    
-    get<Response>(url: string, options: Record<any, any> = {}):Promise<Response>{
+
+    get<Response>(url: string, options: Record<any, any> = {}): Promise<Response> {
 
         url += queryStringify(options.data)
         return this.request<Response>(this.baseUrl + url, { ...options, method: METHODS.GET }, options.timeout)
     };
-    put<Response>(url: string, options: Record<any, any> = {}):Promise<Response>{
+    put<Response>(url: string, options: Record<any, any> = {}): Promise<Response> {
 
         return this.request(this.baseUrl + url, { ...options, method: METHODS.PUT }, options.timeout)
     };
-    post<Response>(url: string, options: Record<any, any> = {}):Promise<Response>{
+    post<Response>(url: string, options: Record<any, any> = {}): Promise<Response> {
 
         return this.request(this.baseUrl + url, { ...options, method: METHODS.POST }, options.timeout)
     };
-    delete<Response>(url: string, options: Record<any, any> = {}):Promise<Response>{
+    delete<Response>(url: string, options: Record<any, any> = {}): Promise<Response> {
 
         return this.request(this.baseUrl + url, { ...options, method: METHODS.DELETE }, options.timeout)
     };
 
     // private request<Response>(url: string, options: Options = {method: Method.Get}): Promise<Response> {
-    private request<Response>(url: string, options: Record<any, any>, timeout = 5000): Promise<Response>{
+    private request<Response>(url: string, options: Record<any, any>, timeout = 5000): Promise<Response> {
 
         const { data, method } = options;
+
         const JSONdata = JSON.stringify(data)
-        
+
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest()
 
             xhr.open(method, url)
-            
-            xhr.setRequestHeader('content-type', 'application/json')
+            if (options.type) {
+
+            } else {
+                xhr.setRequestHeader('content-type', 'application/json')
+            }
+
 
             xhr.onabort = reject
             xhr.onerror = reject
@@ -55,7 +60,10 @@ export default class HTTPTransport {
 
             if (method === METHODS.GET) {
                 xhr.send();
-            } else {
+            } else if (options.type) {
+                xhr.send(data)
+            }
+            else {
                 xhr.send(JSONdata)
             }
 

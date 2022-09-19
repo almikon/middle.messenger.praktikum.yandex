@@ -13,28 +13,28 @@ export class ProfileApiController {
   }
 
   async update(data: SignupData) {
-    try{
-        await this.api.update(data);
-        await this.fetchUser()
+    try {
+      await this.api.update(data);
+      await this.fetchUser()
 
-        router.go('/settings.html')
-    }catch(e){
-        console.error(e)
+      router.go('/settings.html')
+    } catch (e) {
+      console.error(e)
     }
   }
-  async changePassword(data: IChangePassword){
-    try{
-        await this.api.updatePassword(data)
-        await this.fetchUser()
-        router.go('/settings.html')
-    }catch(e){
-        console.error(e)
+  async changePassword(data: IChangePassword) {
+    try {
+      await this.api.updatePassword(data)
+      await this.fetchUser()
+      router.go('/settings.html')
+    } catch (e) {
+      console.error(e)
     }
   }
-  async changeAvatar(formData:FormData){
+  async changeAvatar(formData: FormData) {
     await this.api.updateAvatar(formData)
     await this.fetchUser()
-    // router.go('/settings.html')
+    router.go('/settings.html')
   }
   async fetchUser() {
     const user = await this.userapi.getUser();
