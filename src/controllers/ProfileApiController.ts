@@ -31,7 +31,11 @@ export class ProfileApiController {
         console.error(e)
     }
   }
-
+  async changeAvatar(formData:FormData){
+    await this.api.updateAvatar(formData)
+    await this.fetchUser()
+    // router.go('/settings.html')
+  }
   async fetchUser() {
     const user = await this.userapi.getUser();
 

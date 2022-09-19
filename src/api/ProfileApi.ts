@@ -18,6 +18,11 @@ export class ProfileApi extends BaseAPI {
         options.data = data
         return this.HTTPTransport.put('/password', options)
     }
+    updateAvatar(formData: FormData){
+        const options: Record<string, any> = {}
+        options.data = formData
+        return this.HTTPTransport.put('/profile/avatar', options)
+    }
 }
 
 export default new ProfileApi()

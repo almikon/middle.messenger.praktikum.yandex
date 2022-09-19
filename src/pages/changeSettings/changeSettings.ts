@@ -11,6 +11,7 @@ import { Title } from '../../components/Title';
 import { withStore } from '../../utils/Store';
 import { SignupData } from '../../api/UserApi';
 import ProfileApiController from '../../controllers/ProfileApiController';
+import { Modal } from '../../components/Modal';
 
 export class ChangeSettingsPageCore extends Block {
 
@@ -19,7 +20,10 @@ export class ChangeSettingsPageCore extends Block {
         //TODO: avatar src doesn't work (reason: not found)
         this.children.avatar = new Avatar({
             userAvatar: 'https://ya-praktikum.tech/api/v2/auth/user' + this.props.avatar,
-            altText: 'Ваш аватар'
+            altText: 'Ваш аватар',
+            events: {
+                click: () => this.showModal()
+            }
         })
         this.children.title = new Title({
             value: this.props.login
@@ -93,6 +97,7 @@ export class ChangeSettingsPageCore extends Block {
             ],
             pattern: PATTERNS.NAME
         })
+        this.children.modal = new Modal({})
     }
     public changeSettings() {
         const data = getData()
@@ -101,13 +106,23 @@ export class ChangeSettingsPageCore extends Block {
             console.log('Есть ошибки')
         } else {
             ProfileApiController.update(data as unknown as SignupData)
-            console.log(data)
         }
     }   
-    
+    public showModal(){
+        const modal = document.querySelector('.modal') as HTMLElement
+        modal.style.display = 'block'
+    }
+
     render() {
+        const modal = document.querySelector('.modal') as HTMLElement
+        window.onclick = (event)=>{
+            if(event.target == modal){
+                modal.style.display = 'none'
+            }
+        }
         return this.compile(tmpl, this.props);
     }
 }
+
 const withUser = withStore((state) => ({ ...state.user }))
 export const ChangeSettingsPage = withUser(ChangeSettingsPageCore)

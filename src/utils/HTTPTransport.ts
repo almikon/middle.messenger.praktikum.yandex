@@ -37,7 +37,7 @@ export default class HTTPTransport {
 
         const { data, method } = options;
         const JSONdata = JSON.stringify(data)
-
+        
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest()
 
