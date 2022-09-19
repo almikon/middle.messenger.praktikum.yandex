@@ -1,15 +1,24 @@
 import '../../less/settings.less'
-import userAvatar from '../../../static/img/userAvatar.png'
 import tmpl from './settings.hbs'
 import Block from '../../utils/Block';
 import { Button } from '../../components/Button';
 import UserApiController from '../../controllers/UserApiController';
 import store, { withStore } from '../../utils/Store';
 import { UserInfo } from '../../components/UserInfo';
+import { Title } from '../../components/Title';
+import { Avatar } from '../../components/Avatar';
 
 export class SettingsPageCore extends Block {
+    
     init() {
         UserApiController.fetchUser()
+        this.children.avatar = new Avatar({
+            userAvatar: 'ya-praktikum.tech/api/v2/auth/user' + this.props.avatar,
+            altText: 'Ваш аватар'
+        })
+        this.children.title = new Title({
+            value: this.props.login
+        })
         this.children.button = new Button({
             class: 'back__button',
             events: {
@@ -31,11 +40,11 @@ export class SettingsPageCore extends Block {
             name: 'Логин',
             value: this.props.login
         })
-        this.children.first_name = new UserInfo({
+        this.children.firstName = new UserInfo({
             name: 'Имя',
             value: this.props.first_name
         })
-        this.children.second_name = new UserInfo({
+        this.children.secondName = new UserInfo({
             name: 'Фамилия',
             value: this.props.second_name
         })
@@ -43,10 +52,16 @@ export class SettingsPageCore extends Block {
             name: 'Телефон',
             value: this.props.phone
         })
+        this.children.displayName = new UserInfo({
+            name: 'Имя в чате',
+            value: this.props.display_name
+        })
 
-        console.log(store.getState())
+        
     }
     render() {
+        
+        console.log(store.getState().user)
         return this.compile(tmpl, this.props);
     }
 }

@@ -3,25 +3,27 @@
         {{{button}}}
     </div>
     <div class="settings__main">
-        <img src={{userAvatar}} alt="Ваш аватар" class="userAvatar">
-
-        <p class="user__title">{{user}}</p>
+        {{{avatar}}}
+        {{{title}}}
 
         <div class-"user__settings">
             {{{email}}}
 
             {{{login}}}
 
-            {{{first_name}}}
+            {{{displayName}}}
 
-            {{{second_nmae}}}
+            {{{firstName}}}
+
+            {{{secondName}}}
 
             {{{phone}}}
 
+
         </div>
 
-        <div class="options__item"><a href={{change__data.url}}>{{change__data.item}}</a></div>
-        <div class="options__item"><a href={{change__password.url}}>{{change__password.item}}</a></div>
+        <div class="options__exit"><a href={{change__data.url}}>Изменить данные</a></div>
+        <div class="options__exit"><a href={{change__password.url}}>Изменить пароль</a></div>
 
         <div class="options__exit">{{{exitButton}}}</div>
     </div>

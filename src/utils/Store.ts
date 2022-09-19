@@ -7,16 +7,19 @@ export enum StoreEvents {
 }
 
 export class Store extends EventBus {
-    private state: Record<any, any> = {}
+    private state: any = {}
 
-    public getState(): Record<any, any> {
-        return this.state;
+    public getState() {
+            console.log(this.state.user)
+            return this.state
     }
 
     public set(path: string, value: any) {
         set(this.state, path, value);
         this.emit(StoreEvents.Updated, this.getState())
     }
+
+    
 }
 
 const store = new Store();

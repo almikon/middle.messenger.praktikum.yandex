@@ -13,12 +13,12 @@ export class UserApiController {
   }
 
   async logIn(data: logInData) {
-    await this.api.logIn(data)
-    await this.fetchUser()
-
-    console.log(`login`)
-    console.log(store.getState())
-    router.go('/chats.html')
+    try{
+      await this.api.logIn(data)
+      router.go('/chats.html')
+    } catch (e:any){
+      console.error(e)
+    }
   }
 
   async signup(data: SignupData) {
@@ -37,7 +37,6 @@ export class UserApiController {
 
   async logout() {
     await this.api.logout();
-    await this.fetchUser()
     router.go('/')
   }
 }

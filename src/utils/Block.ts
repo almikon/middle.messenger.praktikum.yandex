@@ -158,7 +158,11 @@ class Block<P extends Record<string,any> = any> {
                 target[prop] = value
                 self.eventBus().emit(Block.EVENTS.FLOW_CDU)
                 return target[prop]
-            }
+            },
+            get(target, prop: string) {
+                const value = target[prop];
+                return typeof value === "function" ? value.bind(target) : value;
+              },
         })
 
     }
