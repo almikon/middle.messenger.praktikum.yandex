@@ -1,48 +1,28 @@
 <div class="settings__container">
-<div class="left__back">
-    {{{button}}}
-</div>
-<div class="settings__main">
-    <img src={{userAvatar}} alt="Ваш аватар" class="userAvatar">
-
-    <p class="user__title">{{user}}</p>
-
-    <div class-"user__settings">
-        <div class="user__settings-item">
-            <p class="user__set_name">{{email.name}}</p>
-            <p class="user__set_value">{{email.value}}</p>
-        </div>
-
-        <div class="user__settings-item">
-            <p class="user__set_name">{{login.name}}</p>
-            <p class="user__set_value">{{login.value}}</p>
-        </div>
-
-        <div class="user__settings-item">
-            <p class="user__set_name">{{first_name.name}}</p>
-            <p class="user__set_value">{{first_name.value}}</p>
-        </div>
-
-        <div class="user__settings-item">
-            <p class="user__set_name">{{second_name.name}}</p>
-            <p class="user__set_value">{{second_name.value}}</p>
-        </div>
-
-        <div class="user__settings-item">
-            <p class="user__set_name">{{display_name.name}}</p>
-            <p class="user__set_value">{{display_name.value}}</p>
-        </div>
-
-        <div class="user__settings-item">
-            <p class="user__set_name">{{phone.name}}</p>
-            <p class="user__set_value">{{phone.value}}</p>
-        </div>
-
+    <div class="left__back">
+        {{{button}}}
     </div>
+    <div class="settings__main">
+        <img src={{userAvatar}} alt="Ваш аватар" class="userAvatar">
 
-    <div class="options__item"><a href={{change__data.url}}>{{change__data.item}}</a></div>
-    <div class="options__item"><a href={{change__password.url}}>{{change__password.item}}</a></div>
+        <p class="user__title">{{user}}</p>
 
-    <div class="options__exit">{{{exitButton}}}</div>
-</div>
+        <div class-"user__settings">
+            {{{email}}}
+
+            {{{login}}}
+
+            {{{first_name}}}
+
+            {{{second_nmae}}}
+
+            {{{phone}}}
+
+        </div>
+
+        <div class="options__item"><a href={{change__data.url}}>{{change__data.item}}</a></div>
+        <div class="options__item"><a href={{change__password.url}}>{{change__password.item}}</a></div>
+
+        <div class="options__exit">{{{exitButton}}}</div>
+    </div>
 </div>

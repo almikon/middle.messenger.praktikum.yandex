@@ -11,7 +11,9 @@ export interface SignupData {
     login: string;
     email: string;
     password: string;
-    phone: string;
+    phone: string,
+    avatar: string | null;
+    display_name: string | null
 }
 
 export interface User {
@@ -22,7 +24,8 @@ export interface User {
     email: string;
     password: string;
     phone: string;
-    avatar: string;
+    avatar: string | null;
+    display_name: string | null
 }
 
 export class UserApi extends BaseAPI {

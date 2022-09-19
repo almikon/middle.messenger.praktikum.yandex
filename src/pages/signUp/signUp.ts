@@ -48,11 +48,11 @@ export class SignUpPage extends Block {
                 name: "password",
                 placeholder: "Пароль"
             },
-            checkpassword: {
-                id: "Пароль (ещё раз)",
-                type: "password",
-                name: "checkPassword",
-                placeholder: "Пароль (ещё раз)"
+            display_name: {
+                id: "Имя в чате",
+                type: "text",
+                name: "display_name",
+                placeholder: "Имя в чате"
             },
             button__text: "Зарегистрироваться",
             footerNote: {
@@ -126,14 +126,14 @@ export class SignUpPage extends Block {
             ],
             pattern: PATTERNS.PHONE
         })
-        this.children.checkpasswordInput = new Input({
-            name: 'checkpassword',
-            placeholder: this.props.checkpassword.placeholder,
+        this.children.displayNameInput = new Input({
+            name: 'display_name',
+            placeholder: this.props.display_name.placeholder,
             classes: [
                 'form__input',
                 'required'
             ],
-            pattern: PATTERNS.PASSWORD
+            pattern: PATTERNS.LOGIN
         })
     }
     public signUp() {
@@ -142,16 +142,19 @@ export class SignUpPage extends Block {
         if (inputs.length) {
             console.log('Есть ошибки')
         } else {
+            data.avatar = '/0ec2bb6a-4ce8-43f4-acdd-d67b86163f25/07b0ef90-99ca-4397-aefe-8dea9b6b3008_A_1850.png'
+            console.log(data)
             UserApiController.signup(data as unknown as SignupData)
         }
     }
     // const res ={
-    //     "first_name": "mega",
+    //     "first_name": ""sljdfksdfppAA"",
     //     "second_name": "MEGA",
-    //     "login": "megaMEGAmegaMEGaQQ",
+    //     "login": "megaMEGAmegaMEGaWW",
     //     "email": "mega@mega.com",
-    //     "password": "sjhdbckhubdkehbchwekebhjcbekjhQQ",
-    //     "phone": "+79998881532"
+    //     "password": "sjhdbckhubdkehbchwekebhjcbekjhWW",
+    //     "phone": "+79998881532",
+    //      "display_name": "megaMEGAmegaMEGaWW"
     //   }
 
     render() {

@@ -1,44 +1,40 @@
 <div class="settings__container">
-<div class="left__back">
-    {{{backButton}}}
-</div>
-<div class="settings__main">
-    <div class="avatar">
-        <img src={{userAvatar}} alt="Нажмите чтобы изменить" class="userAvatar" onclick="setAvatar()">
+    <div class="left__back">
+        {{{backButton}}}
     </div>
-    <p class="user__title">{{user}}</p>
+    <div class="settings__main">
+        <div class="avatar">
+            <img src={{userAvatar}} alt="Нажмите чтобы изменить" class="userAvatar" onclick="setAvatar()">
+        </div>
+        <p class="user__title">{{user}}</p>
 
-    <div class-"user__settings">
-        <div class="user__settings-item">
-            <p class="user__set_name">{{email.name}}</p>
-            {{{emailInput}}}
-        </div>
-        <div class="user__settings-item">
-            <p class="user__set_name">{{login.name}}</p>
-            {{{loginInput}}}
-        </div>
-        <div class="user__settings-item">
-            <p class="user__set_name">{{first_name.name}}</p>
-            {{{firstNameInput}}}
-        </div>
-        <div class="user__settings-item">
-            <p class="user__set_name">{{second_name.name}}</p>
-            {{{secondNameInput}}}
-        </div>
-        <div class="user__settings-item">
-            <p class="user__set_name">{{display_name.name}}</p>
-            {{{display_nameInput}}}
-        </div>
-        <div class="user__settings-item">
-            <p class="user__set_name">{{phone.name}}</p>
-            {{{phoneInput}}}
-        </div>
+        <div class-"user__settings">
+            <div class="user__settings-item">
+                <p class="user__set_name">{{email.name}}</p>
+                {{{emailInput}}}
+            </div>
+            <div class="user__settings-item">
+                <p class="user__set_name">{{login.name}}</p>
+                {{{loginInput}}}
+            </div>
+            <div class="user__settings-item">
+                <p class="user__set_name">{{first_name.name}}</p>
+                {{{firstNameInput}}}
+            </div>
+            <div class="user__settings-item">
+                <p class="user__set_name">{{second_name.name}}</p>
+                {{{secondNameInput}}}
+            </div>
+            <div class="user__settings-item">
+                <p class="user__set_name">{{phone.name}}</p>
+                {{{phoneInput}}}
+            </div>
 
+        </div>
+        <div class="form__data-button">
+            {{{button}}}
+        </div>
     </div>
-    <div class="form__data-button">
-        {{{button}}}
-    </div>
-</div>      
     <div class="modal">
         <div class="modalContent">
             <p class="user__title">Загрузите файл</p>

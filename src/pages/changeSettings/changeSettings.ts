@@ -24,18 +24,14 @@ const context = {
         name: "Фамилия",
         placeholder: "Иванов"
     },
-    display_name: {
-        name: "Имя в чате",
-        placeholder: "Иван"
-    },
     phone: {
         name: "Телефон",
         placeholder: "+7(909)967-30-30"
     },
     button__text: "Сохранить",
-    goTo:'./settings.html'
+    goTo: './settings.html'
 }
-export class ChangeSettingsPage extends Block{
+export class ChangeSettingsPage extends Block {
     constructor() {
         super(context);
     }
@@ -54,7 +50,8 @@ export class ChangeSettingsPage extends Block{
             class: 'back__button',
             events: {
                 click: () => window.history.back()
-            }})
+            }
+        })
 
         this.children.loginInput = new Input({
             name: 'login',
@@ -100,15 +97,6 @@ export class ChangeSettingsPage extends Block{
                 'required'
             ],
             pattern: PATTERNS.PHONE
-        })
-        this.children.display_nameInput = new Input({
-            name: 'phone',
-            placeholder: this.props.display_name.placeholder,
-            classes: [
-                'settings__input',
-                'required'
-            ],
-            pattern: PATTERNS.NOTEMPTY
         })
     }
     public checkData() {
