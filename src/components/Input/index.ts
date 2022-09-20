@@ -5,7 +5,8 @@ interface InputProps {
     name?: string,
     placeholder?: string,
     classes: Array<string>,
-    pattern: string
+    pattern: string,
+    id?: string
 }
 
 export class Input extends Block<InputProps> {
@@ -16,6 +17,7 @@ export class Input extends Block<InputProps> {
             self?.classList.add(value)
         })
         self?.setAttribute('name', this.props.name)
+        self?.setAttribute('id',this.props.id)
         const checkContent = this.checkContent
         this.element?.addEventListener('blur', function (event) {
             const target = event.target as HTMLTextAreaElement

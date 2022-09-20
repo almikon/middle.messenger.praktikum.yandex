@@ -1,6 +1,6 @@
-import store from '../utils/Store';
-import router from '../utils/Router';
-import UserAPI, { logInData, SignupData, UserApi } from '../api/UserApi';
+import store from '../utils/Store'
+import router from '../utils/Router'
+import UserAPI, { logInData, SignupData, UserApi } from '../api/UserApi'
 
 export class UserApiController {
   private readonly api: UserApi

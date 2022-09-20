@@ -59,9 +59,13 @@
 }
 
 .chatsList__item {
-    display: flex;
-    flex-direction: row;
-}
+        background-color: @lightBlue;
+        flex-direction: row;
+        justify-content: center;
+        display: flex;
+        border-radius: 5px;
+        margin: 3px;
+    }
 
 .chat__title {
     font-family: 'Inter';
@@ -159,3 +163,11 @@
     width: 30px;
     border: none;
 }
+
+.newChat__item{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: antiquewhite;
+        border-radius: 5px;
+    }

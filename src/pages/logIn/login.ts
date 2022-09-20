@@ -64,6 +64,7 @@ export class LogInPage extends Block {
             console.log('Есть ошибки')
         } else {
             UserApiController.logIn(data as unknown as logInData)
+
         }
     }
 

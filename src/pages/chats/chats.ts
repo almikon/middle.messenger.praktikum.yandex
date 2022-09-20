@@ -8,61 +8,73 @@ import Block from '../../utils/Block';
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
 import { PATTERNS } from '../../constants'
-import { withStore } from '../../utils/Store'
-import { ChatItem } from '../../components/ChatItem'
+import store, { withStore } from '../../utils/Store'
 import getData from '../../utils/GetData'
-const context = {
-    dots: dots,
-    clip__img: clip__img,
-    forwardArrow: forwardArrow,
-    companion__avatar: companion__avatar,
-    profileLink: {
-        url: "settings.html",
-        text: "Профиль >"
-    },
-    chooseChat: "Выберите чат чтобы отправить сообщение"
-}
+import { NewChat } from '../../components/NewChat'
+import ChatsApiController from '../../controllers/ChatsApiController'
+import { ChatItem } from '../../components/ChatItem'
+
+// const context = {
+//     dots: dots,
+//     clip__img: clip__img,
+//     forwardArrow: forwardArrow,
+//     companion__avatar: companion__avatar,
+    
+//     chooseChat: "Выберите чат чтобы отправить сообщение"
+// }
 /*
-    работу с чатами (список чатов пользователя, 
-    создать новый чат, добавить пользователя в чат, 
-    удалить пользователя из чата).
+TODO:
+    список чатов пользователя, 
+    создать новый чат, - OK
+    добавить пользователя в чат, 
+    удалить пользователя из чата
 */
 export class ChatsPageCore extends Block {
     constructor() {
-        super(context)
+        super({profileLink: {
+            url: "settings.html",
+            text: "Профиль >"
+        }})
     }
     protected init(): void {
-        console.log(this.props)
-        this.children.newChatButton = new Button({
-            class: 'form__button',
-            events: {
-                click: () => this.createNewChat()
-            }
-        })
-        this.children.button = new Button({
-            class: 'send__button',
-            events: {
-                click: () => this.checkData()
-            }
-        }
-        )
-        this.children.input = new Input({
-            name: 'Message',
-            classes: ['message', 'required'],
-            pattern: PATTERNS.NOTEMPTY
-        })
+        ChatsApiController.getChats()
+            
+            this.children.newChat = new NewChat({
+                title: 'Создать новый чат',
+                buttonClass: 'form__button',
+                buttonValue: 'Создать',
+                inputName: 'title',
+                id: 'newChatTitle',
+                inputClasses:['form__input', 'required']
+            })
+            this.children.button = new Button({
+                class: 'send__button',
+                events: {
+                    click: () => this.sendData()
+                }
+            })
+            
+            this.children.input = new Input({
+                name: 'Message',
+                classes: ['message', 'required'],
+                pattern: PATTERNS.NOTEMPTY
+            })
     }
-    checkData() {
+
+    sendData() {
         const message = getData()
         console.log(message)
     }
-    public createNewChat() {
+    protected componentDidUpdate(): boolean {
 
+        return true
     }
+
     render() {
+        
         return this.compile(tmpl, this.props);
     }
 }
 
-const withUser = withStore((state) => ({ ...state.user }))
-export const ChatsPage = withUser(ChatsPageCore)
+const withChats = withStore((state) => ({ ...state }))
+export const ChatsPage = withChats(ChatsPageCore)

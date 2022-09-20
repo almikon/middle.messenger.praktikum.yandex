@@ -2,7 +2,7 @@ import Block from "../../utils/Block"
 import tmpl from './ChatItem.hbs'
 
 interface IChatItem {
-    title: string
+    title: string,
 }
 
 export class ChatItem extends Block {

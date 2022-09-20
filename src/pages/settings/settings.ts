@@ -13,6 +13,7 @@ export class SettingsPageCore extends Block {
     init() {
 
         UserApiController.fetchUser()
+        console.log(this.props)
         this.children.avatar = new Avatar({
             userAvatar: this.props.avatar,
             altText: 'Ваш аватар'

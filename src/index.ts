@@ -26,7 +26,8 @@ window.addEventListener('DOMContentLoaded', async () => {
     try {
         await UserApiController.fetchUser()
         router.start()
-    } catch {
+    } catch (e){
+        console.error(e)
         router.go('/')
     }
 })

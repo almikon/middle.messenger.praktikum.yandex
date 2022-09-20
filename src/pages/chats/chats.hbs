@@ -2,34 +2,22 @@
     <div class="chatsList">
         <div class="profileLink"><a href="{{profileLink.url}}">{{profileLink.text}}</a></div>
         <input class="search" placeholder="Поиск"></input>
-        <div class="chatsList">
-            {{{chat}}}
+        <div class="currentChatsList">
+
+            {{{newChat}}}
+            {{#each chats}}
+            <div class="chatsList__item" onclick="some()">
+                    <p class='chat__title'>{{this.title}}</p>
+            </div>
+            {{/each}}
         </div>
     </div>
     <div class="currentChat">
         <div class="currentChat__header">
-            <img src={{companion__avatar}} alt="Ваш собеседник" class="companion__avatar">
-            <p>Вадим</p>
-            <div class="extra"><img src={{dots}} alt="Дополнительно" class="dots">
-            </div>
+
         </div>
         <div class="currentChat__main">
-            <div class="currentChat__main-date">{{date}}</div>
-            <div class="currentChat__main_messages chat__text {{msg1.author}}">
-                <div class="currentChat__message {{msg1.author}}">
-                    {{{msg1.content}}}
-                </div>
-            </div>
-            <div class="currentChat__main_messages chat__text {{msg2.author}}">
-                <div class="currentChat__message {{msg2.author}}">
-                    <img src={{msg2.content}} alt="фото" class="message_img">
-                </div>
-            </div>
-            <div class="currentChat__main_messages chat__text {{msg3.author}}">
-                <div class="currentChat__message {{msg3.author}}">
-                    {{{msg3.content}}}
-                </div>
-            </div>
+
         </div>
         <div class="currentChat__sendMessage">
             <img src={{clip__img}} alt="Отправить файл" class="clip">

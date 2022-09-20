@@ -32,11 +32,9 @@ export default class HTTPTransport {
         return this.request(this.baseUrl + url, { ...options, method: METHODS.DELETE }, options.timeout)
     };
 
-    // private request<Response>(url: string, options: Options = {method: Method.Get}): Promise<Response> {
     private request<Response>(url: string, options: Record<any, any>, timeout = 5000): Promise<Response> {
 
         const { data, method } = options;
-
         const JSONdata = JSON.stringify(data)
 
         return new Promise((resolve, reject) => {
