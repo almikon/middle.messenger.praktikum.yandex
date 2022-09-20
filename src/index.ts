@@ -9,7 +9,6 @@ import { SettingsPage } from './pages/settings/settings';
 import { SignUpPage } from './pages/signUp/signUp';
 import router from './utils/Router'
 
-
 window.addEventListener('DOMContentLoaded', async () => {
     router
         .use('/', LogInPage)
@@ -26,7 +25,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     try {
         await UserApiController.fetchUser()
         router.start()
-    } catch (e){
+    } catch (e) {
         console.error(e)
         router.go('/')
     }

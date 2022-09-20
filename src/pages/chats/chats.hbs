@@ -3,26 +3,18 @@
         <div class="profileLink"><a href="{{profileLink.url}}">{{profileLink.text}}</a></div>
         <input class="search" placeholder="Поиск"></input>
         <div class="currentChatsList">
-
             {{{newChat}}}
+            <div>
+                <h3>Список чатов</h3>
+            </div>
             {{#each chats}}
-            <div class="chatsList__item" onclick="some()">
-                    <p class='chat__title'>{{this.title}}</p>
+            <div class="chatsList__item" onclick="showChat()">
+                <p class='chat__title'>{{this.title}}</p>
             </div>
             {{/each}}
         </div>
     </div>
     <div class="currentChat">
-        <div class="currentChat__header">
-
-        </div>
-        <div class="currentChat__main">
-
-        </div>
-        <div class="currentChat__sendMessage">
-            <img src={{clip__img}} alt="Отправить файл" class="clip">
-            {{{input}}}
-            {{{button}}}
-        </div>
+        {{{currentChat}}}
     </div>
 </div>

@@ -7,11 +7,11 @@ import tmpl from './newChat.hbs'
 
 interface INewChat {
     title: string,
-    buttonClass:string,
+    buttonClass: string,
     buttonValue: string,
     inputClasses: Array<string>,
     inputName: string,
-    id:string
+    id: string
 }
 
 export class NewChat extends Block {
@@ -26,18 +26,18 @@ export class NewChat extends Block {
                 click: () => this.createNewChat()
             }
         })
-            this.children.chatName = new Input({
-                classes: this.props.inputClasses,
-                pattern: PATTERNS.NOTEMPTY,
-                name: this.props.inputName,
-                id: this.props.id
-            })
+        this.children.chatName = new Input({
+            classes: this.props.inputClasses,
+            pattern: PATTERNS.NOTEMPTY,
+            name: this.props.inputName,
+            id: this.props.id
+        })
 
     }
     public createNewChat() {
         const newChatTitle = document.getElementById('newChatTitle') as HTMLInputElement
-        if(newChatTitle.value){
-        ChatsApiController.createChat(newChatTitle.value)
+        if (newChatTitle.value) {
+            ChatsApiController.createChat(newChatTitle.value)
         }
         newChatTitle.value = ''
     }

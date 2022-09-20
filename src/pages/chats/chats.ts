@@ -12,16 +12,7 @@ import store, { withStore } from '../../utils/Store'
 import getData from '../../utils/GetData'
 import { NewChat } from '../../components/NewChat'
 import ChatsApiController from '../../controllers/ChatsApiController'
-import { ChatItem } from '../../components/ChatItem'
 
-// const context = {
-//     dots: dots,
-//     clip__img: clip__img,
-//     forwardArrow: forwardArrow,
-//     companion__avatar: companion__avatar,
-    
-//     chooseChat: "Выберите чат чтобы отправить сообщение"
-// }
 /*
 TODO:
     список чатов пользователя, 
@@ -31,48 +22,44 @@ TODO:
 */
 export class ChatsPageCore extends Block {
     constructor() {
-        super({profileLink: {
-            url: "settings.html",
-            text: "Профиль >"
-        }})
+        super({ ...store.getState() })
     }
     protected init(): void {
         ChatsApiController.getChats()
-            
-            this.children.newChat = new NewChat({
-                title: 'Создать новый чат',
-                buttonClass: 'form__button',
-                buttonValue: 'Создать',
-                inputName: 'title',
-                id: 'newChatTitle',
-                inputClasses:['form__input', 'required']
-            })
-            this.children.button = new Button({
-                class: 'send__button',
-                events: {
-                    click: () => this.sendData()
-                }
-            })
-            
-            this.children.input = new Input({
-                name: 'Message',
-                classes: ['message', 'required'],
-                pattern: PATTERNS.NOTEMPTY
-            })
-    }
+        console.log(this.props)
+        console.log(this.props.chats)
+        console.log(this.props.user)
+        this.children.newChat = new NewChat({
+            title: 'Создать новый чат',
+            buttonClass: 'form__button',
+            buttonValue: 'Создать',
+            inputName: 'title',
+            id: 'newChatTitle',
+            inputClasses: ['form__input', 'required']
+        })
+        this.children.button = new Button({
+            class: 'send__button',
+            events: {
+                click: () => this.sendData()
+            }
+        })
 
+        this.children.input = new Input({
+            name: 'Message',
+            classes: ['message', 'required'],
+            pattern: PATTERNS.NOTEMPTY
+        })
+    }
     sendData() {
         const message = getData()
         console.log(message)
     }
-    protected componentDidUpdate(): boolean {
-
-        return true
+    showChat() {
     }
-
     render() {
-        
+        console.log(this.props.chats)
         return this.compile(tmpl, this.props);
+
     }
 }
 
