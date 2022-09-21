@@ -48,22 +48,19 @@ export class ChatsPageCore extends Block {
             classes: ['message', 'required'],
             pattern: PATTERNS.NOTEMPTY
         })
-        this.children.chatItem = new ChatItem({
-            title:''
-        })
     }
     sendData() {
         const message = getData()
         console.log(message)
     }
     protected componentDidUpdate(): boolean {
+        
         this.children.chatItem = new ChatItem({
-            title:this.props.chats.title
+            title: 'this.props.chats.title'
         })
         return super.componentDidUpdate()
     }
     render() {
-        console.log(this.props.chats)
         return this.compile(tmpl, this.props);
 
     }
