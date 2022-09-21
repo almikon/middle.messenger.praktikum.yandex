@@ -26,9 +26,7 @@ export class ChatsPageCore extends Block {
     }
     protected init(): void {
         ChatsApiController.getChats()
-        console.log(this.props)
-        console.log(this.props.chats)
-        console.log(this.props.user)
+
         this.children.newChat = new NewChat({
             title: 'Создать новый чат',
             buttonClass: 'form__button',
@@ -54,7 +52,11 @@ export class ChatsPageCore extends Block {
         const message = getData()
         console.log(message)
     }
-    showChat() {
+    protected componentDidUpdate(): boolean {
+        this.children.newChat.setProps({
+            title:'Новое значение'
+        })
+        return super.componentDidUpdate()
     }
     render() {
         console.log(this.props.chats)
