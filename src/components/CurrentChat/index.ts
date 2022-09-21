@@ -1,15 +1,13 @@
 import Block from "../../utils/Block"
-import tmpl from './ChatItem.hbs'
+import tmpl from './currentChat.hbs'
 
-interface IChatItem {
+interface ICurrentChat {
     title: string,
-    events:{
-        click: ()=>void
-    }
+
 }
 
-export class ChatItem extends Block {
-    constructor(props: IChatItem) {
+export class CurrentChat extends Block {
+    constructor(props: ICurrentChat) {
         super(props)
     }
     protected render(): DocumentFragment {

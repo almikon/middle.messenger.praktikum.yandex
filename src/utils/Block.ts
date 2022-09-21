@@ -15,6 +15,7 @@ class Block<P extends Record<string,any> = any> {
     private eventBus: () => EventBus;
     private _element: HTMLElement | null = null;
 
+
     public constructor(propsWithChildren: P) {
         const eventBus = new EventBus();
 

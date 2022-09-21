@@ -21,8 +21,8 @@ export class ChatsApiController {
     try {
       const chats = await this.api.read()
       store.set('chats', chats)
-    } catch (e) {
-      console.error(e)
+    } catch (e){
+      console.log(e)
     }
   }
 }
