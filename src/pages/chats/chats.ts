@@ -11,6 +11,7 @@ import { PATTERNS } from '../../constants'
 import store, { withStore } from '../../utils/Store'
 import getData from '../../utils/GetData'
 import { NewChat } from '../../components/NewChat'
+import { ChatItem } from '../../components/ChatItem'
 import ChatsApiController from '../../controllers/ChatsApiController'
 
 /*
@@ -47,14 +48,17 @@ export class ChatsPageCore extends Block {
             classes: ['message', 'required'],
             pattern: PATTERNS.NOTEMPTY
         })
+        this.children.chatItem = new ChatItem({
+            title:''
+        })
     }
     sendData() {
         const message = getData()
         console.log(message)
     }
     protected componentDidUpdate(): boolean {
-        this.children.newChat.setProps({
-            title:'Новое значение'
+        this.children.chatItem = new ChatItem({
+            title:this.props.chats.title
         })
         return super.componentDidUpdate()
     }

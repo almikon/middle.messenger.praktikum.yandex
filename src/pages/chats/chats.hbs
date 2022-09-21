@@ -8,9 +8,7 @@
                 <h3>Список чатов</h3>
             </div>
             {{#each chats}}
-            <div class="chatsList__item" onclick="showChat()">
-                <p class='chat__title'>{{this.title}}</p>
-            </div>
+                {{{chatItem}}}
             {{/each}}
         </div>
     </div>
