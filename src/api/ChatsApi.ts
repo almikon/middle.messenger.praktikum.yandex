@@ -1,3 +1,4 @@
+import HTTPTransport from '../utils/HTTPTransport'
 import BaseAPI from './baseApi'
 
 export interface IcreateChat{
@@ -19,7 +20,9 @@ export class ChatsApi extends BaseAPI {
     read(){
         return this.HTTPTransport.get('')
     }
-    update = undefined
+    update(options: any){
+        return HTTPTransport.put('/users',options)
+    }
     delete = undefined
 }
 

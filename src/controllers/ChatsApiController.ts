@@ -25,6 +25,14 @@ export class ChatsApiController {
       console.log(e)
     }
   }
+
+  async addUser(){
+    this.api.
+
+  }
+  async deleteUser(){
+
+  }
 }
 
 export default new ChatsApiController()

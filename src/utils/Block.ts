@@ -87,7 +87,7 @@ class Block<P extends Record<string,any> = any> {
         }
     }
 
-    protected componentDidUpdate() {
+    protected componentDidUpdate(_query?:string) {
         return true;
     }
 

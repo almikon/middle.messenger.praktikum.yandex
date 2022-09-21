@@ -12,20 +12,21 @@ import { withStore } from '../../utils/Store';
 import { SignupData } from '../../api/UserApi';
 import ProfileApiController from '../../controllers/ProfileApiController';
 import { Modal } from '../../components/Modal';
-import router from '../../utils/Router'
+
 export class ChangeSettingsPageCore extends Block {
 
     init() {
         UserApiController.fetchUser()
         //TODO: avatar src doesn't work (reason: not found)
         this.children.avatar = new Avatar({
-            userAvatar: this.props.avatar,
+            userAvatar: 'https://ya-praktikum.tech/api/v2/resources' + this.props.avatar,
             altText: 'Ваш аватар',
             events: {
                 click: () => this.showModal()
             }
         })
         this.children.title = new Title({
+            class: "user__title",
             value: this.props.login
         })
         this.children.button = new Button({
@@ -39,7 +40,7 @@ export class ChangeSettingsPageCore extends Block {
         this.children.backButton = new Button({
             class: 'back__button',
             events: {
-                click: () => router.go('/chats.html')
+                click: () => window.history.back()
             }
         })
 
@@ -97,7 +98,15 @@ export class ChangeSettingsPageCore extends Block {
             ],
             pattern: PATTERNS.NAME
         })
-        this.children.modal = new Modal({})
+
+        this.children.modal = new Modal({
+            buttonValue:'Поменять',
+            inputId: 'uploadAvatarImage',
+            inputType: 'file',
+            title: 'Загрузите файл',
+            label: 'Файл',
+            inputClass:'input'
+        })
     }
     public changeSettings() {
         const data = getData()

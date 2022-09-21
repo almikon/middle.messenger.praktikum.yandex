@@ -15,11 +15,12 @@ export class SettingsPageCore extends Block {
         UserApiController.fetchUser()
         console.log(this.props)
         this.children.avatar = new Avatar({
-            userAvatar: this.props.avatar,
+            userAvatar: 'https://ya-praktikum.tech/api/v2/resources' + this.props.avatar,
             altText: 'Ваш аватар'
         })
         this.children.title = new Title({
-            value: this.props.login
+            value: this.props.login,
+            class: "user__title"
         })
         this.children.backButton = new Button({
             class: 'back__button',

@@ -1,7 +1,11 @@
 import Block from "../../utils/Block";
 import tmpl from './title.hbs'
 interface ITitle {
-    value: string
+    value: string,
+    class: string,
+    events?:{
+        click:()=>void
+    }
 }
 export class Title extends Block {
     constructor(props: ITitle) {

@@ -9,17 +9,16 @@ import { withStore } from '../../utils/Store';
 import { Avatar } from '../../components/Avatar';
 import { Title } from '../../components/Title';
 import ProfileApiController from '../../controllers/ProfileApiController';
-import router from '../../utils/Router'
 
 export class ChangePasswordPageCore extends Block {
     init() {
-        //TODO: avatar src doesn't work (reason: not found)
         this.children.avatar = new Avatar({
-            userAvatar: this.props.avatar,
+            userAvatar: 'https://ya-praktikum.tech/api/v2/resources' + this.props.avatar,
             altText: 'Ваш аватар'
         })
         this.children.title = new Title({
-            value: this.props.login
+            value: this.props.login,
+            class: "user__title"
         })
         this.children.button = new Button({
             class: 'form__button',
@@ -31,7 +30,7 @@ export class ChangePasswordPageCore extends Block {
         this.children.backButton = new Button({
             class: 'back__button',
             events: {
-                click: () => router.go('/chats.html')
+                click: () => window.history.back()
             }
         })
 
