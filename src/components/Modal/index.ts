@@ -1,18 +1,19 @@
 import ChatsApiController from "../../controllers/ChatsApiController"
-import ProfileApiController from "../../controllers/ProfileApiController"
+import ProfileApiController from "../../controllers/UserApiController"
 import Block from "../../utils/Block"
+import store from "../../utils/Store"
 import { Button } from "../Button"
 import tmpl from './modal.hbs'
-interface IModal{
+interface IModal {
     buttonValue: string
-    inputId:string
+    inputId: string
     inputType: string
-    inputClass?:string
+    inputClass?: string
     title: string
-    label:string
+    label: string
 }
 export class Modal extends Block {
-    constructor(props: IModal){
+    constructor(props: IModal) {
         super(props)
     }
 
@@ -36,11 +37,13 @@ export class Modal extends Block {
 
             ProfileApiController.changeAvatar(formData)
         }
-        if(addUser.value){
-            console.log(addUser.value)
-            ChatsApiController.addUser()
+        if (addUser.value) {
+
+            ChatsApiController.addUser(
+                store.getState().currentChatId,
+                addUser.value)
         }
-        if(deleteUser.value){
+        if (deleteUser.value) {
             console.log(deleteUser.value)
             ChatsApiController.deleteUser()
         }

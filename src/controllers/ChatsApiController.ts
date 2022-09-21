@@ -1,5 +1,6 @@
 import ChatsAPI, { ChatsApi } from '../api/ChatsApi';
 import store from '../utils/Store';
+import UserApiController from './UserApiController';
 
 export class ChatsApiController {
   private readonly api: ChatsApi
@@ -21,16 +22,18 @@ export class ChatsApiController {
     try {
       const chats = await this.api.read()
       store.set('chats', chats)
-    } catch (e){
+    } catch (e) {
       console.log(e)
     }
   }
 
-  async addUser(){
-    this.api.
+  async addUser(chatId: number, login: string) {
+    const userId: any = await UserApiController.getUserByLogin(login)
+
+    await this.api.update(chatId, userId[0].id)
 
   }
-  async deleteUser(){
+  async deleteUser() {
 
   }
 }

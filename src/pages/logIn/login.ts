@@ -5,9 +5,9 @@ import Block from '../../utils/Block';
 import tmpl from './logIn.hbs'
 import { PATTERNS } from '../../constants'
 import Store, { StoreEvents } from '../../utils/Store';
-import UserApiController from '../../controllers/UserApiController';
+import AuthApiController from '../../controllers/AuthApiController';
 import getData from '../../utils/GetData';
-import { logInData } from '../../api/UserApi';
+import { logInData } from '../../api/AuthApi';
 
 export class LogInPage extends Block {
     constructor() {
@@ -63,7 +63,7 @@ export class LogInPage extends Block {
         if (inputs.length) {
             console.log('Есть ошибки')
         } else {
-            UserApiController.logIn(data as unknown as logInData)
+            AuthApiController.logIn(data as unknown as logInData)
 
         }
     }

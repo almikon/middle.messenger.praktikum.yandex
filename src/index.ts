@@ -1,4 +1,4 @@
-import UserApiController from './controllers/UserApiController';
+import AuthApiController from './controllers/AuthApiController';
 import { Page404Page } from './pages/404/404';
 import { Page500Page } from './pages/500/500';
 import { ChangePasswordPage } from './pages/changePassword/changePassword';
@@ -23,7 +23,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
 
     try {
-        await UserApiController.fetchUser()
+        await AuthApiController.fetchUser()
         router.start()
     } catch (e) {
         console.error(e)

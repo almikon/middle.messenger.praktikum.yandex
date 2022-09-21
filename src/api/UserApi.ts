@@ -1,64 +1,34 @@
-import BaseAPI from './baseApi'
-
-export interface logInData {
-    login: string
-    password: string
+import BaseAPI from "./baseApi";
+import { SignupData } from "./AuthApi";
+export interface IChangePassword {
+    oldpassword: string,
+    newPassword: string
 }
-
-export interface SignupData {
-    first_name: string;
-    second_name: string;
-    login: string;
-    email: string;
-    password: string;
-    phone: string,
-    avatar: string | null;
-    display_name: string | null
-}
-
-export interface User {
-    id: number;
-    first_name: string;
-    second_name: string;
-    login: string;
-    email: string;
-    password: string;
-    phone: string;
-    avatar: string | null;
-    display_name: string | null
-}
-
 export class UserApi extends BaseAPI {
     constructor() {
-        super('/auth')
+        super('/user')
     }
-
-    logIn(data: logInData) {
-        const options: Record<string, string | logInData> = {}
-        options.data = data
-
-        return this.HTTPTransport.post('/signin', options)
-    }
-
-    signUp(data: SignupData) {
+    update(data: SignupData) {
         const options: Record<string, any> = {}
         options.data = data
-
-        return this.HTTPTransport.post('/signup', options)
+        return this.HTTPTransport.put('/profile', options)
     }
-
-    getUser(): Promise<User> {
-
-        return this.HTTPTransport.get('/user')
+    updatePassword(data: IChangePassword) {
+        const options: Record<string, any> = {}
+        options.data = data
+        return this.HTTPTransport.put('/password', options)
     }
-
-    logout() {
-        return this.HTTPTransport.post('/logout')
+    updateAvatar(formData: FormData) {
+        const options: Record<string, any> = {}
+        options.data = formData
+        options.type = 'file'
+        return this.HTTPTransport.put('/profile/avatar', options)
     }
-    create = undefined
-    read = undefined
-    update = undefined
-    delete = undefined
+    getUserByLogin(login: string): {} {
+        const options: Record<string, any> = {}
+        options.data = { 'login': login }
+        return this.HTTPTransport.post('/search', options)
+    }
 }
 
 export default new UserApi()

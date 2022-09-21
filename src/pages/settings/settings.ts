@@ -2,7 +2,7 @@ import '../../less/settings.less'
 import tmpl from './settings.hbs'
 import Block from '../../utils/Block';
 import { Button } from '../../components/Button';
-import UserApiController from '../../controllers/UserApiController';
+import AuthApiController from '../../controllers/AuthApiController';
 import { withStore } from '../../utils/Store';
 import { UserInfo } from '../../components/UserInfo';
 import { Title } from '../../components/Title';
@@ -12,7 +12,7 @@ export class SettingsPageCore extends Block {
 
     init() {
 
-        UserApiController.fetchUser()
+        AuthApiController.fetchUser()
         console.log(this.props)
         this.children.avatar = new Avatar({
             userAvatar: 'https://ya-praktikum.tech/api/v2/resources' + this.props.avatar,
@@ -32,7 +32,7 @@ export class SettingsPageCore extends Block {
             class: 'exit__button',
             value: 'Выход',
             events: {
-                click: () => UserApiController.logout()
+                click: () => AuthApiController.logout()
             }
         })
         this.children.email = new UserInfo({

@@ -5,8 +5,8 @@ import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { PATTERNS } from '../../constants'
 import getData from '../../utils/GetData';
-import UserApiController from '../../controllers/UserApiController';
-import { SignupData } from '../../api/UserApi';
+import AuthApiController from '../../controllers/AuthApiController';
+import { SignupData } from '../../api/AuthApi';
 
 export class SignUpPage extends Block {
     constructor() {
@@ -142,7 +142,7 @@ export class SignUpPage extends Block {
         if (inputs.length) {
             console.log('Есть ошибки')
         } else {
-            UserApiController.signup(data as unknown as SignupData)
+            AuthApiController.signup(data as unknown as SignupData)
         }
     }
     // sljdfksdfppAA

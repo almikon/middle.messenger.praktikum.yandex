@@ -1,8 +1,7 @@
-import HTTPTransport from '../utils/HTTPTransport'
 import BaseAPI from './baseApi'
 
-export interface IcreateChat{
-    title:string
+export interface IcreateChat {
+    title: string
 }
 
 export class ChatsApi extends BaseAPI {
@@ -10,18 +9,20 @@ export class ChatsApi extends BaseAPI {
         super('/chats')
     }
 
-    create(title:string){
-        const options: Record<string,any>={}
-        options.data = {'title': title}
-        // console.log(options)
-        return this.HTTPTransport.post('',options)
+    create(title: string) {
+        const options: Record<string, any> = {}
+        options.data = { 'title': title }
+        return this.HTTPTransport.post('', options)
 
-    } 
-    read(){
+    }
+    read() {
         return this.HTTPTransport.get('')
     }
-    update(options: any){
-        return HTTPTransport.put('/users',options)
+    update(chatId: number, userId: number) {
+
+        const options: Record<string, any> = {}
+        options.data = { 'users': [userId], 'chatId': chatId }
+        return this.HTTPTransport.put('/users', options)
     }
     delete = undefined
 }

@@ -8,7 +8,7 @@ import getData from '../../utils/GetData';
 import { withStore } from '../../utils/Store';
 import { Avatar } from '../../components/Avatar';
 import { Title } from '../../components/Title';
-import ProfileApiController from '../../controllers/ProfileApiController';
+import AuthApiController from '../../controllers/AuthApiController';
 
 export class ChangePasswordPageCore extends Block {
     init() {
@@ -69,7 +69,7 @@ export class ChangePasswordPageCore extends Block {
             console.log('пароли не совпадают')
         } else {
             delete data.checkPassword
-            ProfileApiController.changePassword(data)
+            AuthApiController.changePassword(data)
         }
     }
 

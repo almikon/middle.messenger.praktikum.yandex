@@ -1,14 +1,14 @@
 import Block from "../../utils/Block"
+import { withStore } from "../../utils/Store"
 import { Modal } from "../Modal"
 import { Title } from "../Title"
 import tmpl from './currentChat.hbs'
 
 interface ICurrentChat {
-    title: string,
-
+    title?: string,
 }
 
-export class CurrentChat extends Block {
+class CurrentChatCore extends Block {
     constructor(props: ICurrentChat) {
         super(props)
     }
@@ -17,53 +17,53 @@ export class CurrentChat extends Block {
             class: '',
             value: 'Добавить участника',
             events: {
-                click: ()=> this.addUserToChat()
+                click: () => this.addUserToChat()
             }
         })
         this.children.deleteUser = new Title({
             class: '',
             value: 'Удалить участника',
             events: {
-                click: ()=> this.deleteUserFromChat()
+                click: () => this.deleteUserFromChat()
             }
         })
         this.children.modalAdd = new Modal({
             buttonValue: 'Добавить',
-            inputId:'addModal',
+            inputId: 'addModal',
             inputType: 'text',
-            inputClass:'form__input',
+            inputClass: 'form__input',
             title: 'Добавить пользователя',
             label: 'Логин'
         })
         this.children.modalDelete = new Modal({
             buttonValue: 'Удалить',
-            inputId:'deleteModal',
+            inputId: 'deleteModal',
             inputType: 'text',
-            inputClass:'form__input',
+            inputClass: 'form__input',
             title: 'Удалить пользователя',
             label: 'Логин'
         })
-        
+
     }
 
-    protected componentDidUpdate(query:string): boolean {
-        
-            const modal = document.querySelector(query) as HTMLElement
-            console.log(modal)
-            window.onclick = (event) => {
-                if (event.target == modal) {
-                    modal.style.display = 'none'
-                }
+    protected componentDidUpdate(query: string): boolean {
+
+        const modal = document.querySelector(query) as HTMLElement
+        window.onclick = (event) => {
+            if (event.target == modal) {
+                modal.style.display = 'none'
             }
-        return true  
+        }
+
+        return true
     }
-    public addUserToChat(){
+    public addUserToChat() {
         const addModal = document.querySelector('.addModal') as HTMLElement
-        console.log()
+
         addModal.style.display = 'block'
         this.componentDidUpdate('.addModal')
     }
-    public deleteUserFromChat(){
+    public deleteUserFromChat() {
         const deleteModal = document.querySelector('.deleteModal') as HTMLElement
         deleteModal.style.display = 'block'
         this.componentDidUpdate('.deleteModal')
@@ -72,3 +72,6 @@ export class CurrentChat extends Block {
         return this.compile(tmpl, this.props)
     }
 }
+
+const withChatId = withStore((state) => ({ ...state.currentChatId }))
+export const CurrentChat = withChatId(CurrentChatCore)

@@ -5,18 +5,18 @@ import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { PATTERNS } from '../../constants'
 import getData from '../../utils/GetData';
-import UserApiController from '../../controllers/UserApiController';
+import AuthApiController from '../../controllers/AuthApiController';
 import { Avatar } from '../../components/Avatar';
 import { Title } from '../../components/Title';
 import { withStore } from '../../utils/Store';
-import { SignupData } from '../../api/UserApi';
-import ProfileApiController from '../../controllers/ProfileApiController';
+import { SignupData } from '../../api/AuthApi';
+import AuthApiController from '../../controllers/AuthApiController';
 import { Modal } from '../../components/Modal';
 
 export class ChangeSettingsPageCore extends Block {
 
     init() {
-        UserApiController.fetchUser()
+        AuthApiController.fetchUser()
         //TODO: avatar src doesn't work (reason: not found)
         this.children.avatar = new Avatar({
             userAvatar: 'https://ya-praktikum.tech/api/v2/resources' + this.props.avatar,
@@ -100,12 +100,12 @@ export class ChangeSettingsPageCore extends Block {
         })
 
         this.children.modal = new Modal({
-            buttonValue:'Поменять',
+            buttonValue: 'Поменять',
             inputId: 'uploadAvatarImage',
             inputType: 'file',
             title: 'Загрузите файл',
             label: 'Файл',
-            inputClass:'input'
+            inputClass: 'input'
         })
     }
     public changeSettings() {
@@ -114,7 +114,7 @@ export class ChangeSettingsPageCore extends Block {
         if (inputs.length) {
             console.log('Есть ошибки')
         } else {
-            ProfileApiController.update(data as unknown as SignupData)
+            AuthApiController.update(data as unknown as SignupData)
         }
     }
     public showModal() {
