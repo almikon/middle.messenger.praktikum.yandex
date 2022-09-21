@@ -54,7 +54,9 @@ export class ChatsPageCore extends Block {
         console.log(message)
     }
     protected componentDidUpdate(): boolean {
-        
+        this.props.chats.forEach((element: any) => {
+            console.log(element)
+        });
         this.children.chatItem = new ChatItem({
             title: 'this.props.chats.title'
         })
