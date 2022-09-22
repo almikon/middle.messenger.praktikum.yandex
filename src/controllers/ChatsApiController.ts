@@ -33,8 +33,15 @@ export class ChatsApiController {
     await this.api.update(chatId, userId[0].id)
 
   }
-  async deleteUser() {
+  async deleteUser(chatId: number, login: string) {
+    const userId: any = await UserApiController.getUserByLogin(login)
 
+    await this.api.delete(chatId, userId[0].id)
+  }
+
+  async chatToken(id:number) {
+    const token =  await this.api.chatToken(id)
+    store.set('token', token) 
   }
 }
 

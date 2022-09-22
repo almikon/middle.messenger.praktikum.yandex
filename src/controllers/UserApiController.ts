@@ -16,7 +16,7 @@ export class UserApiController {
       await this.api.update(data);
       await this.fetchUser()
 
-      router.go('/settings.html')
+      router.go('/settings')
     } catch (e) {
       console.error(e)
     }
@@ -25,7 +25,7 @@ export class UserApiController {
     try {
       await this.api.updatePassword(data)
       await this.fetchUser()
-      router.go('/settings.html')
+      router.go('/settings')
     } catch (e) {
       console.error(e)
     }
@@ -33,7 +33,7 @@ export class UserApiController {
   async changeAvatar(formData: FormData) {
     await this.api.updateAvatar(formData)
     await this.fetchUser()
-    router.go('/settings.html')
+    router.go('/settings')
   }
   async fetchUser() {
     const user = await this.authApi.getUser();

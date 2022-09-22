@@ -12,7 +12,7 @@ export class AuthApiController {
   async logIn(data: logInData) {
     try {
       await this.api.logIn(data)
-      router.go('/chats.html')
+      router.go('/messenger')
     } catch (e: any) {
       console.error(e)
     }
@@ -23,7 +23,7 @@ export class AuthApiController {
       await this.api.signUp(data);
       await this.fetchUser()
 
-      router.go('/chats.html')
+      router.go('/messenger')
     } catch (e: any) {
       console.error(e)
     }

@@ -10,7 +10,7 @@ export class Page500Page extends Block{
                 description: "Мы уже фиксим"
             },
             footerNote: {
-                url: "./chats.html",
+                url: "./messenger",
                 text: "Назад к чатам"
             }
         });

@@ -13,13 +13,13 @@ window.addEventListener('DOMContentLoaded', async () => {
     router
         .use('/', LogInPage)
         .use('/index.html', LogInPage)
-        .use('/signUp.html', SignUpPage)
+        .use('/sign-up', SignUpPage)
         .use('/404.html', Page404Page)
         .use('/500.html', Page500Page)
         .use('/changePassword.html', ChangePasswordPage)
-        .use('/changeSettings.html', ChangeSettingsPage)
-        .use('/settings.html', SettingsPage)
-        .use('/chats.html', ChatsPage)
+        .use('/changesettings', ChangeSettingsPage)
+        .use('/settings', SettingsPage)
+        .use('/messenger', ChatsPage)
 
 
     try {

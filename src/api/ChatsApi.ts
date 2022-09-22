@@ -22,9 +22,18 @@ export class ChatsApi extends BaseAPI {
 
         const options: Record<string, any> = {}
         options.data = { 'users': [userId], 'chatId': chatId }
+        console.log('put users')
         return this.HTTPTransport.put('/users', options)
     }
-    delete = undefined
+    delete(chatId: number, userId: number){
+        const options: Record<string, any> = {}
+        options.data = { 'users': [userId], 'chatId': chatId }
+        console.log('delete users')
+        return this.HTTPTransport.delete('/users', options)
+}
+    chatToken(id:number){
+        return this.HTTPTransport.post(`/token/${id}`)
+    }
 }
 
 export default new ChatsApi()

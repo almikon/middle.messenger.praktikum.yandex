@@ -25,7 +25,7 @@ export class SettingsPageCore extends Block {
         this.children.backButton = new Button({
             class: 'back__button',
             events: {
-                click: () => router.go('/chats.html')
+                click: () => router.go('/messenger')
             }
         })
         this.children.exitButton = new Button({

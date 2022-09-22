@@ -13,18 +13,13 @@ import ChatsApiController from '../../controllers/ChatsApiController'
 import { ChatList } from '../../components/ChatList'
 import { CurrentChat } from '../../components/CurrentChat';
 
-/*
-TODO:
-    добавить пользователя в чат, 
-    удалить пользователя из чата
-*/
 export class ChatsPageCore extends Block {
     constructor() {
         super({ ...store.getState(),
         clip__img: clip__img,
         forwardArrow:forwardArrow,
         profileLink: {
-            url: '/settings.html',
+            url: '/settings',
             text: 'Профиль'}
  })
     }
@@ -53,7 +48,7 @@ export class ChatsPageCore extends Block {
         })
 
         this.children.currentChat = new CurrentChat({
-                title: 'old'
+                title: 'Выберите чат'
         })
 
     }

@@ -1,3 +1,4 @@
+import ChatsApiController from "../../controllers/ChatsApiController"
 import Block from "../../utils/Block"
 import store from "../../utils/Store"
 import { ChatItem } from "../ChatItem"
@@ -13,6 +14,7 @@ export class ChatList extends Block {
         super(props)
     }
     protected init(): void {
+
         if (this.props) {
             for (let i = 0; i < this.props.chats.length; i++) {
                 let chatName = 'chat' + i
@@ -29,6 +31,7 @@ export class ChatList extends Block {
     public chooseChat(title: string, id: number) {
         this.props.pr.currentChat.setProps({ title: `${title} : ${id}` })
         store.set('currentChatId', id)
+        ChatsApiController.chatToken(id)
     }
 
 

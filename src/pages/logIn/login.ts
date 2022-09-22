@@ -18,9 +18,9 @@ export class LogInPage extends Block {
                 password: "Пароль",
                 footerNote: {
                     text: "Нет аккаунта?",
-                    url: "signUp.html"
+                    url: "sign-up"
                 },
-                url: "chats.html"
+                url: "messenger"
             });
     }
     init() {

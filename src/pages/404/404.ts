@@ -10,7 +10,7 @@ export class Page404Page extends Block{
                 description: "Не туда попали"
             },
             footerNote: {
-                url: "./chats.html",
+                url: "./messenger",
                 text: "Назад к чатам"
             }
         });

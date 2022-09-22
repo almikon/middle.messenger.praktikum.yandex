@@ -42,10 +42,13 @@ export class Modal extends Block {
             ChatsApiController.addUser(
                 store.getState().currentChatId,
                 addUser.value)
+            addUser.value = ''
         }
         if (deleteUser.value) {
-            console.log(deleteUser.value)
-            ChatsApiController.deleteUser()
+            ChatsApiController.deleteUser(
+                store.getState().currentChatId,
+                deleteUser.value)
+            deleteUser.value = ''
         }
         this.hide()
     }
