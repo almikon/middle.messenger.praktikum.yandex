@@ -83,7 +83,10 @@
     line-height: 15px;
     color: @userValueColor;
 }
-
+.clip{
+    width: 32px;
+    height: 32px;
+}
 .message {
     height: 32px;
     left: 0px;
@@ -98,6 +101,8 @@
     text-align: center;
     padding: 0;
     color: @userValueColor;
+    width: 30%;
+    margin: 15px;
 }
 
 .companion__avatar {
@@ -160,13 +165,15 @@
         width: 100%;
         display: flex;
         border-top: 1px solid @borderColor;
+        align-items: center;
     }
 }
 
 .send__button {
     background-image: url(@forwardArrow);
     background-repeat: no-repeat;
-    width: 30px;
+    width: 32px;
+    height: 32px;
     border: none;
 }
 

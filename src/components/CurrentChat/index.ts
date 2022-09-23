@@ -55,7 +55,7 @@ class CurrentChatCore extends Block {
 }
 
     protected componentDidUpdate(query: string): boolean {
-        // console.log(this.props)
+        // (this.props)
         if(this.props.currentChatId &&
             this.props.user.id &&
             this.props.token){

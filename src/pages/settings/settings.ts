@@ -11,9 +11,8 @@ import router from '../../utils/Router'
 export class SettingsPageCore extends Block {
 
     init() {
-
         AuthApiController.fetchUser()
-        console.log(this.props)
+
         this.children.avatar = new Avatar({
             userAvatar: 'https://ya-praktikum.tech/api/v2/resources' + this.props.avatar,
             altText: 'Ваш аватар'

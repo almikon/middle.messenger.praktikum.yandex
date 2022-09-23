@@ -35,7 +35,6 @@ export class ChatsApiController {
   }
   async deleteUser(chatId: number, login: string) {
     const userId: any = await UserApiController.getUserByLogin(login)
-
     await this.api.delete(chatId, userId[0].id)
   }
 

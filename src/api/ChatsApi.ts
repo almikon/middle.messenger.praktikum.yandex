@@ -22,13 +22,13 @@ export class ChatsApi extends BaseAPI {
 
         const options: Record<string, any> = {}
         options.data = { 'users': [userId], 'chatId': chatId }
-        console.log('put users')
+        ('put users')
         return this.HTTPTransport.put('/users', options)
     }
     delete(chatId: number, userId: number){
         const options: Record<string, any> = {}
         options.data = { 'users': [userId], 'chatId': chatId }
-        console.log('delete users')
+        ('delete users')
         return this.HTTPTransport.delete('/users', options)
 }
     chatToken(id:number){
