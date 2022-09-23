@@ -4,32 +4,31 @@ import '../../less/form.less';
 import Block from '../../utils/Block';
 import tmpl from './logIn.hbs'
 import { PATTERNS } from '../../constants'
-const context = {
-    title: "Вход",
-    login: "Логин",
-    password: "Пароль",
-    button__text: "Вход",
-    goTo: "./chats.html",
-    footerNote: {
-        text: "Нет аккаунта?",
-        url: "signUp.html"
-    },
-    url: "chats.html"
-};
-type LogInPageProps = {
+import Store, { StoreEvents } from '../../utils/Store';
+import AuthApiController from '../../controllers/AuthApiController';
+import getData from '../../utils/GetData';
+import { logInData } from '../../api/AuthApi';
 
-}
-export class LogInPage extends Block<LogInPageProps> {
-    constructor(props = context) {
-        super('div', props);
+export class LogInPage extends Block {
+    constructor() {
+        super(
+            {
+                title: "Вход",
+                login: "Логин",
+                password: "Пароль",
+                footerNote: {
+                    text: "Нет аккаунта?",
+                    url: "sign-up"
+                },
+                url: "messenger"
+            });
     }
     init() {
         this.children.button = new Button({
             class: 'form__button',
-            value: this.props.button__text,
-            goTo: this.props.goTo,
+            value: "Вход",
             events: {
-                click: () => this.checkData()
+                click: () => this.logIn()
             }
         }
         )
@@ -54,36 +53,22 @@ export class LogInPage extends Block<LogInPageProps> {
             pattern: PATTERNS.PASSWORD
         })
     }
-    public checkData() {
-        this.getData()
+
+    public logIn() {
+        const data = getData()
+        Store.on(StoreEvents.Updated, () => {
+            this.setProps(Store.getState());
+        });
         const inputs = document.querySelectorAll('.wrong')
         if (inputs.length) {
             console.log('Есть ошибки')
         } else {
-            this.goTo(this.props.goTo)
+            AuthApiController.logIn(data as unknown as logInData)
+
         }
     }
-    public goTo(adress: string) {
-        document.location.pathname = adress
-    }
-    public getData() {
-        let res: Record<string, string> = {}
-        const inputList = document.querySelectorAll('input')
-        inputList.forEach(input => {
-            if (input.classList.contains('required')) {
-                if (input.value.length > 0) {
-                    res[input.name] = input.value
-                }
-                else {
-                    console.log(`${input.name} не может быть пустым!`)
-                    input.classList.add('wrong')
-                }
-            }
-        })
-        console.log(res)
-    }
-    render() {
 
+    render() {
         return this.compile(tmpl, this.props);
     }
 }

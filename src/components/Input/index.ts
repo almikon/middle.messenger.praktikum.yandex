@@ -5,20 +5,19 @@ interface InputProps {
     name?: string,
     placeholder?: string,
     classes: Array<string>,
-    pattern: string
+    pattern: string,
+    id?: string
 }
 
 export class Input extends Block<InputProps> {
     constructor(props: InputProps) {
-        super('input', props)
+        super(props)
         const self = this.element
         this.props.classes.forEach(function (value: string) {
             self?.classList.add(value)
         })
         self?.setAttribute('name', this.props.name)
-        if (props.placeholder) {
-            self?.setAttribute('placeholder', this.props.placeholder)
-        }
+        self?.setAttribute('id',this.props.id)
         const checkContent = this.checkContent
         this.element?.addEventListener('blur', function (event) {
             const target = event.target as HTMLTextAreaElement

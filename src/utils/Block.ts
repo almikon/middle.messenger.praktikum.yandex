@@ -1,7 +1,7 @@
 import { EventBus } from "./EventBus";
 import { nanoid } from 'nanoid';
 
-class Block<Props extends {}> {
+class Block<P extends Record<string,any> = any> {
     static EVENTS = {
         INIT: "init",
         FLOW_CDM: "flow:component-did-mount",
@@ -11,20 +11,15 @@ class Block<Props extends {}> {
 
     public id = nanoid(4);
     protected props: Record<string, any>;
-    public children: Record<string, Block<Props>>;
+    public children: Record<string, Block<P>>;
     private eventBus: () => EventBus;
     private _element: HTMLElement | null = null;
-    private _meta: { tagName: string; props: any; };
 
-    public constructor(tagName: string = "div", propsWithChildren: Props) {
+
+    public constructor(propsWithChildren: P) {
         const eventBus = new EventBus();
 
         const { props, children } = this._getChildrenAndProps(propsWithChildren);
-
-        this._meta = {
-            tagName,
-            props
-        };
 
         this.children = children;
         this.props = this._makePropsProxy(props);
@@ -35,13 +30,13 @@ class Block<Props extends {}> {
         eventBus.emit(Block.EVENTS.INIT);
     }
 
-    private _getChildrenAndProps(childrenAndProps: any) {
-        const props: Record<string, any> = {};
-        const children: Record<string, Block<Props>> = {};
+    private _getChildrenAndProps(childrenAndProps: P) {
+        const props: P = {} as P;
+        const children: Record<string, Block<P>> = {};
 
-        Object.entries(childrenAndProps).forEach(([key, value]) => {
+        Object.entries(childrenAndProps).forEach(([key, value]: [keyof P, any]) => {
             if (value instanceof Block) {
-                children[key] = value;
+                children[key as string] = value;
             } else {
                 props[key] = value;
             }
@@ -64,15 +59,8 @@ class Block<Props extends {}> {
         eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
     }
 
-    private _createResources() {
-        const { tagName } = this._meta;
-        this._element = this._createDocumentElement(tagName);
-    }
 
     private _init() {
-
-        this._createResources();
-
         this.init();
 
         this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
@@ -99,7 +87,7 @@ class Block<Props extends {}> {
         }
     }
 
-    protected componentDidUpdate() {
+    protected componentDidUpdate(_query?:string) {
         return true;
     }
 
@@ -118,10 +106,14 @@ class Block<Props extends {}> {
     private _render() {
         const fragment = this.render();
 
-        this._element!.innerHTML = '';
-
-        this._element!.append(fragment);
-
+        const newElement = fragment.firstElementChild as HTMLElement;
+    
+        if (this._element && newElement) {
+          this._element.replaceWith(newElement);
+        }
+    
+        this._element = newElement;
+    
         this._addEvents();
     }
 
@@ -144,7 +136,7 @@ class Block<Props extends {}> {
             if (!stub) {
                 return;
             }
-
+            component.getContent()?.append(...Array.from(stub.childNodes))
             stub.replaceWith(component.getContent()!);
 
         });
@@ -167,13 +159,13 @@ class Block<Props extends {}> {
                 target[prop] = value
                 self.eventBus().emit(Block.EVENTS.FLOW_CDU)
                 return target[prop]
-            }
+            },
+            get(target, prop: string) {
+                const value = target[prop];
+                return typeof value === "function" ? value.bind(target) : value;
+              },
         })
 
-    }
-
-    private _createDocumentElement(tagName: string) {
-        return document.createElement(tagName);
     }
 
     show() {
