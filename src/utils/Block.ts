@@ -1,7 +1,7 @@
 import { EventBus } from "./EventBus";
 import { nanoid } from 'nanoid';
 
-class Block<P extends Record<string,any> = any> {
+class Block<P extends Record<string, any> = any> {
     static EVENTS = {
         INIT: "init",
         FLOW_CDM: "flow:component-did-mount",
@@ -12,6 +12,7 @@ class Block<P extends Record<string,any> = any> {
     public id = nanoid(4);
     protected props: Record<string, any>;
     public children: Record<string, Block<P>>;
+    public arrayChildren: Record<string, Block[]>
     private eventBus: () => EventBus;
     private _element: HTMLElement | null = null;
 
@@ -19,11 +20,11 @@ class Block<P extends Record<string,any> = any> {
     public constructor(propsWithChildren: P) {
         const eventBus = new EventBus();
 
-        const { props, children } = this._getChildrenAndProps(propsWithChildren);
+        const { props, children, arrayChildren } = this._getChildrenAndProps(propsWithChildren);
 
         this.children = children;
         this.props = this._makePropsProxy(props);
-
+        this.arrayChildren = arrayChildren
         this.eventBus = () => eventBus;
 
         this._registerEvents(eventBus);
@@ -31,18 +32,21 @@ class Block<P extends Record<string,any> = any> {
     }
 
     private _getChildrenAndProps(childrenAndProps: P) {
-        const props: P = {} as P;
-        const children: Record<string, Block<P>> = {};
+        const props: Record<string, any> = {}
+        const children: Record<string, Block<P>> = {}
+        const arrayChildren: Record<string, Block[]> = {}
+        Object.entries(childrenAndProps).forEach(([key, value]) => {
 
-        Object.entries(childrenAndProps).forEach(([key, value]: [keyof P, any]) => {
-            if (value instanceof Block) {
-                children[key as string] = value;
+            if (Array.isArray(value) && value.every((element: unknown) => element instanceof Block)) {
+                arrayChildren[key] = value as Block[];
+            } else if (value instanceof Block) {
+                children[key] = value;
             } else {
                 props[key] = value;
             }
         });
 
-        return { props, children };
+        return { props: props as P, children, arrayChildren };
     }
 
     private _addEvents() {
@@ -87,7 +91,7 @@ class Block<P extends Record<string,any> = any> {
         }
     }
 
-    protected componentDidUpdate(_query?:string) {
+    protected componentDidUpdate(_query?: string) {
         return true;
     }
 
@@ -107,18 +111,28 @@ class Block<P extends Record<string,any> = any> {
         const fragment = this.render();
 
         const newElement = fragment.firstElementChild as HTMLElement;
-    
+
         if (this._element && newElement) {
-          this._element.replaceWith(newElement);
+            this._element.replaceWith(newElement);
         }
-    
+
         this._element = newElement;
-    
+
         this._addEvents();
     }
 
     protected compile(template: (context: any) => string, context: any) {
         const contextAndStubs = { ...context };
+
+        Object.entries(this.arrayChildren).forEach(([arrayName, array]) => {
+            Object.entries(array).forEach(([, component]) => {
+                if (Array.isArray(contextAndStubs[arrayName])) {
+                    contextAndStubs[arrayName].push(`<div data-id="${component.id}"></div>`);
+                } else {
+                    contextAndStubs[arrayName] = [`<div data-id="${component.id}"></div>`];
+                }
+            });
+        });
 
         Object.entries(this.children).forEach(([name, component]) => {
             contextAndStubs[name] = `<div data-id="${component.id}"></div>`;
@@ -130,16 +144,27 @@ class Block<P extends Record<string,any> = any> {
 
         temp.innerHTML = html;
 
-        Object.entries(this.children).forEach(([_, component]) => {
+        const replace = (component: Block<P>) => {
             const stub = temp.content.querySelector(`[data-id="${component.id}"]`);
 
             if (!stub) {
                 return;
             }
-            component.getContent()?.append(...Array.from(stub.childNodes))
-            stub.replaceWith(component.getContent()!);
 
+            component.getContent()?.append(...Array.from(stub.childNodes));
+            stub.replaceWith(component.getContent()!);
+        };
+
+        Object.entries(this.arrayChildren).forEach(([, array]) => {
+            Object.entries(array).forEach(([, component]) => {
+                replace(component);
+            });
         });
+
+        Object.entries(this.children).forEach(([, component]) => {
+            replace(component);
+        });
+
 
         return temp.content;
     }
@@ -163,7 +188,7 @@ class Block<P extends Record<string,any> = any> {
             get(target, prop: string) {
                 const value = target[prop];
                 return typeof value === "function" ? value.bind(target) : value;
-              },
+            },
         })
 
     }

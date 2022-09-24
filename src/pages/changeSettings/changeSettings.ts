@@ -9,9 +9,9 @@ import AuthApiController from '../../controllers/AuthApiController';
 import { Avatar } from '../../components/Avatar';
 import { Title } from '../../components/Title';
 import { withStore } from '../../utils/Store';
-import { SignupData } from '../../api/AuthApi';
-import AuthApiController from '../../controllers/AuthApiController';
+import { ISignupData } from '../../api/AuthApi';
 import { Modal } from '../../components/Modal';
+import UserApiController from '../../controllers/UserApiController';
 
 export class ChangeSettingsPageCore extends Block {
 
@@ -114,7 +114,7 @@ export class ChangeSettingsPageCore extends Block {
         if (inputs.length) {
             console.log('Есть ошибки')
         } else {
-            AuthApiController.update(data as unknown as SignupData)
+            UserApiController.update(data as unknown as ISignupData)
         }
     }
     public showModal() {

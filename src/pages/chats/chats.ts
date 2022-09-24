@@ -12,16 +12,19 @@ import { NewChat } from '../../components/NewChat'
 import ChatsApiController from '../../controllers/ChatsApiController'
 import { ChatList } from '../../components/ChatList'
 import { CurrentChat } from '../../components/CurrentChat';
+import { ChatItem } from '../../components/ChatItem';
 
 export class ChatsPageCore extends Block {
     constructor() {
-        super({ ...store.getState(),
-        clip__img: clip__img,
-        forwardArrow:forwardArrow,
-        profileLink: {
-            url: '/settings',
-            text: 'Профиль'}
- })
+        super({
+            ...store.getState(),
+            clip__img: clip__img,
+            forwardArrow: forwardArrow,
+            profileLink: {
+                url: '/settings',
+                text: 'Профиль'
+            }
+        })
     }
     protected init(): void {
         ChatsApiController.getChats()
@@ -48,7 +51,7 @@ export class ChatsPageCore extends Block {
         })
 
         this.children.currentChat = new CurrentChat({
-                title: 'Выберите чат'
+            title: 'Выберите чат'
         })
 
     }
@@ -57,15 +60,32 @@ export class ChatsPageCore extends Block {
         console.log(message)
     }
     protected componentDidUpdate(): boolean {
-        if(this.props.chats){
+        if (this.props.chats) {
+            const newChats: Array<ChatItem> = []
+            this.props.chats.forEach((chat: any) => {
+                newChats.push(new ChatItem({
+                    title: chat.title,
+                    events: {
+                        click: () => this.chooseChat(chat.title, chat.id)
+                    }
+                }
+                ))
+            })
+
             this.children.chatList = new ChatList({
                 pr: this.children,
-                chats: this.props.chats
+                chats: newChats
             })
         }
 
-    return super.componentDidUpdate()
-}
+        return super.componentDidUpdate()
+    }
+    public chooseChat(title: string, id: number) {
+        const currentChat = { title: title, id: id }
+        store.set('currentChat', currentChat)
+        ChatsApiController.chatToken(id)
+        console.log(title, id)
+    }
     render() {
         return this.compile(tmpl, this.props);
 

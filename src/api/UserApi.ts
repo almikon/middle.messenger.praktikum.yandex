@@ -1,5 +1,5 @@
 import BaseAPI from "./baseApi";
-import { SignupData } from "./AuthApi";
+import { ISignupData } from "./AuthApi";
 export interface IChangePassword {
     oldpassword: string,
     newPassword: string
@@ -8,7 +8,7 @@ export class UserApi extends BaseAPI {
     constructor() {
         super('/user')
     }
-    update(data: SignupData) {
+    update(data: ISignupData) {
         const options: Record<string, any> = {}
         options.data = data
         return this.HTTPTransport.put('/profile', options)
