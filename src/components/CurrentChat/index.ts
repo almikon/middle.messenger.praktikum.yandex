@@ -5,11 +5,14 @@ import { Modal } from "../Modal"
 import { Title } from "../Title"
 import tmpl from './currentChat.hbs'
 
+
 interface ICurrentChat {
     title?: string,
+    chat?: any
 }
 
 class CurrentChatCore extends Block {
+    sockets: string[] = []
     constructor(props: ICurrentChat) {
         super(props)
     }
@@ -55,43 +58,36 @@ class CurrentChatCore extends Block {
         })
     }
 
-    protected componentDidUpdate(query: string): boolean {
-        if (this.props.currentChatId &&
+    protected componentDidUpdate(): boolean {
+
+        if (this.props.currentChat?.id &&
             this.props.user.id &&
             this.props.token) {
-            const socket = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${this.props.user.id}/${this.props.currentChatId}/${this.props.token['token']}`);
+            if (!this.sockets.includes(this.props.currentChat?.id)) {
+                this.sockets.push(this.props.currentChat?.id)
+                const socketId = `wss://ya-praktikum.tech/ws/chats/${this.props.user.id}/${this.props.currentChat.id}/${this.props.token['token']}`
+                const socket = new WebSocket(socketId);
+                socket.addEventListener('open', () => {
+                    console.log('Соединение установлено');
+                })
 
-            socket.addEventListener('open', () => {
-                console.log('Соединение установлено');
+                socket.addEventListener('close', event => {
+                    if (event.wasClean) {
+                        console.log('Соединение закрыто чисто');
+                    } else {
+                        console.log('Обрыв соединения');
+                    }
 
-                socket.send(JSON.stringify({
-                    content: 'Моё первое сообщение миру!',
-                    type: 'message',
-                }));
-            });
+                    console.log(`Код: ${event.code} | Причина: ${event.reason}`);
+                });
 
-            socket.addEventListener('close', event => {
-                if (event.wasClean) {
-                    console.log('Соединение закрыто чисто');
-                } else {
-                    console.log('Обрыв соединения');
-                }
+                socket.addEventListener('message', event => {
+                    console.log('Получены данные', event.data);
+                });
 
-                console.log(`Код: ${event.code} | Причина: ${event.reason}`);
-            });
-
-            socket.addEventListener('message', event => {
-                console.log('Получены данные', event.data);
-            });
-
-            socket.addEventListener('error', () => {
-                console.log('Ошибка');
-            });
-        }
-        const modal = document.querySelector(query) as HTMLElement
-        window.onclick = (event) => {
-            if (event.target == modal) {
-                modal.style.display = 'none'
+                socket.addEventListener('error', () => {
+                    console.log('Ошибка');
+                });
             }
         }
 
@@ -102,12 +98,22 @@ class CurrentChatCore extends Block {
         const addModal = document.querySelector('.addModal') as HTMLElement
 
         addModal.style.display = 'block'
-        this.componentDidUpdate('.addModal')
+        const modal = document.querySelector('.addModal') as HTMLElement
+        window.addEventListener('click', (event) => {
+            if (event.target == modal) {
+                modal.style.display = 'none'
+            }
+        })
     }
     public deleteUserFromChat() {
         const deleteModal = document.querySelector('.deleteModal') as HTMLElement
         deleteModal.style.display = 'block'
-        this.componentDidUpdate('.deleteModal')
+        const modal = document.querySelector('.deleteModal') as HTMLElement
+        window.addEventListener('click', (event) => {
+            if (event.target == modal) {
+                modal.style.display = 'none'
+            }
+        })
     }
     protected render(): DocumentFragment {
         return this.compile(tmpl, this.props)
@@ -115,4 +121,4 @@ class CurrentChatCore extends Block {
 }
 
 const withChatId = withStore((state) => ({ ...state }))
-export const CurrentChat = withChatId(CurrentChatCore)
+export const currentChat = withChatId(CurrentChatCore)

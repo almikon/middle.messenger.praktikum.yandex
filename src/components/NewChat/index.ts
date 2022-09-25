@@ -28,7 +28,7 @@ export class NewChat extends Block {
         })
         this.children.chatName = new Input({
             classes: this.props.inputClasses,
-            pattern: PATTERNS.NOTEMPTY,
+            pattern: PATTERNS.NOT_EMPTY,
             name: this.props.inputName,
             id: this.props.id
         })

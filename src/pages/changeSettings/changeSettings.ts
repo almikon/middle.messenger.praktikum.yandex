@@ -17,7 +17,30 @@ export class ChangeSettingsPageCore extends Block {
 
     init() {
         AuthApiController.fetchUser()
-        //TODO: avatar src doesn't work (reason: not found)
+        this.children.modal = new Modal({
+            buttonValue: 'Поменять',
+            inputId: 'uploadAvatarImage',
+            inputType: 'file',
+            title: 'Загрузите файл',
+            label: 'Файл',
+            inputClass: 'input'
+        })
+    }
+    public changeSettings() {
+        const data = getData()
+        const inputs = document.querySelectorAll('.wrong')
+        if (inputs.length) {
+            console.log('Есть ошибки')
+        } else {
+            UserApiController.update(data as unknown as ISignupData)
+        }
+    }
+    public showModal() {
+        const modal = document.querySelector('.modal') as HTMLElement
+        modal.style.display = 'block'
+    }
+    protected componentDidUpdate(_query?: string | undefined): boolean {
+
         this.children.avatar = new Avatar({
             userAvatar: 'https://ya-praktikum.tech/api/v2/resources' + this.props.avatar,
             altText: 'Ваш аватар',
@@ -99,36 +122,17 @@ export class ChangeSettingsPageCore extends Block {
             pattern: PATTERNS.NAME
         })
 
-        this.children.modal = new Modal({
-            buttonValue: 'Поменять',
-            inputId: 'uploadAvatarImage',
-            inputType: 'file',
-            title: 'Загрузите файл',
-            label: 'Файл',
-            inputClass: 'input'
-        })
-    }
-    public changeSettings() {
-        const data = getData()
-        const inputs = document.querySelectorAll('.wrong')
-        if (inputs.length) {
-            console.log('Есть ошибки')
-        } else {
-            UserApiController.update(data as unknown as ISignupData)
-        }
-    }
-    public showModal() {
-        const modal = document.querySelector('.modal') as HTMLElement
-        modal.style.display = 'block'
-    }
 
-    render() {
         const modal = document.querySelector('.modal') as HTMLElement
-        window.onclick = (event) => {
+        window.addEventListener('click', (event) => {
             if (event.target == modal) {
                 modal.style.display = 'none'
             }
-        }
+        })
+        return true
+    }
+
+    render() {
         return this.compile(tmpl, this.props);
     }
 }

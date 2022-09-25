@@ -57,7 +57,7 @@ export class SignUpPage extends Block {
             button__text: "Зарегистрироваться",
             footerNote: {
                 text: "Войти",
-                url: "./index.html"
+                url: "./logIn"
             }
         });
     }

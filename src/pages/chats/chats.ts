@@ -11,7 +11,7 @@ import getData from '../../utils/GetData'
 import { NewChat } from '../../components/NewChat'
 import ChatsApiController from '../../controllers/ChatsApiController'
 import { ChatList } from '../../components/ChatList'
-import { CurrentChat } from '../../components/CurrentChat';
+import { currentChat } from '../../components/CurrentChat';
 import { ChatItem } from '../../components/ChatItem';
 
 export class ChatsPageCore extends Block {
@@ -47,16 +47,17 @@ export class ChatsPageCore extends Block {
         this.children.input = new Input({
             name: 'Message',
             classes: ['message', 'required'],
-            pattern: PATTERNS.NOTEMPTY
+            pattern: PATTERNS.NOT_EMPTY
         })
 
-        this.children.currentChat = new CurrentChat({
+        this.children.currentChat = new currentChat({
             title: 'Выберите чат'
         })
 
     }
     sendData() {
         const message = getData()
+
         console.log(message)
     }
     protected componentDidUpdate(): boolean {
@@ -77,14 +78,13 @@ export class ChatsPageCore extends Block {
                 chats: newChats
             })
         }
-
-        return super.componentDidUpdate()
+        return true
     }
     public chooseChat(title: string, id: number) {
         const currentChat = { title: title, id: id }
         store.set('currentChat', currentChat)
         ChatsApiController.chatToken(id)
-        console.log(title, id)
+        this.children.currentChat.setProps({ title: currentChat.title })
     }
     render() {
         return this.compile(tmpl, this.props);

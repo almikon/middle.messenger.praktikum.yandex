@@ -12,7 +12,8 @@ export class SettingsPageCore extends Block {
 
     init() {
         AuthApiController.fetchUser()
-
+    }
+    componentDidUpdate() {
         this.children.avatar = new Avatar({
             userAvatar: 'https://ya-praktikum.tech/api/v2/resources' + this.props.avatar,
             altText: 'Ваш аватар'
@@ -58,8 +59,7 @@ export class SettingsPageCore extends Block {
             name: 'Имя в чате',
             value: this.props.display_name
         })
-
-
+        return true
     }
     render() {
 

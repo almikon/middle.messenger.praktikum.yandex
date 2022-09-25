@@ -8,10 +8,14 @@ import getData from '../../utils/GetData';
 import { withStore } from '../../utils/Store';
 import { Avatar } from '../../components/Avatar';
 import { Title } from '../../components/Title';
-import AuthApiController from '../../controllers/AuthApiController';
+import UserApiController from '../../controllers/UserApiController';
+import { IChangePassword } from '../../api/UserApi';
 
 export class ChangePasswordPageCore extends Block {
     init() {
+
+    }
+    protected componentDidUpdate(_query?: string | undefined): boolean {
         this.children.avatar = new Avatar({
             userAvatar: 'https://ya-praktikum.tech/api/v2/resources' + this.props.avatar,
             altText: 'Ваш аватар'
@@ -61,6 +65,7 @@ export class ChangePasswordPageCore extends Block {
             ],
             pattern: PATTERNS.PASSWORD
         })
+        return true
     }
     public changePassword() {
         const data = getData()
@@ -69,7 +74,7 @@ export class ChangePasswordPageCore extends Block {
             console.log('пароли не совпадают')
         } else {
             delete data.checkPassword
-            AuthApiController.changePassword(data)
+            UserApiController.changePassword(data as unknown as IChangePassword)
         }
     }
 

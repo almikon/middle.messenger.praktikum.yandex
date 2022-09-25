@@ -2,7 +2,7 @@ import store from '../utils/Store'
 import router from '../utils/Router'
 import AuthAPI, { ILogInData, ISignupData, AuthApi } from '../api/AuthApi'
 
-export class AuthApiController {
+class AuthApiController {
   private readonly api: AuthApi
 
   constructor() {
