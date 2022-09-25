@@ -7,7 +7,8 @@ import { PATTERNS } from '../../constants'
 import Store, { StoreEvents } from '../../utils/Store';
 import AuthApiController from '../../controllers/AuthApiController';
 import getData from '../../utils/GetData';
-import { logInData } from '../../api/AuthApi';
+import { ILogInData } from '../../api/AuthApi';
+
 
 export class LogInPage extends Block {
     constructor() {
@@ -24,6 +25,7 @@ export class LogInPage extends Block {
             });
     }
     init() {
+
         this.children.button = new Button({
             class: 'form__button',
             value: "Вход",
@@ -63,7 +65,7 @@ export class LogInPage extends Block {
         if (inputs.length) {
             console.log('Есть ошибки')
         } else {
-            AuthApiController.logIn(data as unknown as logInData)
+            AuthApiController.logIn(data as unknown as ILogInData)
 
         }
     }

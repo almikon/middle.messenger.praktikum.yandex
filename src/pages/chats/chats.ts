@@ -15,6 +15,7 @@ import { currentChat } from '../../components/CurrentChat';
 import { ChatItem } from '../../components/ChatItem';
 
 export class ChatsPageCore extends Block {
+    sockets: string[] = []
     constructor() {
         super({
             ...store.getState(),
@@ -63,6 +64,7 @@ export class ChatsPageCore extends Block {
     protected componentDidUpdate(): boolean {
         if (this.props.chats) {
             const newChats: Array<ChatItem> = []
+            console.log(this.props.chats)
             this.props.chats.forEach((chat: any) => {
                 newChats.push(new ChatItem({
                     title: chat.title,
@@ -85,6 +87,37 @@ export class ChatsPageCore extends Block {
         store.set('currentChat', currentChat)
         ChatsApiController.chatToken(id)
         this.children.currentChat.setProps({ title: currentChat.title })
+        console.log(this.props)
+        if (this.props.currentChat?.id &&
+            this.props.user.id &&
+            this.props.token) {
+            if (!this.sockets.includes(this.props.currentChat?.id)) {
+                this.sockets.push(this.props.currentChat?.id)
+                const socketId = `wss://ya-praktikum.tech/ws/chats/${this.props.user.id}/${this.props.currentChat.id}/${this.props.token['token']}`
+                const socket = new WebSocket(socketId);
+                socket.addEventListener('open', () => {
+                    console.log('Соединение установлено');
+                })
+
+                socket.addEventListener('close', event => {
+                    if (event.wasClean) {
+                        console.log('Соединение закрыто чисто');
+                    } else {
+                        console.log('Обрыв соединения');
+                    }
+
+                    console.log(`Код: ${event.code} | Причина: ${event.reason}`);
+                });
+
+                socket.addEventListener('message', event => {
+                    console.log('Получены данные', event.data);
+                });
+
+                socket.addEventListener('error', () => {
+                    console.log('Ошибка');
+                });
+            }
+        }
     }
     render() {
         return this.compile(tmpl, this.props);

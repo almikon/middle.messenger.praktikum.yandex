@@ -29,3 +29,4 @@ window.addEventListener('DOMContentLoaded', async () => {
         router.go('/')
     }
 })
+
