@@ -6,7 +6,7 @@ import { Input } from '../../components/Input';
 import { PATTERNS } from '../../constants'
 import getData from '../../utils/GetData';
 import AuthApiController from '../../controllers/AuthApiController';
-import { SignupData } from '../../api/AuthApi';
+import { ISignupData } from '../../api/AuthApi';
 
 export class SignUpPage extends Block {
     constructor() {
@@ -57,7 +57,7 @@ export class SignUpPage extends Block {
             button__text: "Зарегистрироваться",
             footerNote: {
                 text: "Войти",
-                url: "./index.html"
+                url: "./logIn"
             }
         });
     }
@@ -142,11 +142,9 @@ export class SignUpPage extends Block {
         if (inputs.length) {
             console.log('Есть ошибки')
         } else {
-            AuthApiController.signup(data as unknown as SignupData)
+            AuthApiController.signup(data as unknown as ISignupData)
         }
     }
-    // sljdfksdfppAA
-    // sljdfksdfppBB
 
     render() {
         return this.compile(tmpl, this.props);

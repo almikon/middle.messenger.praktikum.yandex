@@ -1,15 +1,15 @@
 import store from '../utils/Store'
 import router from '../utils/Router'
-import AuthAPI, { logInData, SignupData, AuthApi } from '../api/AuthApi'
+import AuthAPI, { ILogInData, ISignupData, AuthApi } from '../api/AuthApi'
 
-export class AuthApiController {
+class AuthApiController {
   private readonly api: AuthApi
 
   constructor() {
     this.api = AuthAPI;
   }
 
-  async logIn(data: logInData) {
+  async logIn(data: ILogInData) {
     try {
       await this.api.logIn(data)
       router.go('/messenger')
@@ -18,7 +18,7 @@ export class AuthApiController {
     }
   }
 
-  async signup(data: SignupData) {
+  async signup(data: ISignupData) {
     try {
       await this.api.signUp(data);
       await this.fetchUser()

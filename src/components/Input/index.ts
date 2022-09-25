@@ -1,7 +1,7 @@
 import Block from "../../utils/Block"
 import tmpl from './input.hbs'
 
-interface InputProps {
+interface IInputProps {
     name?: string,
     placeholder?: string,
     classes: Array<string>,
@@ -9,15 +9,15 @@ interface InputProps {
     id?: string
 }
 
-export class Input extends Block<InputProps> {
-    constructor(props: InputProps) {
+export class Input extends Block<IInputProps> {
+    constructor(props: IInputProps) {
         super(props)
         const self = this.element
         this.props.classes.forEach(function (value: string) {
             self?.classList.add(value)
         })
         self?.setAttribute('name', this.props.name)
-        self?.setAttribute('id',this.props.id)
+
         const checkContent = this.checkContent
         this.element?.addEventListener('blur', function (event) {
             const target = event.target as HTMLTextAreaElement

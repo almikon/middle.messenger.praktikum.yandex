@@ -12,19 +12,18 @@ import router from './utils/Router'
 window.addEventListener('DOMContentLoaded', async () => {
     router
         .use('/', LogInPage)
-        .use('/index.html', LogInPage)
+        .use('/logIn', LogInPage)
         .use('/sign-up', SignUpPage)
-        .use('/404.html', Page404Page)
-        .use('/500.html', Page500Page)
-        .use('/changePassword.html', ChangePasswordPage)
-        .use('/changesettings', ChangeSettingsPage)
+        .use('/404', Page404Page)
+        .use('/500', Page500Page)
+        .use('/changePassword', ChangePasswordPage)
+        .use('/changeSettings', ChangeSettingsPage)
         .use('/settings', SettingsPage)
         .use('/messenger', ChatsPage)
-
+    router.start()
 
     try {
         await AuthApiController.fetchUser()
-        router.start()
     } catch (e) {
         console.error(e)
         router.go('/')

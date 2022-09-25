@@ -1,9 +1,9 @@
 import store from '../utils/Store';
 import router from '../utils/Router';
 import UserAPI, { IChangePassword, UserApi } from '../api/UserApi';
-import AuthAPI, { AuthApi, SignupData } from '../api/AuthApi';
+import AuthAPI, { AuthApi, ISignupData } from '../api/AuthApi';
 
-export class UserApiController {
+class UserApiController {
   private readonly api: UserApi
   private readonly authApi: AuthApi
   constructor() {
@@ -11,7 +11,7 @@ export class UserApiController {
     this.authApi = AuthAPI;
   }
 
-  async update(data: SignupData) {
+  async update(data: ISignupData) {
     try {
       await this.api.update(data);
       await this.fetchUser()
