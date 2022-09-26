@@ -8,7 +8,8 @@ import tmpl from './currentChat.hbs'
 
 interface ICurrentChat {
     title?: string,
-    chat?: any
+    chat?: any,
+    getMessage?: string
 }
 
 class CurrentChatCore extends Block {
@@ -49,19 +50,16 @@ class CurrentChatCore extends Block {
         })
 
         this.children.messages = new Messages({
-            messages: [
-                {
-                    title: 'test TITLE',
-                    text: 'TEST text'
-                }
-            ]
+            messages: []
+
         })
     }
 
     protected componentDidUpdate(): boolean {
-
-
-
+        if(this.props.getMessage){
+        this.children.messages.setProps({
+            messages:this.props.getMessage
+        })}
         return true
     }
 

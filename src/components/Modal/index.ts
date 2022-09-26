@@ -36,15 +36,13 @@ export class Modal extends Block {
             formData.append('avatar', avatar.files[0], 'avatar.png')
 
             ProfileApiController.changeAvatar(formData)
-        }
-        if (addUser.value) {
+        }else if (addUser.value) {
 
             ChatsApiController.addUser(
                 store.getState().currentChat.id,
                 addUser.value)
             addUser.value = ''
-        }
-        if (deleteUser.value) {
+        }else if (deleteUser.value) {
             ChatsApiController.deleteUser(
                 store.getState().currentChat.id,
                 deleteUser.value)

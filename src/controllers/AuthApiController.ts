@@ -31,8 +31,15 @@ class AuthApiController {
 
   async fetchUser() {
     const user = await this.api.getUser();
-
-    store.set('user', user)
+    
+    if(!user.avatar){
+      delete user.avatar
+    }
+    if(!user.display_name){
+      delete user.display_name
+    }
+    
+   store.set('user', user)
   }
 
   async logout() {

@@ -4,25 +4,33 @@ import '../../less/form.less';
 import Block from '../../utils/Block';
 import tmpl from './logIn.hbs'
 import { PATTERNS } from '../../constants'
-import Store, { StoreEvents } from '../../utils/Store';
+import Store, { StoreEvents, withStore } from '../../utils/Store';
 import AuthApiController from '../../controllers/AuthApiController';
 import getData from '../../utils/GetData';
 import { ILogInData } from '../../api/AuthApi';
 
 
-export class LogInPage extends Block {
+export class LoginPageCore extends Block {
     constructor() {
         super(
             {
-                title: "Вход",
-                login: "Логин",
-                password: "Пароль",
                 footerNote: {
                     text: "Нет аккаунта?",
                     url: "sign-up"
                 },
                 url: "messenger"
             });
+            const a = document.getElementsByTagName('a')
+
+            for(let el of a){
+                console.log(el)
+                el.addEventListener('click',(event)=>{
+                    event.preventDefault()
+                    // const route = event.target as unknown as string
+                    console.log(event.target)
+                    // router.go(route)
+                })
+            }
     }
     init() {
 
@@ -54,6 +62,7 @@ export class LogInPage extends Block {
             ],
             pattern: PATTERNS.PASSWORD
         })
+
     }
 
     public logIn() {
@@ -74,3 +83,6 @@ export class LogInPage extends Block {
         return this.compile(tmpl, this.props);
     }
 }
+
+const withUser = withStore((state) => ({ ...state.user }))
+export const loginPage = withUser(LoginPageCore)

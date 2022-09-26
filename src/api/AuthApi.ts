@@ -24,8 +24,8 @@ export interface IUser {
     email: string;
     password: string;
     phone: string;
-    avatar: string | null;
-    display_name: string | null
+    avatar?: string;
+    display_name?: string
 }
 
 export class AuthApi extends BaseAPI {

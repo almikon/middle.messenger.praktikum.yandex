@@ -7,7 +7,6 @@ import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
 import { PATTERNS } from '../../constants'
 import store, { withStore } from '../../utils/Store'
-import getData from '../../utils/GetData'
 import { NewChat } from '../../components/NewChat'
 import ChatsApiController from '../../controllers/ChatsApiController'
 import { ChatList } from '../../components/ChatList'
@@ -57,14 +56,17 @@ export class ChatsPageCore extends Block {
 
     }
     sendData() {
-        const message = getData()
+        const message = document.querySelector('input.message') as HTMLInputElement
 
-        console.log(message)
+        this.props.curSocket.send(JSON.stringify({
+            content: message.value,
+            type: 'message',
+            }))
     }
+
     protected componentDidUpdate(): boolean {
         if (this.props.chats) {
             const newChats: Array<ChatItem> = []
-            console.log(this.props.chats)
             this.props.chats.forEach((chat: any) => {
                 newChats.push(new ChatItem({
                     title: chat.title,
@@ -87,17 +89,17 @@ export class ChatsPageCore extends Block {
         store.set('currentChat', currentChat)
         ChatsApiController.chatToken(id)
         this.children.currentChat.setProps({ title: currentChat.title })
-        console.log(this.props)
         if (this.props.currentChat?.id &&
             this.props.user.id &&
             this.props.token) {
-            if (!this.sockets.includes(this.props.currentChat?.id)) {
-                this.sockets.push(this.props.currentChat?.id)
+            if (this.props.curSocket && this.props.curSocket.url !== 
+                `wss://ya-praktikum.tech/ws/chats/${this.props.user.id}/${this.props.currentChat.id}/${this.props.token['token']}`) {
+                this.props.curSocket.close()
+            }
                 const socketId = `wss://ya-praktikum.tech/ws/chats/${this.props.user.id}/${this.props.currentChat.id}/${this.props.token['token']}`
                 const socket = new WebSocket(socketId);
                 socket.addEventListener('open', () => {
-                    console.log('Соединение установлено');
-                })
+                    console.log('Соединение установлено')})
 
                 socket.addEventListener('close', event => {
                     if (event.wasClean) {
@@ -110,15 +112,18 @@ export class ChatsPageCore extends Block {
                 });
 
                 socket.addEventListener('message', event => {
-                    console.log('Получены данные', event.data);
+                    const newMessage = event.data.split(',')[0].split(':')[1].slice(1,-1)
+                    this.children.currentChat.setProps({getMessage: newMessage})
                 });
 
                 socket.addEventListener('error', () => {
                     console.log('Ошибка');
                 });
+
+                store.set(`curSocket`, socket)
             }
         }
-    }
+
     render() {
         return this.compile(tmpl, this.props);
 

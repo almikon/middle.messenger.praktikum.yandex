@@ -4,15 +4,15 @@ import { Page500Page } from './pages/500/500';
 import { ChangePasswordPage } from './pages/changePassword/changePassword';
 import { ChangeSettingsPage } from './pages/changeSettings/changeSettings';
 import { ChatsPage } from './pages/chats/chats';
-import { LogInPage } from './pages/logIn/login';
+import { loginPage } from './pages/logIn/login';
 import { SettingsPage } from './pages/settings/settings';
 import { SignUpPage } from './pages/signUp/signUp';
 import router from './utils/Router'
 
 window.addEventListener('DOMContentLoaded', async () => {
     router
-        .use('/', LogInPage)
-        .use('/logIn', LogInPage)
+        .use('/', loginPage)
+        .use('/logIn', loginPage)
         .use('/sign-up', SignUpPage)
         .use('/404', Page404Page)
         .use('/500', Page500Page)
@@ -26,7 +26,5 @@ window.addEventListener('DOMContentLoaded', async () => {
         await AuthApiController.fetchUser()
     } catch (e) {
         console.error(e)
-        router.go('/')
     }
 })
-
