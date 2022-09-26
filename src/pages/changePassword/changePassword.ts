@@ -10,10 +10,11 @@ import { Avatar } from '../../components/Avatar';
 import { Title } from '../../components/Title';
 import UserApiController from '../../controllers/UserApiController';
 import { IChangePassword } from '../../api/UserApi';
+import AuthApiController from '../../controllers/AuthApiController';
 
 export class ChangePasswordPageCore extends Block {
     init() {
-
+        AuthApiController.fetchUser()
     }
     protected componentDidUpdate(): boolean {
         this.children.avatar = new Avatar({

@@ -12,6 +12,7 @@ import ChatsApiController from '../../controllers/ChatsApiController'
 import { ChatList } from '../../components/ChatList'
 import { currentChat } from '../../components/CurrentChat';
 import { ChatItem } from '../../components/ChatItem';
+import { Link } from '../../components/Link';
 
 export class ChatsPageCore extends Block {
     sockets: string[] = []
@@ -19,16 +20,17 @@ export class ChatsPageCore extends Block {
         super({
             ...store.getState(),
             clip__img: clip__img,
-            forwardArrow: forwardArrow,
-            profileLink: {
-                url: '/settings',
-                text: 'Профиль'
-            }
+            forwardArrow: forwardArrow
         })
     }
     protected init(): void {
         ChatsApiController.getChats()
-        console.log(this.props)
+
+        this.children.link = new Link({
+            to: '/settings',
+            label: 'Профиль ->'
+        })
+
         this.children.newChat = new NewChat({
             title: 'Создать новый чат',
             buttonClass: 'form__button',
@@ -37,6 +39,7 @@ export class ChatsPageCore extends Block {
             id: 'newChatTitle',
             inputClasses: ['form__input', 'required']
         })
+
         this.children.button = new Button({
             class: 'send__button',
             events: {

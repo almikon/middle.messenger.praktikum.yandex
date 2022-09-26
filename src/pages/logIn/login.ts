@@ -8,18 +8,12 @@ import Store, { StoreEvents, withStore } from '../../utils/Store';
 import AuthApiController from '../../controllers/AuthApiController';
 import getData from '../../utils/GetData';
 import { ILogInData } from '../../api/AuthApi';
+import { Link } from '../../components/Link';
 
 
 export class LoginPageCore extends Block {
     constructor() {
-        super(
-            {
-                footerNote: {
-                    text: "Нет аккаунта?",
-                    url: "sign-up"
-                },
-                url: "messenger"
-            });
+        super({})
 
     }
     init() {
@@ -51,6 +45,10 @@ export class LoginPageCore extends Block {
                 'password'
             ],
             pattern: PATTERNS.PASSWORD
+        })
+        this.children.link = new Link({
+            to: '/sign-up',
+            label: 'Нет аккаунта?'
         })
 
     }
