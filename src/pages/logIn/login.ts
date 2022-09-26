@@ -20,17 +20,7 @@ export class LoginPageCore extends Block {
                 },
                 url: "messenger"
             });
-            const a = document.getElementsByTagName('a')
 
-            for(let el of a){
-                console.log(el)
-                el.addEventListener('click',(event)=>{
-                    event.preventDefault()
-                    // const route = event.target as unknown as string
-                    console.log(event.target)
-                    // router.go(route)
-                })
-            }
     }
     init() {
 
@@ -81,6 +71,7 @@ export class LoginPageCore extends Block {
 
     render() {
         return this.compile(tmpl, this.props);
+
     }
 }
 

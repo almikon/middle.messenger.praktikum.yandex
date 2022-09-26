@@ -1,5 +1,7 @@
 <div class="currentChat__main">
-{{#each this.messages}}
-{{{this}}}
-{{/each}}
+    {{#each this.messages}}
+    <div class="message">
+        <p class="text">{{{this}}}</p>
+    </div>
+    {{/each}}
 </div>

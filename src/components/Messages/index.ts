@@ -1,27 +1,20 @@
 import Block from "../../utils/Block";
-import { Message } from "../Message";
+import { withStore } from "../../utils/Store";
 import tmpl from './messages.hbs'
 
 interface IMessages {
-    message: string
+    messages?: Record<string, string>
 }
 
-export class Messages extends Block {
+export class MessagesCore extends Block {
     constructor(props: IMessages) {
         super(props)
     }
-    protected componentDidUpdate(): boolean {
-       if (this.props.messages){
-        console.log(this.props.messages)
-        const newMessages: Array<Message> = []
-                newMessages.push(new Message({
-                    content: this.props.messages[0].content
-                }))
-       }
-       
-       return true
-    }
+
     protected render(): DocumentFragment {
         return this.compile(tmpl, this.props)
     }
 }
+
+const withMessages = withStore((state) => ({ ...state }))
+export const messages = withMessages(MessagesCore)

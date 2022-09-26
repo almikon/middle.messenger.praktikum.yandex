@@ -28,7 +28,7 @@ export class ChatsPageCore extends Block {
     }
     protected init(): void {
         ChatsApiController.getChats()
-
+        console.log(this.props)
         this.children.newChat = new NewChat({
             title: 'Создать новый чат',
             buttonClass: 'form__button',
@@ -61,7 +61,8 @@ export class ChatsPageCore extends Block {
         this.props.curSocket.send(JSON.stringify({
             content: message.value,
             type: 'message',
-            }))
+        }))
+        message.value = ''
     }
 
     protected componentDidUpdate(): boolean {
@@ -92,37 +93,44 @@ export class ChatsPageCore extends Block {
         if (this.props.currentChat?.id &&
             this.props.user.id &&
             this.props.token) {
-            if (this.props.curSocket && this.props.curSocket.url !== 
+            if (this.props.curSocket && this.props.curSocket.url !==
                 `wss://ya-praktikum.tech/ws/chats/${this.props.user.id}/${this.props.currentChat.id}/${this.props.token['token']}`) {
                 this.props.curSocket.close()
             }
-                const socketId = `wss://ya-praktikum.tech/ws/chats/${this.props.user.id}/${this.props.currentChat.id}/${this.props.token['token']}`
-                const socket = new WebSocket(socketId);
-                socket.addEventListener('open', () => {
-                    console.log('Соединение установлено')})
+            const socketId = `wss://ya-praktikum.tech/ws/chats/${this.props.user.id}/${this.props.currentChat.id}/${this.props.token['token']}`
+            const socket = new WebSocket(socketId);
+            socket.addEventListener('open', () => {
+                console.log('Соединение установлено')
+            })
+            const messagesList: Record<string, string> = {}
+            socket.addEventListener('close', event => {
+                if (event.wasClean) {
+                    console.log('Соединение закрыто чисто');
+                } else {
+                    console.log('Обрыв соединения');
+                }
 
-                socket.addEventListener('close', event => {
-                    if (event.wasClean) {
-                        console.log('Соединение закрыто чисто');
-                    } else {
-                        console.log('Обрыв соединения');
-                    }
+                console.log(`Код: ${event.code} | Причина: ${event.reason}`);
+            });
 
-                    console.log(`Код: ${event.code} | Причина: ${event.reason}`);
-                });
+            socket.addEventListener('message', event => {
+                if (event.data && event.data !== 'WS token is not valid') {
+                    const newDate = event.data.split(',')[2].split(':"')[1].slice(0, -1)
+                    const newMessage = event.data.split(',')[0].split(':')[1].slice(1, -1)
+                    console.log(`${newMessage}`)
+                    messagesList[newDate] = newMessage
 
-                socket.addEventListener('message', event => {
-                    const newMessage = event.data.split(',')[0].split(':')[1].slice(1,-1)
-                    this.children.currentChat.setProps({getMessage: newMessage})
-                });
+                    this.children.currentChat.children.messages.setProps({ messages: messagesList })
+                }
+            });
 
-                socket.addEventListener('error', () => {
-                    console.log('Ошибка');
-                });
+            socket.addEventListener('error', () => {
+                console.log('Ошибка');
+            });
 
-                store.set(`curSocket`, socket)
-            }
+            store.set(`curSocket`, socket)
         }
+    }
 
     render() {
         return this.compile(tmpl, this.props);

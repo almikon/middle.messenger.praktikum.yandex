@@ -1,6 +1,6 @@
 import Block from "../../utils/Block"
 import { withStore } from "../../utils/Store"
-import { Messages } from "../Messages"
+import { messages } from "../Messages"
 import { Modal } from "../Modal"
 import { Title } from "../Title"
 import tmpl from './currentChat.hbs'
@@ -49,17 +49,18 @@ class CurrentChatCore extends Block {
             label: 'Логин'
         })
 
-        this.children.messages = new Messages({
+        this.children.messages = new messages({
             messages: []
 
         })
     }
 
     protected componentDidUpdate(): boolean {
-        if(this.props.getMessage){
-        this.children.messages.setProps({
-            messages:this.props.getMessage
-        })}
+        if (this.props.getMessage) {
+            this.children.messages.setProps({
+                messages: this.props.getMessage
+            })
+        }
         return true
     }
 
