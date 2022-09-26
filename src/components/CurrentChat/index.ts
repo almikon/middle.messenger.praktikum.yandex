@@ -1,6 +1,6 @@
 import Block from "../../utils/Block"
 import { withStore } from "../../utils/Store"
-import { Messages } from "../Messages"
+import { messages } from "../Messages"
 import { Modal } from "../Modal"
 import { Title } from "../Title"
 import tmpl from './currentChat.hbs'
@@ -8,11 +8,12 @@ import tmpl from './currentChat.hbs'
 
 interface ICurrentChat {
     title?: string,
-    chat?: any
+    chat?: any,
+    getMessage?: string
 }
 
 class CurrentChatCore extends Block {
-    sockets: string[] = []
+
     constructor(props: ICurrentChat) {
         super(props)
     }
@@ -48,49 +49,18 @@ class CurrentChatCore extends Block {
             label: 'Логин'
         })
 
-        this.children.messages = new Messages({
-            messages: [
-                {
-                    title: 'test TITLE',
-                    text: 'TEST text'
-                }
-            ]
+        this.children.messages = new messages({
+            messages: []
+
         })
     }
 
     protected componentDidUpdate(): boolean {
-
-        if (this.props.currentChat?.id &&
-            this.props.user.id &&
-            this.props.token) {
-            if (!this.sockets.includes(this.props.currentChat?.id)) {
-                this.sockets.push(this.props.currentChat?.id)
-                const socketId = `wss://ya-praktikum.tech/ws/chats/${this.props.user.id}/${this.props.currentChat.id}/${this.props.token['token']}`
-                const socket = new WebSocket(socketId);
-                socket.addEventListener('open', () => {
-                    console.log('Соединение установлено');
-                })
-
-                socket.addEventListener('close', event => {
-                    if (event.wasClean) {
-                        console.log('Соединение закрыто чисто');
-                    } else {
-                        console.log('Обрыв соединения');
-                    }
-
-                    console.log(`Код: ${event.code} | Причина: ${event.reason}`);
-                });
-
-                socket.addEventListener('message', event => {
-                    console.log('Получены данные', event.data);
-                });
-
-                socket.addEventListener('error', () => {
-                    console.log('Ошибка');
-                });
-            }
+        if (this.props.getMessage) {
+            this.children.messages.setProps({
+                messages: this.props.getMessage
+            })
         }
-
         return true
     }
 

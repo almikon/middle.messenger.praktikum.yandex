@@ -1,9 +1,12 @@
 import Block from "../../utils/Block";
+import { withStore } from "../../utils/Store";
 import tmpl from './messages.hbs'
+
 interface IMessages {
-    messages: Record<string, string>[]
+    messages?: Record<string, string>
 }
-export class Messages extends Block {
+
+export class MessagesCore extends Block {
     constructor(props: IMessages) {
         super(props)
     }
@@ -12,3 +15,6 @@ export class Messages extends Block {
         return this.compile(tmpl, this.props)
     }
 }
+
+const withMessages = withStore((state) => ({ ...state }))
+export const messages = withMessages(MessagesCore)

@@ -8,10 +8,20 @@ import { UserInfo } from '../../components/UserInfo';
 import { Title } from '../../components/Title';
 import { Avatar } from '../../components/Avatar';
 import router from '../../utils/Router'
+import { Link } from '../../components/Link';
+
 export class SettingsPageCore extends Block {
 
     init() {
         AuthApiController.fetchUser()
+        this.children.linkSet = new Link({
+            to: '/changeSettings',
+            label: 'Изменить данные'
+        });
+        this.children.linkPas = new Link({
+            to: '/changePassword',
+            label: 'Изменить пароль'
+        })
     }
     componentDidUpdate() {
         this.children.avatar = new Avatar({

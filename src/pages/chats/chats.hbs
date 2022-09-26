@@ -1,6 +1,6 @@
 <div class="chats__container">
     <div class="chatsList">
-        <div class="profileLink"><a href="{{profileLink.url}}">{{profileLink.text}}</a></div>
+        <div class="profileLink">{{{link}}}</div>
         <input class="search" placeholder="Поиск"></input>
         <div class="currentChatsList">
             {{{newChat}}}
@@ -13,9 +13,9 @@
     <div class="currentChat">
         {{{currentChat}}}
         <div class="currentChat__sendMessage">
-    <img src={{clip__img}} alt="Отправить файл" class="clip">
-    {{{input}}}
-    {{{button}}}
-</div>
+            <img src={{clip__img}} alt="Отправить файл" class="clip">
+            {{{input}}}
+            {{{button}}}
+        </div>
     </div>
 </div>

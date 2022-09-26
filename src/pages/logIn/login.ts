@@ -4,26 +4,20 @@ import '../../less/form.less';
 import Block from '../../utils/Block';
 import tmpl from './logIn.hbs'
 import { PATTERNS } from '../../constants'
-import Store, { StoreEvents } from '../../utils/Store';
+import Store, { StoreEvents, withStore } from '../../utils/Store';
 import AuthApiController from '../../controllers/AuthApiController';
 import getData from '../../utils/GetData';
-import { logInData } from '../../api/AuthApi';
+import { ILogInData } from '../../api/AuthApi';
+import { Link } from '../../components/Link';
 
-export class LogInPage extends Block {
+
+export class LoginPageCore extends Block {
     constructor() {
-        super(
-            {
-                title: "Вход",
-                login: "Логин",
-                password: "Пароль",
-                footerNote: {
-                    text: "Нет аккаунта?",
-                    url: "sign-up"
-                },
-                url: "messenger"
-            });
+        super({})
+
     }
     init() {
+
         this.children.button = new Button({
             class: 'form__button',
             value: "Вход",
@@ -52,6 +46,11 @@ export class LogInPage extends Block {
             ],
             pattern: PATTERNS.PASSWORD
         })
+        this.children.link = new Link({
+            to: '/sign-up',
+            label: 'Нет аккаунта?'
+        })
+
     }
 
     public logIn() {
@@ -63,12 +62,16 @@ export class LogInPage extends Block {
         if (inputs.length) {
             console.log('Есть ошибки')
         } else {
-            AuthApiController.logIn(data as unknown as logInData)
+            AuthApiController.logIn(data as unknown as ILogInData)
 
         }
     }
 
     render() {
         return this.compile(tmpl, this.props);
+
     }
 }
+
+const withUser = withStore((state) => ({ ...state.user }))
+export const loginPage = withUser(LoginPageCore)

@@ -7,27 +7,29 @@ import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
 import { PATTERNS } from '../../constants'
 import store, { withStore } from '../../utils/Store'
-import getData from '../../utils/GetData'
 import { NewChat } from '../../components/NewChat'
 import ChatsApiController from '../../controllers/ChatsApiController'
 import { ChatList } from '../../components/ChatList'
 import { currentChat } from '../../components/CurrentChat';
 import { ChatItem } from '../../components/ChatItem';
+import { Link } from '../../components/Link';
 
 export class ChatsPageCore extends Block {
+    sockets: string[] = []
     constructor() {
         super({
             ...store.getState(),
             clip__img: clip__img,
-            forwardArrow: forwardArrow,
-            profileLink: {
-                url: '/settings',
-                text: 'Профиль'
-            }
+            forwardArrow: forwardArrow
         })
     }
     protected init(): void {
         ChatsApiController.getChats()
+
+        this.children.link = new Link({
+            to: '/settings',
+            label: 'Профиль ->'
+        })
 
         this.children.newChat = new NewChat({
             title: 'Создать новый чат',
@@ -37,6 +39,7 @@ export class ChatsPageCore extends Block {
             id: 'newChatTitle',
             inputClasses: ['form__input', 'required']
         })
+
         this.children.button = new Button({
             class: 'send__button',
             events: {
@@ -56,10 +59,15 @@ export class ChatsPageCore extends Block {
 
     }
     sendData() {
-        const message = getData()
+        const message = document.querySelector('input.message') as HTMLInputElement
 
-        console.log(message)
+        this.props.curSocket.send(JSON.stringify({
+            content: message.value,
+            type: 'message',
+        }))
+        message.value = ''
     }
+
     protected componentDidUpdate(): boolean {
         if (this.props.chats) {
             const newChats: Array<ChatItem> = []
@@ -85,7 +93,48 @@ export class ChatsPageCore extends Block {
         store.set('currentChat', currentChat)
         ChatsApiController.chatToken(id)
         this.children.currentChat.setProps({ title: currentChat.title })
+        if (this.props.currentChat?.id &&
+            this.props.user.id &&
+            this.props.token) {
+            if (this.props.curSocket && this.props.curSocket.url !==
+                `wss://ya-praktikum.tech/ws/chats/${this.props.user.id}/${this.props.currentChat.id}/${this.props.token['token']}`) {
+                this.props.curSocket.close()
+            }
+            const socketId = `wss://ya-praktikum.tech/ws/chats/${this.props.user.id}/${this.props.currentChat.id}/${this.props.token['token']}`
+            const socket = new WebSocket(socketId);
+            socket.addEventListener('open', () => {
+                console.log('Соединение установлено')
+            })
+            const messagesList: Record<string, string> = {}
+            socket.addEventListener('close', event => {
+                if (event.wasClean) {
+                    console.log('Соединение закрыто чисто');
+                } else {
+                    console.log('Обрыв соединения');
+                }
+
+                console.log(`Код: ${event.code} | Причина: ${event.reason}`);
+            });
+
+            socket.addEventListener('message', event => {
+                if (event.data && event.data !== 'WS token is not valid') {
+                    const newDate = event.data.split(',')[2].split(':"')[1].slice(0, -1)
+                    const newMessage = event.data.split(',')[0].split(':')[1].slice(1, -1)
+                    console.log(`${newMessage}`)
+                    messagesList[newDate] = newMessage
+
+                    this.children.currentChat.children.messages.setProps({ messages: messagesList })
+                }
+            });
+
+            socket.addEventListener('error', () => {
+                console.log('Ошибка');
+            });
+
+            store.set(`curSocket`, socket)
+        }
     }
+
     render() {
         return this.compile(tmpl, this.props);
 

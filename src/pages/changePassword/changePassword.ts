@@ -10,12 +10,13 @@ import { Avatar } from '../../components/Avatar';
 import { Title } from '../../components/Title';
 import UserApiController from '../../controllers/UserApiController';
 import { IChangePassword } from '../../api/UserApi';
+import AuthApiController from '../../controllers/AuthApiController';
 
 export class ChangePasswordPageCore extends Block {
     init() {
-
+        AuthApiController.fetchUser()
     }
-    protected componentDidUpdate(_query?: string | undefined): boolean {
+    protected componentDidUpdate(): boolean {
         this.children.avatar = new Avatar({
             userAvatar: 'https://ya-praktikum.tech/api/v2/resources' + this.props.avatar,
             altText: 'Ваш аватар'

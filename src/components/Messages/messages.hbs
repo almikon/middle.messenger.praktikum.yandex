@@ -1,8 +1,7 @@
 <div class="currentChat__main">
-{{#each this.messages}}
-<div class="message">
-    {{title}} написал:
-    <p class="text">{{text}}</p>
-</div>
-{{/each}}
+    {{#each this.messages}}
+    <div class="message">
+        <p class="text">{{{this}}}</p>
+    </div>
+    {{/each}}
 </div>

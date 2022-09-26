@@ -7,6 +7,7 @@ import { PATTERNS } from '../../constants'
 import getData from '../../utils/GetData';
 import AuthApiController from '../../controllers/AuthApiController';
 import { ISignupData } from '../../api/AuthApi';
+import { Link } from '../../components/Link';
 
 export class SignUpPage extends Block {
     constructor() {
@@ -54,11 +55,7 @@ export class SignUpPage extends Block {
                 name: "display_name",
                 placeholder: "Имя в чате"
             },
-            button__text: "Зарегистрироваться",
-            footerNote: {
-                text: "Войти",
-                url: "./logIn"
-            }
+            button__text: "Зарегистрироваться"
         });
     }
 
@@ -134,6 +131,10 @@ export class SignUpPage extends Block {
                 'required'
             ],
             pattern: PATTERNS.LOGIN
+        })
+        this.children.link = new Link({
+            to: '/',
+            label: 'Войти'
         })
     }
     public signUp() {
