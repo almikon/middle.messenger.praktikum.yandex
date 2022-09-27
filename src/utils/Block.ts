@@ -101,6 +101,8 @@ class Block<P extends Record<string, any> = any> {
         }
 
         Object.assign(this.props, nextProps);
+
+        this.eventBus().emit(Block.EVENTS.FLOW_CDU);
     };
 
     get element() {
@@ -178,11 +180,9 @@ class Block<P extends Record<string, any> = any> {
     }
 
     private _makePropsProxy(props: any) {
-        const self = this;
         return new Proxy(props, {
             set(target, prop, value) {
                 target[prop] = value
-                self.eventBus().emit(Block.EVENTS.FLOW_CDU)
                 return target[prop]
             },
             get(target, prop: string) {
