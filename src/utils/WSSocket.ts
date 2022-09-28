@@ -16,9 +16,15 @@ class WSSocket {
 
     onopen() {
         console.log('Соединение установлено');
-        this.socketInst?.send(JSON.stringify({type:'get old', content: '0'}))
+        this.socketInst?.send(JSON.stringify({ type: 'get old', content: '0' }))
     }
-
+    getOld() {
+        if (this.socketInst?.readyState === 1) {
+            this.socketInst?.send(JSON.stringify({ type: 'get old', content: '0' }))
+        } else {
+            this.socketInst?.onopen
+        }
+    }
     close() {
         console.log('Соединение закрыто');
     }
@@ -28,15 +34,16 @@ class WSSocket {
     }
 
     onmessage(event: MessageEvent) {
-        
-        const message = JSON.parse(event.data);
-            if (Array.isArray(message) && message.length > 0) {
-                store.set('messages', message);
-            } else if (typeof message === 'object' && !Array.isArray(message) && message.type === 'message') {
-                store.set('messages', [message, ...store.getState().messages]);
-            }
 
-        
+        const message = JSON.parse(event.data);
+        if (Array.isArray(message) && message.length > 0) {
+            store.set('messages', message);
+        } else if (typeof message === 'object' && !Array.isArray(message) && message.type === 'message' && store.getState().messages) {
+            store.set('messages', [message, ...store.getState().messages]);
+        } else {
+            store.set('messages', message);
+        }
+
     }
 
     send(data: string) {

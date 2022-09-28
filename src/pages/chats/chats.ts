@@ -61,15 +61,22 @@ export class ChatsPageCore extends Block {
 
     }
     sendData() {
+
         const message = document.querySelector('input.message') as HTMLInputElement
-        if(this.props.curSocket.getState() === 1){
-        this.props.curSocket.send(JSON.stringify({
-            content: message.value,
-            type: 'message',
-        }))}else{
-            this.props.curSocket.onopen()
+        try {
+            if (this.props.curSocket.getState() === 1) {
+                this.props.curSocket.send(JSON.stringify({
+                    content: message.value,
+                    type: 'message',
+                }))
+            } else {
+                this.props.curSocket.onopen()
+            }
+            message.value = ''
         }
-        message.value = ''
+        catch {
+            console.log('Не выбран чат!')
+        }
     }
 
     protected componentDidUpdate(): boolean {
@@ -92,8 +99,10 @@ export class ChatsPageCore extends Block {
                 chats: newChats
             })
         }
-
-
+        this.getSocket()
+        return true
+    }
+    getSocket() {
         if (this.props.currentChat?.id &&
             this.props.user.id &&
             this.props.token &&
@@ -106,14 +115,16 @@ export class ChatsPageCore extends Block {
                 store.set(`curSocket`, socket)
             }
         }
-        return true
     }
     public async chooseChat(title: string, id: number) {
         const currentChat = { title: title, id: id }
         await ChatsApiController.chatToken(id)
         store.set('currentChat', currentChat)
-        this.children.currentChat.setProps({ title: currentChat.title})
-        this.children.currentChat.children.messages.setProps({messages: []})
+        this.children.currentChat.setProps({ title: `${currentChat.title} : ${currentChat.id}` })
+        this.children.currentChat.children.messages.setProps({ messages: [] })
+        store.set('messages', store.getState().curSocket.getOld() || [])
+        this.getSocket()
+        this.children.currentChat.children.messages.setProps({ messages: store.getState().messages })
         console.log(this.props)
     }
 
