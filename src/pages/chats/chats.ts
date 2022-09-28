@@ -18,7 +18,7 @@ import WSSocket from '../../utils/WSSocket';
 export class ChatsPageCore extends Block {
     sockets: WSSocket[] = []
     chatsId: number[] = []
-    openSocket: boolean = false
+    tokens: string[] = []
     constructor() {
         super({
             ...store.getState(),
@@ -62,11 +62,13 @@ export class ChatsPageCore extends Block {
     }
     sendData() {
         const message = document.querySelector('input.message') as HTMLInputElement
-
+        if(this.props.curSocket.getState() === 1){
         this.props.curSocket.send(JSON.stringify({
             content: message.value,
             type: 'message',
-        }))
+        }))}else{
+            this.props.curSocket.onopen()
+        }
         message.value = ''
     }
 
@@ -94,26 +96,25 @@ export class ChatsPageCore extends Block {
 
         if (this.props.currentChat?.id &&
             this.props.user.id &&
-            this.props.token) {
+            this.props.token &&
+            !this.tokens.includes(this.props.token)) {
             if (!this.chatsId.includes(this.props.currentChat?.id)) {
                 this.chatsId.push(this.props.currentChat?.id);
                 const socket = new WSSocket(this.props.currentChat?.id, this.props.user.id, this.props.token['token'])
                 this.sockets.push(socket)
+                this.tokens.push(this.props.token)
                 store.set(`curSocket`, socket)
-                console.log(this.sockets)
             }
         }
         return true
     }
     public async chooseChat(title: string, id: number) {
         const currentChat = { title: title, id: id }
-        store.set('currentChat', currentChat)
         await ChatsApiController.chatToken(id)
-        this.children.currentChat.setProps({ title: currentChat.title })
-
-        // const socketId = `wss://ya-praktikum.tech/ws/chats/${this.props.user.id}/${this.props.currentChat.id}/${this.props.token['token']}`
-        // const socket = new WebSocket(socketId);
-
+        store.set('currentChat', currentChat)
+        this.children.currentChat.setProps({ title: currentChat.title})
+        this.children.currentChat.children.messages.setProps({messages: []})
+        console.log(this.props)
     }
 
     render() {

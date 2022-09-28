@@ -16,7 +16,7 @@ class WSSocket {
 
     onopen() {
         console.log('Соединение установлено');
-        this.send(JSON.stringify({ type: 'ping' }));
+        this.socketInst?.send(JSON.stringify({type:'get old', content: '0'}))
     }
 
     close() {
@@ -28,21 +28,22 @@ class WSSocket {
     }
 
     onmessage(event: MessageEvent) {
-        console.log(event.data)
-        return
+        
         const message = JSON.parse(event.data);
-        if (Array.isArray(message) && message.length > 0) {
-            store.set('newMessage', message);
-        } else if (typeof message === 'object' && !Array.isArray(message) && message.type === 'message') {
-            store.set('newMessage', message);
-        }
+            if (Array.isArray(message) && message.length > 0) {
+                store.set('messages', message);
+            } else if (typeof message === 'object' && !Array.isArray(message) && message.type === 'message') {
+                store.set('messages', [message, ...store.getState().messages]);
+            }
+
+        
     }
 
     send(data: string) {
         this.socketInst?.send(data);
     }
 
-    getStatus() {
+    getState() {
         return this.socketInst?.readyState;
     }
 }
