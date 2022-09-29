@@ -46,7 +46,7 @@ export default class HTTPTransport {
             } else {
                 xhr.setRequestHeader('content-type', 'application/json')
             }
-
+            
 
             xhr.onabort = reject
             xhr.onerror = reject
@@ -65,9 +65,15 @@ export default class HTTPTransport {
                 xhr.send(JSONdata)
             }
 
-            xhr.onload = function () {
-                resolve(xhr.response)
-            };
+            xhr.onreadystatechange = () =>{
+                if(xhr.readyState === XMLHttpRequest.DONE){
+                    if(xhr.status < 400){
+                        resolve(xhr.response)
+                    }else{
+                        reject(xhr.response.reason)
+                    }
+                }
+            }
 
         })
     }

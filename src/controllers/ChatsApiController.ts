@@ -38,7 +38,6 @@ class ChatsApiController {
 
   async chatToken(id: number) {
     const token = await this.api.chatToken(id)
-    console.log(token)
     store.set('token', token)
     return token
   }
