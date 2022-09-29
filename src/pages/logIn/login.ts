@@ -63,7 +63,6 @@ export class LoginPageCore extends Block {
             console.log('Есть ошибки')
         } else {
             AuthApiController.logIn(data as unknown as ILogInData)
-
         }
     }
 

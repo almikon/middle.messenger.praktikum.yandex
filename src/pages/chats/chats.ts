@@ -99,33 +99,25 @@ export class ChatsPageCore extends Block {
                 chats: newChats
             })
         }
-        this.getSocket()
         return true
     }
     getSocket() {
         if (this.props.currentChat?.id &&
             this.props.user.id &&
-            this.props.token &&
-            !this.tokens.includes(this.props.token)) {
-            if (!this.chatsId.includes(this.props.currentChat?.id)) {
-                this.chatsId.push(this.props.currentChat?.id);
+            this.props.token) {
                 const socket = new WSSocket(this.props.currentChat?.id, this.props.user.id, this.props.token['token'])
-                this.sockets.push(socket)
-                this.tokens.push(this.props.token)
+                
                 store.set(`curSocket`, socket)
-            }
         }
     }
     public async chooseChat(title: string, id: number) {
         const currentChat = { title: title, id: id }
-        await ChatsApiController.chatToken(id)
+        await ChatsApiController.chatToken(id);
         store.set('currentChat', currentChat)
-        this.children.currentChat.setProps({ title: `${currentChat.title} : ${currentChat.id}` })
-        this.children.currentChat.children.messages.setProps({ messages: [] })
-        store.set('messages', store.getState().curSocket.getOld() || [])
+        
+        this.children.currentChat.setProps({ title: `${currentChat.title} : ${currentChat.id}` });
         this.getSocket()
-        this.children.currentChat.children.messages.setProps({ messages: store.getState().messages })
-        console.log(this.props)
+        
     }
 
     render() {
