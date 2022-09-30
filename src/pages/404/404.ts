@@ -1,21 +1,22 @@
+import { Link } from '../../components/Link';
 import '../../less/errorPage.less'
 import Block from '../../utils/Block';
 import tmpl from './404.hbs'
 
-const context = {
-    error: {
-        title: "404",
-        description: "Не туда попали"
-    },
-    footerNote: {
-        url: "./chats.html",
-        text: "Назад к чатам"
-    }
-};
-
 export class Page404Page extends Block {
-    constructor(props = context) {
-        super('div', props);
+    constructor() {
+        super({
+            error: {
+                title: "404",
+                description: "Не туда попали"
+            }
+        });
+    }
+    protected init(): void {
+        this.children.link = new Link({
+            to: '/messenger',
+            label: 'Назад к чатам'
+        })
     }
 
     render() {

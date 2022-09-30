@@ -1,24 +1,23 @@
 import Block from "../../utils/Block"
 import tmpl from './input.hbs'
 
-interface InputProps {
+interface IInputProps {
     name?: string,
     placeholder?: string,
     classes: Array<string>,
-    pattern: string
+    pattern: string,
+    id?: string
 }
 
-export class Input extends Block<InputProps> {
-    constructor(props: InputProps) {
-        super('input', props)
+export class Input extends Block<IInputProps> {
+    constructor(props: IInputProps) {
+        super(props)
         const self = this.element
         this.props.classes.forEach(function (value: string) {
             self?.classList.add(value)
         })
         self?.setAttribute('name', this.props.name)
-        if (props.placeholder) {
-            self?.setAttribute('placeholder', this.props.placeholder)
-        }
+
         const checkContent = this.checkContent
         this.element?.addEventListener('blur', function (event) {
             const target = event.target as HTMLTextAreaElement

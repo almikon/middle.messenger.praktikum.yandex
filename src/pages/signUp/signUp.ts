@@ -4,62 +4,59 @@ import Block from '../../utils/Block';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { PATTERNS } from '../../constants'
-const context = {
-    title: "Регистрация",
-    email: {
-        id: "Почта",
-        type: "email",
-        name: "email",
-        placeholder: "pochta@yandex.ru"
-    },
-    login: {
-        id: "Логин",
-        type: "text",
-        name: "login",
-        placeholder: "Логин"
-    },
-    first_name: {
-        id: "Имя",
-        type: "text",
-        name: "first_name",
-        placeholder: "Иван"
-    },
-    second_name: {
-        id: "Фамилия",
-        type: "text",
-        name: "second_name",
-        placeholder: "Иванов"
-    },
-    phone: {
-        id: "Телефон",
-        type: "phone",
-        name: "phone",
-        placeholder: "+7 (909) 967 30 30"
-    },
-    password: {
-        id: "Пароль",
-        type: "password",
-        name: "password",
-        placeholder: "Пароль"
-    },
-    checkpassword: {
-        id: "Пароль (ещё раз)",
-        type: "password",
-        name: "checkPassword",
-        placeholder: "Пароль (ещё раз)"
-    },
-    button__text: "Зарегистрироваться",
-    footerNote: {
-        text: "Войти",
-        url: "./index.html"
-    }
-}
-type SignUpPageProps = {
+import getData from '../../utils/GetData';
+import AuthApiController from '../../controllers/AuthApiController';
+import { ISignupData } from '../../api/AuthApi';
+import { Link } from '../../components/Link';
 
-}
-export class SignUpPage extends Block<SignUpPageProps> {
-    constructor(props = context) {
-        super('div', props);
+export class SignUpPage extends Block {
+    constructor() {
+        super({
+            title: "Регистрация",
+            email: {
+                id: "Почта",
+                type: "email",
+                name: "email",
+                placeholder: "pochta@yandex.ru"
+            },
+            login: {
+                id: "Логин",
+                type: "text",
+                name: "login",
+                placeholder: "Логин"
+            },
+            first_name: {
+                id: "Имя",
+                type: "text",
+                name: "first_name",
+                placeholder: "Иван"
+            },
+            second_name: {
+                id: "Фамилия",
+                type: "text",
+                name: "second_name",
+                placeholder: "Иванов"
+            },
+            phone: {
+                id: "Телефон",
+                type: "phone",
+                name: "phone",
+                placeholder: "+7 (909) 967 30 30"
+            },
+            password: {
+                id: "Пароль",
+                type: "password",
+                name: "password",
+                placeholder: "Пароль"
+            },
+            display_name: {
+                id: "Имя в чате",
+                type: "text",
+                name: "display_name",
+                placeholder: "Имя в чате"
+            },
+            button__text: "Зарегистрироваться"
+        });
     }
 
     init() {
@@ -68,7 +65,7 @@ export class SignUpPage extends Block<SignUpPageProps> {
             value: this.props.button__text,
             goTo: this.props.goTo,
             events: {
-                click: () => this.checkData()
+                click: () => this.signUp()
             }
         }
         )
@@ -126,44 +123,30 @@ export class SignUpPage extends Block<SignUpPageProps> {
             ],
             pattern: PATTERNS.PHONE
         })
-        this.children.checkpasswordInput = new Input({
-            name: 'checkpassword',
-            placeholder: this.props.checkpassword.placeholder,
+        this.children.displayNameInput = new Input({
+            name: 'display_name',
+            placeholder: this.props.display_name.placeholder,
             classes: [
                 'form__input',
                 'required'
             ],
-            pattern: PATTERNS.PASSWORD
+            pattern: PATTERNS.LOGIN
+        })
+        this.children.link = new Link({
+            to: '/',
+            label: 'Войти'
         })
     }
-    public checkData() {
-        this.getData()
+    public signUp() {
+        const data = getData()
         const inputs = document.querySelectorAll('.wrong')
         if (inputs.length) {
             console.log('Есть ошибки')
         } else {
-            this.goTo(this.props.goTo)
+            AuthApiController.signup(data as unknown as ISignupData)
         }
     }
-    public goTo(adress: string) {
-        document.location.pathname = adress
-    }
-    public getData() {
-        let res: Record<string, string> = {}
-        const inputList = document.querySelectorAll('input')
-        inputList.forEach(input => {
-            if (input.classList.contains('required')) {
-                if (input.value.length > 0) {
-                    res[input.name] = input.value
-                }
-                else {
-                    console.log(`${input.name} не может быть пустым!`)
-                    input.classList.add('wrong')
-                }
-            }
-        })
-        console.log(res)
-    }
+
     render() {
         return this.compile(tmpl, this.props);
     }

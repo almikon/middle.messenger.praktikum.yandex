@@ -1,56 +1,81 @@
 import '../../less/settings.less'
-import userAvatar from '../../../static/img/userAvatar.png'
-import backArrow from '../../../static/img/backArrow.png'
 import tmpl from './settings.hbs'
 import Block from '../../utils/Block';
+import { Button } from '../../components/Button';
+import AuthApiController from '../../controllers/AuthApiController';
+import { withStore } from '../../utils/Store';
+import { UserInfo } from '../../components/UserInfo';
+import { Title } from '../../components/Title';
+import { Avatar } from '../../components/Avatar';
+import router from '../../utils/Router'
+import { Link } from '../../components/Link';
 
-const context = {
-    backArrow: backArrow,
-    userAvatar: userAvatar,
-    user: "Иван",
-    email: {
-        name: "Почта",
-        value: "pochta@yandex.ru"
-    },
-    login: {
-        name: "Логин",
-        value: "ivanivanov"
-    },
-    first_name: {
-        name: "Имя",
-        value: "Иван"
-    },
-    second_name: {
-        name: "Фамилия",
-        value: "Иванов"
-    },
-    display_name: {
-        name: "Имя в чате",
-        value: "Иван"
-    },
-    phone: {
-        name: "Телефон",
-        value: "+7 (909) 967 30 30"
-    },
-    change__data: {
-        item: "Изменить данные",
-        url: "changeSettings.html"
-    },
-    change__password: {
-        item: "Изменить пароль",
-        url: "changePassword.html"
-    },
-    option__exit: "Выйти"
-};
-type SettingsPageProps = {
+export class SettingsPageCore extends Block {
 
-}
-export class SettingsPage extends Block<SettingsPageProps> {
-    constructor(props = context) {
-        super('div', props);
+    init() {
+        AuthApiController.fetchUser()
+        this.children.linkSet = new Link({
+            to: '/changeSettings',
+            label: 'Изменить данные'
+        });
+        this.children.linkPas = new Link({
+            to: '/changePassword',
+            label: 'Изменить пароль'
+        })
     }
-
+    componentDidUpdate() {
+        this.children.avatar = new Avatar({
+            userAvatar: 'https://ya-praktikum.tech/api/v2/resources' + this.props.avatar,
+            altText: 'Ваш аватар'
+        })
+        this.children.title = new Title({
+            value: this.props.login,
+            class: "user__title"
+        })
+        this.children.backButton = new Button({
+            class: 'back__button',
+            events: {
+                click: () => router.go('/messenger')
+            }
+        })
+        this.children.exitButton = new Button({
+            class: 'exit__button',
+            value: 'Выход',
+            events: {
+                click: () => AuthApiController.logout()
+            }
+        })
+        this.children.email = new UserInfo({
+            name: 'Почта',
+            value: this.props.email
+        })
+        this.children.login = new UserInfo({
+            name: 'Логин',
+            value: this.props.login
+        })
+        this.children.firstName = new UserInfo({
+            name: 'Имя',
+            value: this.props.first_name
+        })
+        this.children.secondName = new UserInfo({
+            name: 'Фамилия',
+            value: this.props.second_name
+        })
+        this.children.phone = new UserInfo({
+            name: 'Телефон',
+            value: this.props.phone
+        })
+        this.children.displayName = new UserInfo({
+            name: 'Имя в чате',
+            value: this.props.display_name
+        })
+        return true
+    }
     render() {
+
         return this.compile(tmpl, this.props);
     }
 }
+
+const withUser = withStore((state) => ({ ...state.user }))
+export const SettingsPage = withUser(SettingsPageCore)

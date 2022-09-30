@@ -59,8 +59,12 @@
 }
 
 .chatsList__item {
-    display: flex;
+    background-color: @lightBlue;
     flex-direction: row;
+    justify-content: center;
+    display: flex;
+    border-radius: 5px;
+    margin: 3px;
 }
 
 .chat__title {
@@ -80,6 +84,11 @@
     color: @userValueColor;
 }
 
+.clip {
+    width: 32px;
+    height: 32px;
+}
+
 .message {
     height: 32px;
     left: 0px;
@@ -94,6 +103,9 @@
     text-align: center;
     padding: 0;
     color: @userValueColor;
+    width: fit-content;
+    margin: 15px;
+    padding: 10px;
 }
 
 .companion__avatar {
@@ -106,10 +118,18 @@
     flex-direction: column;
     justify-content: space-between;
 
+    &__container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
     &__header {
         width: calc(100% - 10px);
         margin-top: 10px;
         display: flex;
+        flex-direction: row;
+        justify-content: space-between;
         border-bottom: 2px solid @borderColor;
 
         &>p {
@@ -150,12 +170,22 @@
         width: 100%;
         display: flex;
         border-top: 1px solid @borderColor;
+        align-items: center;
     }
 }
 
 .send__button {
     background-image: url(@forwardArrow);
     background-repeat: no-repeat;
-    width: 30px;
+    width: 32px;
+    height: 32px;
     border: none;
+}
+
+.newChat__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: @newChatBackground;
+    border-radius: 5px;
 }

@@ -1,4 +1,3 @@
-
 import Block from "../../utils/Block"
 import tmpl from './button.hbs'
 
@@ -13,14 +12,7 @@ type ButtonProps = {
 
 export class Button extends Block<ButtonProps> {
     constructor(props: ButtonProps) {
-        super('button', props)
-        this.element?.classList.add(props.class)
-        this.props.events = {
-            click: () => { }
-        }
-    }
-    public click() {
-        this.props.events.click()
+        super(props)
     }
 
     protected render(): DocumentFragment {

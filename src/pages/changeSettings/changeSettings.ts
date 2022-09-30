@@ -1,62 +1,75 @@
 import '../../less/changeSettings.less'
-import userAvatar from '../../../static/img/userAvatar.png'
-import backArrow from '../../../static/img/backArrow.png'
 import tmpl from './changeSettings.hbs'
 import Block from '../../utils/Block';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { PATTERNS } from '../../constants'
-const context = {
-    backArrow: backArrow,
-    userAvatar: userAvatar,
-    user: "Иван",
-    email: {
-        name: "Почта",
-        placeholder: "pochta@yandex.ru"
-    },
-    login: {
-        name: "Логин",
-        placeholder: "ivanivanov"
-    },
-    first_name: {
-        name: "Имя",
-        placeholder: "Иван"
-    },
-    second_name: {
-        name: "Фамилия",
-        placeholder: "Иванов"
-    },
-    display_name: {
-        name: "Имя в чате",
-        placeholder: "Иван"
-    },
-    phone: {
-        name: "Телефон",
-        placeholder: "+7(909)967-30-30"
-    },
-    button__text: "Сохранить"
-};
-type ChangeSettingsPageProps = {
+import getData from '../../utils/GetData';
+import AuthApiController from '../../controllers/AuthApiController';
+import { Avatar } from '../../components/Avatar';
+import { Title } from '../../components/Title';
+import { withStore } from '../../utils/Store';
+import { ISignupData } from '../../api/AuthApi';
+import { Modal } from '../../components/Modal';
+import UserApiController from '../../controllers/UserApiController';
 
-}
-export class ChangeSettingsPage extends Block<ChangeSettingsPageProps> {
-    constructor(props = context) {
-        super('div', props);
-    }
+export class ChangeSettingsPageCore extends Block {
 
     init() {
+        AuthApiController.fetchUser()
+        this.children.modal = new Modal({
+            buttonValue: 'Поменять',
+            inputId: 'uploadAvatarImage',
+            inputType: 'file',
+            title: 'Загрузите файл',
+            label: 'Файл',
+            inputClass: 'input'
+        })
+    }
+    public changeSettings() {
+        const data = getData()
+        const inputs = document.querySelectorAll('.wrong')
+        if (inputs.length) {
+            console.log('Есть ошибки')
+        } else {
+            UserApiController.update(data as unknown as ISignupData)
+        }
+    }
+    public showModal() {
+        const modal = document.querySelector('.modal') as HTMLElement
+        modal.style.display = 'block'
+    }
+    protected componentDidUpdate(): boolean {
+
+        this.children.avatar = new Avatar({
+            userAvatar: 'https://ya-praktikum.tech/api/v2/resources' + this.props.avatar,
+            altText: 'Ваш аватар',
+            events: {
+                click: () => this.showModal()
+            }
+        })
+        this.children.title = new Title({
+            class: "user__title",
+            value: this.props.login
+        })
         this.children.button = new Button({
             class: 'form__button',
-            value: this.props.button__text,
-            goTo: this.props.goTo,
+            value: 'Сохранить',
             events: {
-                click: () => this.checkData()
+                click: () => this.changeSettings()
             }
-        }
-        )
+        })
+
+        this.children.backButton = new Button({
+            class: 'back__button',
+            events: {
+                click: () => window.history.back()
+            }
+        })
+
         this.children.loginInput = new Input({
             name: 'login',
-            placeholder: this.props.login.placeholder,
+            placeholder: this.props.login,
             classes: [
                 'settings__input',
                 'required'
@@ -65,7 +78,7 @@ export class ChangeSettingsPage extends Block<ChangeSettingsPageProps> {
         })
         this.children.emailInput = new Input({
             name: 'email',
-            placeholder: this.props.email.placeholder,
+            placeholder: this.props.email,
             classes: [
                 'settings__input',
                 'required'
@@ -74,7 +87,7 @@ export class ChangeSettingsPage extends Block<ChangeSettingsPageProps> {
         })
         this.children.firstNameInput = new Input({
             name: 'first_name',
-            placeholder: this.props.first_name.placeholder,
+            placeholder: this.props.first_name,
             classes: [
                 'settings__input',
                 'required'
@@ -83,7 +96,7 @@ export class ChangeSettingsPage extends Block<ChangeSettingsPageProps> {
         })
         this.children.secondNameInput = new Input({
             name: 'second_name',
-            placeholder: this.props.second_name.placeholder,
+            placeholder: this.props.second_name,
             classes: [
                 'settings__input',
                 'required'
@@ -92,52 +105,37 @@ export class ChangeSettingsPage extends Block<ChangeSettingsPageProps> {
         })
         this.children.phoneInput = new Input({
             name: 'phone',
-            placeholder: this.props.phone.placeholder,
+            placeholder: this.props.phone,
             classes: [
                 'settings__input',
                 'required'
             ],
             pattern: PATTERNS.PHONE
         })
-        this.children.display_nameInput = new Input({
-            name: 'phone',
-            placeholder: this.props.display_name.placeholder,
+        this.children.displayNameInput = new Input({
+            name: 'display_name',
+            placeholder: this.props.display_name,
             classes: [
                 'settings__input',
                 'required'
             ],
-            pattern: PATTERNS.NOTEMPTY
+            pattern: PATTERNS.NAME
         })
-    }
-    public checkData() {
-        this.getData()
-        const inputs = document.querySelectorAll('.wrong')
-        if (inputs.length) {
-            console.log('Есть ошибки')
-        } else {
-            this.goTo(this.props.goTo)
-        }
-    }
-    public goTo(adress: string) {
-        document.location.pathname = adress
-    }
-    public getData() {
-        let res: Record<string, string> = {}
-        const inputList = document.querySelectorAll('input')
-        inputList.forEach(input => {
-            if (input.classList.contains('required')) {
-                if (input.value.length > 0) {
-                    res[input.name] = input.value
-                }
-                else {
-                    console.log(`${input.name} не может быть пустым!`)
-                    input.classList.add('wrong')
-                }
+
+
+        const modal = document.querySelector('.modal') as HTMLElement
+        window.addEventListener('click', (event) => {
+            if (event.target == modal) {
+                modal.style.display = 'none'
             }
         })
-        console.log(res)
+        return true
     }
+
     render() {
         return this.compile(tmpl, this.props);
     }
 }
+
+const withUser = withStore((state) => ({ ...state.user }))
+export const ChangeSettingsPage = withUser(ChangeSettingsPageCore)
