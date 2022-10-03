@@ -13,8 +13,5 @@
         "strictNullChecks": true
     },
     "$schema": "https://json.schemastore.org/tsconfig",
-    "display": "Recommended",
-    "exclude": [
-        "./dist"
-    ]
+    "display": "Recommended"
 }

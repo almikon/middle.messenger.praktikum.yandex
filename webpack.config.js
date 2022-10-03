@@ -1,3 +1,4 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
@@ -5,7 +6,27 @@ module.exports = {
     entry: './src/index.ts',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'main.ts'
+        filename: 'main.js'
+    },
+    plugins:[new HtmlWebpackPlugin({
+        title: 'Web Chat',
+        templateContent:`<!DOCTYPE html>
+        <html lang="en">
+        
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="./src/less/global.less">
+            <script type="module" src="./src/index.ts"></script>
+        </head>
+        <body>
+            <div id="app"></div>
+        </body>
+        </html>`
+    })],
+    devServer:{
+        static: './dist',
     },
     resolve: {
         extensions: ['.ts', '.js', '.json']
