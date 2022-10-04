@@ -26,7 +26,7 @@ module.exports = {
         </html>`
     })],
     devServer:{
-        static: './dist',
+        static: './dist'
     },
     resolve: {
         extensions: ['.ts', '.js', '.json']
