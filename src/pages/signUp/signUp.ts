@@ -141,7 +141,7 @@ export class SignUpPage extends Block {
         const data = getData()
         const inputs = document.querySelectorAll('.wrong')
         if (inputs.length) {
-            console.log('Есть ошибки')
+
         } else {
             AuthApiController.signup(data as unknown as ISignupData)
         }

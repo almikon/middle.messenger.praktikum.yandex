@@ -4,7 +4,7 @@ import tmpl from './messages.hbs'
 
 interface IMessages {
     messages?: Record<string, string>[]
-    newMessage?: Record<string,string>
+    newMessage?: Record<string, string>
 }
 
 export class MessagesCore extends Block {
@@ -12,8 +12,6 @@ export class MessagesCore extends Block {
         super(props)
     }
     protected componentDidUpdate(): boolean {
-        // console.log('mess')
-        // console.log(this.props)
         return true
     }
     protected render(): DocumentFragment {

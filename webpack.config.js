@@ -8,24 +8,10 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: 'main.js'
     },
-    plugins:[new HtmlWebpackPlugin({
-        title: 'Web Chat',
-        templateContent:`<!DOCTYPE html>
-        <html lang="en">
-        
-        <head>
-            <meta charset="UTF-8">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link rel="stylesheet" href="./src/less/global.less">
-            <script type="module" src="./src/index.ts"></script>
-        </head>
-        <body>
-            <div id="app"></div>
-        </body>
-        </html>`
+    plugins: [new HtmlWebpackPlugin({
+        template: './static/html/index.html'
     })],
-    devServer:{
+    devServer: {
         static: './dist'
     },
     resolve: {
@@ -47,27 +33,11 @@ module.exports = {
             },
             {
                 test: /\.hbs$/,
-                use: [
-                    {
-                        loader: "handlebars-loader",
-                        options: {
-                            configFile: path.resolve(__dirname, 'tsconfig.json'),
-                        },
-                    },
-                ],
-                exclude: /(node_modules)/
+                loader: "handlebars-loader"
             },
             {
                 test: /\.(png|jpe?g|gif)$/i,
-                use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            configFile: path.resolve(__dirname, 'tsconfig.json'),
-                        },
-                    },
-                ],
-                exclude: /(node_modules)/
+                loader: 'file-loader'
             },
             {
                 test: /\.less$/i,
@@ -76,7 +46,6 @@ module.exports = {
                     "css-loader",
                     "less-loader",
                 ],
-                exclude: /(node_modules)/
             }
         ]
     }

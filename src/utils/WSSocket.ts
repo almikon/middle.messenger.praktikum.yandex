@@ -15,7 +15,6 @@ class WSSocket {
     }
 
     onopen() {
-        console.log('Соединение установлено');
         this.socketInst?.send(JSON.stringify({ type: 'get old', content: '0' }))
     }
     getOld() {
@@ -26,7 +25,7 @@ class WSSocket {
         }
     }
     close() {
-        console.log('Соединение закрыто');
+
     }
 
     error(e: Event) {

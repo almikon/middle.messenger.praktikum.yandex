@@ -1,9 +1,8 @@
 {
   "name": "sprint_1",
   "scripts": {
-    "webpack": "webpack serve --open",
-    "dev": "./node_modules/.bin/webpack",
-    "build": "parcel build index.html",
+    "dev": "webpack serve --open",
+    "build": "webpack",
     "start": "npm run build && node server.js"
   },
   "devDependencies": {
