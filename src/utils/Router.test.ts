@@ -28,13 +28,12 @@ describe('Router',()=>{
         });
     })
 
-    describe('.back()', ()=>{
-        it('should render a page on history back action',()=>{
+    describe.only('.back()', ()=>{
+        it('should render a page on history back action',()=>{          
             window.location.pathname = '/settings';
             Router
                 .use('/',BlockMock)
                 .start();
-
             window.location.pathname = '/';
             Router.back();
             expect(getContentFake.callCount).to.eq(1);
