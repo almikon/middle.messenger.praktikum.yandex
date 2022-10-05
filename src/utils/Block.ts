@@ -113,13 +113,13 @@ class Block<P extends Record<string, any> = any> {
         const fragment = this.render();
 
         const newElement = fragment.firstElementChild as HTMLElement;
-
+        
         if (this._element && newElement) {
             this._element.replaceWith(newElement);
         }
 
         this._element = newElement;
-
+        console.log(fragment)
         this._addEvents();
     }
 

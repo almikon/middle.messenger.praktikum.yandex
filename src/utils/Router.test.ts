@@ -28,7 +28,7 @@ describe('Router',()=>{
         });
     })
 
-    describe.only('.back()', ()=>{
+    describe('.back()', ()=>{
         it('should render a page on history back action',()=>{          
             window.location.pathname = '/settings';
             Router
@@ -39,7 +39,7 @@ describe('Router',()=>{
             expect(getContentFake.callCount).to.eq(1);
         });
         });
-        describe('.forward()', ()=>{
+    describe('.forward()', ()=>{
             it('should render a page on history forward action',()=>{
                 window.location.pathname = '/settings'
                 Router.use('/',BlockMock)
@@ -50,4 +50,13 @@ describe('Router',()=>{
                 expect(getContentFake.callCount).to.eq(1)
             });
             });
+            describe('.start()', ()=>{
+                it('should render a page on start',()=>{
+                    Router
+                        .use('/',BlockMock)
+                        .start();
+                        
+                    expect(getContentFake.callCount).to.eq(1);
+                });
+                });
 });
