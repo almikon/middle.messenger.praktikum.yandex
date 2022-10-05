@@ -24,6 +24,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     try {
         await AuthApiController.fetchUser()
+        router.go('/messenger')
     } catch (e) {
         console.error(e)
     }

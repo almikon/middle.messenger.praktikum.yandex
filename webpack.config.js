@@ -12,7 +12,9 @@ module.exports = {
         template: './static/html/index.html'
     })],
     devServer: {
-        static: './dist'
+        static: './dist',
+        historyApiFallback: true,
+        hot: true
     },
     resolve: {
         extensions: ['.ts', '.js', '.json']
@@ -37,7 +39,7 @@ module.exports = {
             },
             {
                 test: /\.(png|jpe?g|gif)$/i,
-                loader: 'file-loader'
+                type: 'asset/resource'
             },
             {
                 test: /\.less$/i,
