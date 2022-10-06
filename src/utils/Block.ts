@@ -111,7 +111,7 @@ class Block<P extends Record<string, any> = any> {
 
     private _render() {
         const fragment = this.render();
-
+        
         const newElement = fragment.firstElementChild as HTMLElement;
 
         if (this._element && newElement) {
