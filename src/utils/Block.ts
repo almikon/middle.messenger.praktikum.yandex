@@ -140,7 +140,7 @@ class Block<P extends Record<string, any> = any> {
         });
 
         const html = template(contextAndStubs);
-
+        
         const temp = document.createElement('template');
 
         temp.innerHTML = html;

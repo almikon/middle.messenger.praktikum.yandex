@@ -1,26 +1,30 @@
-import { expect } from "chai";
-import { Link } from ".";
+import { Link } from './index';
+import { expect } from 'chai';
+import Router from '../../utils/Router';
 import sinon from 'sinon';
-import Router from "../../utils/Router";
 
 describe('Link', () => {
-    it('should render', () => {
-        new Link({ to: '/' });
-    });
+  it('should render', () => {
+    new Link({ to: '/',label:'test',events:{click:()=>{}} });
 
+    
+  });
 
-    it('should return span', () => {
-        const link = new Link({ to: '/' });
-        const element = link.element; 
+  it.only('element should return span', () => {
+    
+    const link = new Link({ to: '/',label:'test',events:{click:()=>{}} });
+    const element = link.element;
 
-        expect(element).to.be.instanceOf(window.HTMLSpanElement);
-    });
-    it('should go to passed route on click', () => {
-        const spy = sinon.spy(Router, 'go');
-        const link = new Link({ to: '/' });
-        const element = link.element as HTMLSpanElement;
-        element.click();
+    expect(element).to.be.instanceof(window.HTMLSpanElement)
+  });
 
-        expect(spy.calledOnce).be.eq(true);
-    })
-})
+  it('should go to passed route on click', () => {
+    const link = new Link({ to: '/',label:'test',events:{click:()=>{}} });
+    const spy = sinon.spy(Router, 'go');
+    const element = link.element as HTMLSpanElement;
+
+    element.click();
+
+    expect(spy.calledOnce).to.eq(true);
+  });
+});
