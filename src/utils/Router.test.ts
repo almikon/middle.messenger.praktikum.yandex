@@ -29,22 +29,20 @@ describe('Router',()=>{
     })
 
     describe('.back()', ()=>{
-        it('should render a page on history back action',()=>{          
-            window.location.pathname = '/settings';
+        it('should render a page on history back action',()=>{       
             Router
                 .use('/',BlockMock)
                 .start();
-            window.location.pathname = '/';
             Router.back();
             expect(getContentFake.callCount).to.eq(1);
         });
         });
     describe('.forward()', ()=>{
             it('should render a page on history forward action',()=>{
-                window.location.pathname = '/settings'
-                Router.use('/',BlockMock)
-                .start()
-                window.location.pathname = '/'
+                Router
+                    .use('/',BlockMock)
+                    .start()
+                
                 Router.forward()
 
                 expect(getContentFake.callCount).to.eq(1)

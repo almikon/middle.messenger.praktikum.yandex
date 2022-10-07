@@ -10,7 +10,7 @@ describe('Link', () => {
     
   });
 
-  it.only('element should return span', () => {
+  it('element should return span', () => {
     
     const link = new Link({ to: '/',label:'test',events:{click:()=>{}} });
     const element = link.element;
