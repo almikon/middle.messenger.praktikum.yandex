@@ -4,10 +4,12 @@ import Router from '../../utils/Router';
 import sinon from 'sinon';
 
 describe('Link', () => {
-  it('should render', () => {
-    new Link({ to: '/',label:'test',events:{click:()=>{}} });
+  it('should render on setProps', () => {
+    const link = new Link({ to: '/'});
+    const spy = sinon.spy(link, 'render');
+    link.setProps({to:'/test'})
 
-    
+    expect(spy.calledOnce).to.eq(true);
   });
 
   it('element should return span', () => {

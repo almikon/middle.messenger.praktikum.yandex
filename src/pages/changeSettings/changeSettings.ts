@@ -29,9 +29,7 @@ export class ChangeSettingsPageCore extends Block {
     public changeSettings() {
         const data = getData()
         const inputs = document.querySelectorAll('.wrong')
-        if (inputs.length) {
-
-        } else {
+        if (!inputs.length) {
             UserApiController.update(data as unknown as ISignupData)
         }
     }

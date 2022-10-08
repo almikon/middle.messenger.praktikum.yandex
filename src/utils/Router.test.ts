@@ -36,25 +36,25 @@ describe('Router',()=>{
             Router.back();
             expect(getContentFake.callCount).to.eq(1);
         });
-        });
+    });
     describe('.forward()', ()=>{
-            it('should render a page on history forward action',()=>{
-                Router
-                    .use('/',BlockMock)
-                    .start()
-                
-                Router.forward()
+        it('should render a page on history forward action',()=>{
+            Router
+                .use('/',BlockMock)
+                .start()
+            
+            Router.forward()
 
-                expect(getContentFake.callCount).to.eq(1)
-            });
-            });
-            describe('.start()', ()=>{
-                it('should render a page on start',()=>{
-                    Router
-                        .use('/',BlockMock)
-                        .start();
-                        
-                    expect(getContentFake.callCount).to.eq(1);
-                });
-                });
+            expect(getContentFake.callCount).to.eq(1)
+        });
+    });
+    describe('.start()', ()=>{
+        it('should render a page on start',()=>{
+            Router
+                .use('/',BlockMock)
+                .start();
+                
+            expect(getContentFake.callCount).to.eq(1);
+        });
+    });
 });

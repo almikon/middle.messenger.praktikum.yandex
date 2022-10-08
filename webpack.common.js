@@ -2,7 +2,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-    mode: 'development',
     entry: './src/index.ts',
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -11,11 +10,6 @@ module.exports = {
     plugins: [new HtmlWebpackPlugin({
         template: './static/html/index.html'
     })],
-    devServer: {
-        static: './dist',
-        historyApiFallback: true,
-        hot: true
-    },
     resolve: {
         extensions: ['.ts', '.js', '.json']
     },

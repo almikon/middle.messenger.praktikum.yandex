@@ -60,9 +60,7 @@ export class LoginPageCore extends Block {
             this.setProps(Store.getState());
         });
         const inputs = document.querySelectorAll('.wrong')
-        if (inputs.length) {
-
-        } else {
+        if (!inputs.length) {
             AuthApiController.logIn(data as unknown as ILogInData)
         }
     }
