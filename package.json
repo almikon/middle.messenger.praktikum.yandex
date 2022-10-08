@@ -1,19 +1,14 @@
 {
   "name": "sprint_4",
   "scripts": {
+    "pre-commit":"lint-staged",
     "test": "mocha './src/**/*.test.ts'",
     "dev": "webpack serve --open  --hot --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
     "start": "npm run build && node server.js --open"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"       
-  }
-  },
   "lint-staged":{
-    "./src/**/*.{ts,js}": "eslint --fix",
-    "./src/less/*.less":"stylelint -fix"
+    "*.test.ts":"mocha"
   },
   "devDependencies": {
     "@anikin/parcel-transformer-handlebars-precompile": "1.0.1",
