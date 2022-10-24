@@ -7,7 +7,6 @@ export default function getData() {
                 res[input.name] = input.value
             }
             else {
-                console.log(`${input.name} не может быть пустым!`)
                 input.classList.add('wrong')
             }
         }

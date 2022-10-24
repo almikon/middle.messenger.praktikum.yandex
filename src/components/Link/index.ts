@@ -4,7 +4,7 @@ import tmpl from './link.hbs';
 
 interface ILinkProps {
     to: string;
-    label: string;
+    label?: string;
     events?: {
         click: () => void;
     };

@@ -24,6 +24,8 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     try {
         await AuthApiController.fetchUser()
+        if(window.location.pathname === '/' || window.location.pathname === '/logIn' || window.location.pathname === '/sign-up'){
+        router.go('/messenger')}
     } catch (e) {
         console.error(e)
     }

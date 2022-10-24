@@ -41,9 +41,7 @@ export default class HTTPTransport {
             const xhr = new XMLHttpRequest()
 
             xhr.open(method, url)
-            if (options.type) {
-
-            } else {
+            if (!options.type) {
                 xhr.setRequestHeader('content-type', 'application/json')
             }
             
