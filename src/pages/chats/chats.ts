@@ -75,7 +75,7 @@ export class ChatsPageCore extends Block {
             message.value = ''
         }
         catch {
-            console.log('Не выбран чат!')
+
         }
     }
 
@@ -105,19 +105,19 @@ export class ChatsPageCore extends Block {
         if (this.props.currentChat?.id &&
             this.props.user.id &&
             this.props.token) {
-                const socket = new WSSocket(this.props.currentChat?.id, this.props.user.id, this.props.token['token'])
-                
-                store.set(`curSocket`, socket)
+            const socket = new WSSocket(this.props.currentChat?.id, this.props.user.id, this.props.token['token'])
+
+            store.set(`curSocket`, socket)
         }
     }
     public async chooseChat(title: string, id: number) {
         const currentChat = { title: title, id: id }
         await ChatsApiController.chatToken(id);
         store.set('currentChat', currentChat)
-        
+
         this.children.currentChat.setProps({ title: `${currentChat.title} : ${currentChat.id}` });
         this.getSocket()
-        
+
     }
 
     render() {

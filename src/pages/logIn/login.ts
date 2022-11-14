@@ -1,5 +1,6 @@
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
+import '../../less/global.less';
 import '../../less/form.less';
 import Block from '../../utils/Block';
 import tmpl from './logIn.hbs'
@@ -59,9 +60,7 @@ export class LoginPageCore extends Block {
             this.setProps(Store.getState());
         });
         const inputs = document.querySelectorAll('.wrong')
-        if (inputs.length) {
-            console.log('Есть ошибки')
-        } else {
+        if (!inputs.length) {
             AuthApiController.logIn(data as unknown as ILogInData)
         }
     }

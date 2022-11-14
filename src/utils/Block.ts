@@ -111,7 +111,7 @@ class Block<P extends Record<string, any> = any> {
 
     private _render() {
         const fragment = this.render();
-
+        
         const newElement = fragment.firstElementChild as HTMLElement;
 
         if (this._element && newElement) {
@@ -119,7 +119,6 @@ class Block<P extends Record<string, any> = any> {
         }
 
         this._element = newElement;
-
         this._addEvents();
     }
 
@@ -141,7 +140,7 @@ class Block<P extends Record<string, any> = any> {
         });
 
         const html = template(contextAndStubs);
-
+        
         const temp = document.createElement('template');
 
         temp.innerHTML = html;

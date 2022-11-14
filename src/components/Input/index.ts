@@ -32,7 +32,6 @@ export class Input extends Block<IInputProps> {
 
         const reg = new RegExp(pattern)
         if (!reg.test(value) || value === '') {
-            console.log(`Поле ${target.name} заполнено некорректно!`)
             target.classList.add('wrong')
         }
         if (reg.test(value)) {

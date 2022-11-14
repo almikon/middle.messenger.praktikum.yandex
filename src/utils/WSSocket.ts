@@ -15,7 +15,6 @@ class WSSocket {
     }
 
     onopen() {
-        console.log('Соединение установлено');
         this.socketInst?.send(JSON.stringify({ type: 'get old', content: '0' }))
     }
     getOld() {
@@ -26,7 +25,7 @@ class WSSocket {
         }
     }
     close() {
-        console.log('Соединение закрыто');
+
     }
 
     error(e: Event) {
@@ -37,9 +36,9 @@ class WSSocket {
 
         const message = JSON.parse(event.data);
         if (Array.isArray(message) && message.length > 0) {
-            store.set('messages', message);
+            store.set('messages', message.reverse());
         } else if (typeof message === 'object' && !Array.isArray(message) && message.type === 'message' && store.getState().messages) {
-            store.set('messages', [message, ...store.getState().messages]);
+            store.set('messages', [...store.getState().messages, message]);
         } else {
             store.set('messages', message);
         }

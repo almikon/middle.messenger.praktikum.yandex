@@ -71,9 +71,7 @@ export class ChangePasswordPageCore extends Block {
     public changePassword() {
         const data = getData()
         const inputs = document.querySelectorAll('.wrong')
-        if (inputs.length || data.newPassword !== data.checkPassword) {
-            console.log('пароли не совпадают')
-        } else {
+        if (!inputs.length || data.newPassword === data.checkPassword) {
             delete data.checkPassword
             UserApiController.changePassword(data as unknown as IChangePassword)
         }
